@@ -1,0 +1,19 @@
+{
+  "name": "kaoyan-408-knowledge-base",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "prepare:content": "python3 scripts/prepare_content.py",
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "dompurify": "^3.2.6",
+    "katex": "^0.16.22",
+    "marked": "^15.0.12",
+    "marked-katex-extension": "^5.0.0"
+  },
+  "devDependencies": {"vite": "^6.2.6"}
+}
