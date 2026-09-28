@@ -3,6 +3,7 @@ import ast, html, json, re, shutil
 
 HERE = Path(__file__).resolve().parents[1]
 SOURCE = HERE / 'source' / '408'
+SUPPLEMENTS = HERE / 'source' / 'supplements'
 if not SOURCE.exists():
     raise SystemExit('缺少 source/408 源资料')
 PUBLIC = HERE / 'public'
@@ -25,6 +26,9 @@ specs = [
  ('11-操作系统强化题型', '强化题型', '操作系统'),
  ('12-计网强化题型', '强化题型', '计算机网络'),
  ('13-历年真题', '强化题型', '历年真题'),
+ ('14-数据结构错题补充', '错题补充', '数据结构'),
+ ('15-计算机组成原理错题补充', '错题补充', '计算机组成原理'),
+ ('16-操作系统错题补充', '错题补充', '操作系统'),
 ]
 
 def clean(text):
@@ -55,11 +59,12 @@ def convert(raw):
 
 records=[]; docs=[]; copied=set(); missing=[]
 for name, group, subject in specs:
-    raw = (SOURCE / f'{name}.md').read_text(encoding='utf-8')
+    source_dir = SUPPLEMENTS if group == '错题补充' else SOURCE
+    raw = (source_dir / f'{name}.md').read_text(encoding='utf-8')
     for rel in re.findall(r'(?:src=["\']|!\[[^]]*\]\()\.?/([^"\')]+)', raw):
         rel = rel.split('#')[0]
-        path = (SOURCE / rel).resolve()
-        if SOURCE.resolve() not in path.parents or not path.is_file():
+        path = (source_dir / rel).resolve()
+        if source_dir.resolve() not in path.parents or not path.is_file():
             if (ASSETS/rel).is_file():
                 copied.add(rel); continue
             missing.append((name,rel)); continue
@@ -88,7 +93,10 @@ for name, group, subject in specs:
         current_lines.append(line); out.append(line)
     flush()
     (DOCS/f'{name}.md').write_text('\n'.join(out),encoding='utf-8')
-    docs.append({'id':name,'group':group,'subject':subject,'title':subject if group=='知识体系' else (subject+' · '+group if subject!='历年真题' else subject),'sections':sections,'source':f'https://github.com/yyx-dev/yyx-dev.github.io/blob/325bdaa/docs/408/{name}.md'})
+    source_url = (f'https://github.com/louise-ZQF/postgraduate-exam-408-website/blob/main/source/supplements/{name}.md'
+                  if group == '错题补充' else
+                  f'https://github.com/yyx-dev/yyx-dev.github.io/blob/325bdaa/docs/408/{name}.md')
+    docs.append({'id':name,'group':group,'subject':subject,'title':subject if group=='知识体系' else (subject+' · '+group if subject!='历年真题' else subject),'sections':sections,'source':source_url})
 (PUBLIC/'catalog.json').write_text(json.dumps({'docs':docs,'records':records},ensure_ascii=False,separators=(',',':')),encoding='utf-8')
 print(f'{len(docs)} documents, {len(records)} search records, {len(copied)} images; missing references: {len(missing)}')
 if missing: print('Missing examples:',missing[:8])

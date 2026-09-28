@@ -14,7 +14,7 @@ const docs = catalog.docs
 const records = catalog.records
 const docMap = new Map(docs.map(d => [d.id, d]))
 const subjectOrder = ['数据结构', '计算机组成原理', '操作系统', '计算机网络']
-const groups = ['知识体系', '基础题型', '强化题型']
+const groups = ['知识体系', '基础题型', '强化题型', '错题补充']
 const FAVORITE_KEY = 'kaoyan-408-favorites-v1'
 let currentFilter = '全部'
 let liveQuery = ''
@@ -40,9 +40,9 @@ function header(active, q = '') {
   const n = favoriteList().length
   return `<header class="site-header"><div class="header-inner"><a class="brand" href="#/" aria-label="408 知识库首页"><span class="brand-rule" aria-hidden="true"></span><span><b>408 知识库</b><small>知识 · 题型 · 真题</small></span></a><form class="header-search" role="search" id="header-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg><input name="q" value="${escapeHtml(q)}" aria-label="搜索 408 知识点与题目" placeholder="搜索知识点或题目关键词" maxlength="60"></form><nav aria-label="主导航"><a href="#/" class="${active==='search'?'active':''}">搜索</a><a href="#/catalog" class="${active==='catalog'?'active':''}">资料目录</a><a href="#/favorites" class="${active==='favorites'?'active':''}">待背收藏 <span class="favorite-count" data-favorite-count>${n || ''}</span></a></nav></div></header>`
 }
-function footer() { return `<footer class="site-footer">408 资料来自 <a href="https://github.com/yyx-dev/yyx-dev.github.io/tree/325bdaa/docs/408" target="_blank" rel="noopener noreferrer">yyx-dev 的原始仓库 ↗</a>。本站保留原文入口。</footer>` }
+function footer() { return `<footer class="site-footer">基础资料来自 <a href="https://github.com/yyx-dev/yyx-dev.github.io/tree/325bdaa/docs/408" target="_blank" rel="noopener noreferrer">yyx-dev 的原始仓库 ↗</a>；错题补充根据自有复习笔记整理。每篇文章保留来源入口。</footer>` }
 function docGrid() {
-  return `<section class="browse" aria-labelledby="browse-title"><div class="section-head"><h2 id="browse-title">按资料浏览</h2><span>13 篇 · 四科知识、题型与真题</span></div><div class="browse-grid">${groups.map(group => `<div class="browse-column"><h3>${group}</h3>${subjectOrder.map(subject => { const doc=docs.find(x=>x.group===group && x.subject===subject); return `<a href="${docUrl(doc.id)}"><span>${subject}</span><span aria-hidden="true">↗</span></a>` }).join('')}${group==='强化题型'?`<a href="${docUrl('13-历年真题')}"><span>历年真题</span><span aria-hidden="true">↗</span></a>`:''}</div>`).join('')}</div></section>`
+  return `<section class="browse" aria-labelledby="browse-title"><div class="section-head"><h2 id="browse-title">按资料浏览</h2><span>${docs.length} 篇 · 四科知识、题型、真题与错题补充</span></div><div class="browse-grid">${groups.map(group => `<div class="browse-column"><h3>${group}</h3>${docs.filter(d=>d.group===group).map(d => `<a href="${docUrl(d.id)}"><span>${escapeHtml(d.subject)}</span><span aria-hidden="true">↗</span></a>`).join('')}</div>`).join('')}</div></section>`
 }
 function normalize(value) { return String(value).toLocaleLowerCase().replace(/\s+/g,'') }
 const aliases = { '计组':'计算机组成原理', '计网':'计算机网络', 'os':'操作系统', 'ds':'数据结构', '数据链路':'数据链路层', 'cpu':'cpu', 'tcp':'tcp', 'kmp':'kmp' }
@@ -103,7 +103,7 @@ async function renderDoc(id,anchor='') {
   const doc=docMap.get(id)
   if (!doc) { location.hash='#/';return }
   currentDoc=id
-  app.innerHTML=`${header('doc')}<main class="reader"><aside class="reader-side" aria-label="资料目录"><a class="back-link" href="#/catalog">← 资料目录</a><div class="side-group">${groups.map(g=>`<h3>${g}</h3>${subjectOrder.map(s=>{const x=docs.find(d=>d.group===g && d.subject===s);return `<a class="${id===x.id?'current':''}" href="${docUrl(x.id)}">${s}</a>`}).join('')}${g==='强化题型'?`<a class="${id==='13-历年真题'?'current':''}" href="${docUrl('13-历年真题')}">历年真题</a>`:''}`).join('')}</div></aside><article class="reader-article"><div class="reader-toolbar"><a href="${searchUrl(liveQuery)}">← 返回搜索</a><a href="${sourceUrl(doc)}" target="_blank" rel="noopener noreferrer">查看原始资料 ↗</a></div><header class="reader-title"><span>${escapeHtml(doc.group)} · ${escapeHtml(doc.subject)}</span><h1>${escapeHtml(doc.title)}</h1><p>点击标题旁的星标，可加入待背收藏。</p></header><div class="markdown" id="article-body"><p>正在加载内容…</p></div></article><aside class="reader-toc" aria-label="本文目录"><h3>本文目录</h3><div>${doc.sections.filter(s=>s.level<=3).map(s=>`<a class="level-${s.level}" href="${docUrl(id,s.anchor)}">${escapeHtml(s.title)}</a>`).join('')}</div></aside></main>${footer()}`
+  app.innerHTML=`${header('doc')}<main class="reader"><aside class="reader-side" aria-label="资料目录"><a class="back-link" href="#/catalog">← 资料目录</a><div class="side-group">${groups.map(g=>`<h3>${g}</h3>${docs.filter(d=>d.group===g).map(d=>`<a class="${id===d.id?'current':''}" href="${docUrl(d.id)}">${escapeHtml(d.subject)}</a>`).join('')}`).join('')}</div></aside><article class="reader-article"><div class="reader-toolbar"><a href="${searchUrl(liveQuery)}">← 返回搜索</a><a href="${sourceUrl(doc)}" target="_blank" rel="noopener noreferrer">查看原始资料 ↗</a></div><header class="reader-title"><span>${escapeHtml(doc.group)} · ${escapeHtml(doc.subject)}</span><h1>${escapeHtml(doc.title)}</h1><p>点击标题旁的星标，可加入待背收藏。</p></header><div class="markdown" id="article-body"><p>正在加载内容…</p></div></article><aside class="reader-toc" aria-label="本文目录"><h3>本文目录</h3><div>${doc.sections.filter(s=>s.level<=3).map(s=>`<a class="level-${s.level}" href="${docUrl(id,s.anchor)}">${escapeHtml(s.title)}</a>`).join('')}</div></aside></main>${footer()}`
   try {
     const md=await fetch(`${BASE}docs/${encodeURIComponent(id)}.md`).then(r=>{if(!r.ok)throw new Error('正文加载失败');return r.text()})
     if (currentDoc!==id) return
