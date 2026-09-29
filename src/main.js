@@ -1,10 +1,9 @@
 import './style.css'
 import 'katex/dist/katex.min.css'
 import { marked } from 'marked'
-import markedKatex from 'marked-katex-extension'
 import DOMPurify from 'dompurify'
+import renderMathInElement from 'katex/contrib/auto-render'
 
-marked.use(markedKatex({ throwOnError: false, output: 'html' }))
 marked.setOptions({ gfm: true, breaks: false })
 
 const BASE = import.meta.env.BASE_URL
@@ -97,7 +96,7 @@ function renderFavorites() {
   app.innerHTML=`${header('favorites')}<main class="favorites-page"><div class="section-head favorites-head"><div><p class="eyebrow">复习清单</p><h1>待背收藏</h1></div><span>${list.length} 条收藏</span></div>${list.length?`<div class="results">${list.map(x=>{const d=docMap.get(x.doc);return `<article class="favorite-card"><div class="result-path">${escapeHtml(d?.group||'')} <span>/</span> ${escapeHtml(d?.subject||'')}</div><h2>${escapeHtml(x.title)}</h2><p>${escapeHtml(x.text)}</p><div class="favorite-actions"><a href="${docUrl(x.doc,x.anchor)}">查看原文 ↗</a><button type="button" data-remove-favorite="${escapeHtml(x.id)}">已背会，移出待背</button></div></article>`}).join('')}</div>`:'<div class="empty"><h2>还没有待背内容</h2><p>搜索知识点，在需要复习的结果旁点击“收藏”。</p><a class="primary-link" href="#/">去搜索</a></div>'}</main>${footer()}`
 }
 function preprocessMarkdown(md) {
-  return md.replace(/(?:src=["']|\]\()\.\/([^"')]+)/g, (all,path) => all.replace(`./${path}`,`${BASE}assets/${path.split('/').map(encodeURIComponent).join('/')}`))
+  return md.replace(/(?:src=["']|\]\()\.\/([^"')]+)/g, (all,path) => all.replace(`./${path}`,`${BASE}assets/${path.split('/').map(segment => encodeURIComponent(segment).replace(/%2B/gi, '+')).join('/')}`))
 }
 function styleAnswerChoices(container) {
   for (const list of container.querySelectorAll('ul')) {
@@ -147,6 +146,15 @@ async function renderDoc(id,anchor='') {
     const html=marked.parse(preprocessMarkdown(md))
     const container=document.querySelector('#article-body')
     container.innerHTML=DOMPurify.sanitize(html,{ADD_ATTR:['target','rel','style']})
+    renderMathInElement(container, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '$', right: '$', display: false },
+      ],
+      ignoredClasses: ['katex'],
+      throwOnError: false,
+      strict: 'ignore',
+    })
     styleAnswerChoices(container)
     container.querySelectorAll('a[href^="http"]').forEach(a=>{a.target='_blank';a.rel='noopener noreferrer'})
     const topTitle=container.querySelector('h1'); if(topTitle) topTitle.style.display='none'
