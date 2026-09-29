@@ -43,6 +43,35 @@ def options(match):
     try:
         arr = ast.literal_eval(raw)
         if not isinstance(arr, list): return ''
+        code_choices = []
+        for value in arr:
+            # Some source choices wrap C in presentation-only spans.
+            choice = re.sub(r'</?span\b[^>]*>', '', str(value), flags=re.I).strip()
+            label = re.match(r'^([A-Z])\.\s*(.+)$', choice, flags=re.S)
+            if not label or '->' not in label.group(2) or ';' not in label.group(2):
+                code_choices = []
+                break
+            code_choices.append((label.group(1), label.group(2).strip()))
+        if code_choices and len(code_choices) == len(arr):
+            cards = []
+            for label, code in code_choices:
+                # Break only between statements, preserving their original order and logic.
+                code = re.sub(r'\b(if|while)\(', r'\1 (', code)
+                code = re.sub(r'[ \t]*(==|!=|<=|>=|&&|\|\|)[ \t]*', r' \1 ', code)
+                code = re.sub(r'(?<![!<>=])=(?!=)', ' = ', code)
+                code = re.sub(r'\s*([{}])\s*', r'\n\1\n', code)
+                code = re.sub(r';\s*(?=\S)', ';\n', code)
+                lines = [line.strip() for line in code.splitlines() if line.strip()]
+                depth = 0
+                formatted = []
+                for line in lines:
+                    if line.startswith('}'):
+                        depth = max(0, depth - 1)
+                    formatted.append('  ' * depth + line)
+                    if line.endswith('{'):
+                        depth += 1
+                cards.append(f'<div class="code-option" role="listitem"><span class="code-option-label">{label}.</span><pre><code>{html.escape(chr(10).join(formatted))}</code></pre></div>')
+            return '\n<div class="code-options" role="list">\n' + '\n'.join(cards) + '\n</div>\n'
         return '\n' + '\n'.join('- ' + str(x) for x in arr) + '\n'
     except (SyntaxError, ValueError):
         return '\n' + raw + '\n'
