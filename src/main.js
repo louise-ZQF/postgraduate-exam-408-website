@@ -23,7 +23,7 @@ let currentDoc = null
 let currentRoute = ''
 
 function escapeHtml(value = '') { return String(value).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[c]) }
-function favoriteList() { try { return JSON.parse(localStorage.getItem(FAVORITE_KEY) || '[]') } catch { return [] } }
+function favoriteList() { try { return JSON.parse(localStorage.getItem(FAVORITE_KEY) || '[]').filter(x => docMap.has(x.doc)) } catch { return [] } }
 function favoriteId(doc, anchor) { return `${doc}#${anchor}` }
 function favoriteSet() { return new Set(favoriteList().map(x => x.id)) }
 function storeFavorites(list) { localStorage.setItem(FAVORITE_KEY, JSON.stringify(list)); document.querySelectorAll('[data-favorite-count]').forEach(e => e.textContent = list.length ? String(list.length) : '') }
@@ -38,11 +38,11 @@ function searchUrl(q = '') { return `#/search${q ? `?q=${encodeURIComponent(q)}`
 function sourceUrl(doc) { return doc.source.replace(/([^/]+)\.md$/, (_, filename) => `${encodeURIComponent(filename)}.md`) }
 function header(active, q = '') {
   const n = favoriteList().length
-  return `<header class="site-header"><div class="header-inner"><a class="brand" href="#/" aria-label="408 知识库首页"><span class="brand-rule" aria-hidden="true"></span><span><b>408 知识库</b><small>知识 · 题型 · 真题</small></span></a><form class="header-search" role="search" id="header-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg><input name="q" value="${escapeHtml(q)}" aria-label="搜索 408 知识点与题目" placeholder="搜索知识点或题目关键词" maxlength="60"></form><nav aria-label="主导航"><a href="#/" class="${active==='search'?'active':''}">搜索</a><a href="#/catalog" class="${active==='catalog'?'active':''}">资料目录</a><a href="#/favorites" class="${active==='favorites'?'active':''}">待背收藏 <span class="favorite-count" data-favorite-count>${n || ''}</span></a></nav></div></header>`
+  return `<header class="site-header"><div class="header-inner"><a class="brand" href="#/" aria-label="408 知识库首页"><span class="brand-rule" aria-hidden="true"></span><span><b>408 知识库</b><small>知识 · 题型 · 错题</small></span></a><form class="header-search" role="search" id="header-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg><input name="q" value="${escapeHtml(q)}" aria-label="搜索 408 知识点与题目" placeholder="搜索知识点或题目关键词" maxlength="60"></form><nav aria-label="主导航"><a href="#/" class="${active==='search'?'active':''}">搜索</a><a href="#/catalog" class="${active==='catalog'?'active':''}">资料目录</a><a href="#/favorites" class="${active==='favorites'?'active':''}">待背收藏 <span class="favorite-count" data-favorite-count>${n || ''}</span></a></nav></div></header>`
 }
 function footer() { return `<footer class="site-footer">基础资料来自 <a href="https://github.com/yyx-dev/yyx-dev.github.io/tree/325bdaa/docs/408" target="_blank" rel="noopener noreferrer">yyx-dev 的原始仓库 ↗</a>；错题补充根据自有复习笔记整理。每篇文章保留来源入口。</footer>` }
 function docGrid() {
-  return `<section class="browse" aria-labelledby="browse-title"><div class="section-head"><h2 id="browse-title">按资料浏览</h2><span>${docs.length} 篇 · 四科知识、题型、真题与错题补充</span></div><div class="browse-grid">${groups.map(group => `<div class="browse-column"><h3>${group}</h3>${docs.filter(d=>d.group===group).map(d => `<a href="${docUrl(d.id)}"><span>${escapeHtml(d.subject)}</span><span aria-hidden="true">↗</span></a>`).join('')}</div>`).join('')}</div></section>`
+  return `<section class="browse" aria-labelledby="browse-title"><div class="section-head"><h2 id="browse-title">按资料浏览</h2><span>${docs.length} 篇 · 四科知识、题型与错题补充</span></div><div class="browse-grid">${groups.map(group => `<div class="browse-column"><h3>${group}</h3>${docs.filter(d=>d.group===group).map(d => `<a href="${docUrl(d.id)}"><span>${escapeHtml(d.subject)}</span><span aria-hidden="true">↗</span></a>`).join('')}</div>`).join('')}</div></section>`
 }
 function normalize(value) { return String(value).toLocaleLowerCase().replace(/\s+/g,'') }
 const aliases = { '计组':'计算机组成原理', '计网':'计算机网络', 'os':'操作系统', 'ds':'数据结构', '数据链路':'数据链路层', 'cpu':'cpu', 'tcp':'tcp', 'kmp':'kmp' }
@@ -99,6 +99,43 @@ function renderFavorites() {
 function preprocessMarkdown(md) {
   return md.replace(/(?:src=["']|\]\()\.\/([^"')]+)/g, (all,path) => all.replace(`./${path}`,`${BASE}assets/${path.split('/').map(encodeURIComponent).join('/')}`))
 }
+function styleAnswerChoices(container) {
+  for (const list of container.querySelectorAll('ul')) {
+    const items = [...list.children]
+    if (items.length < 2 || items.some(item => item.tagName !== 'LI')) continue
+    const labeled = items.map(item => {
+      const walker = document.createTreeWalker(item, NodeFilter.SHOW_TEXT)
+      let node
+      while ((node = walker.nextNode())) {
+        if (!node.textContent.trim()) continue
+        const match = node.textContent.match(/^\s*([A-H])[.．、]\s*/)
+        return match ? { node, match } : null
+      }
+      return null
+    })
+    const letters = labeled.map(entry => entry?.match[1])
+    if (letters.some(letter => !letter) || new Set(letters).size !== items.length ||
+        !letters.every(letter => letter.charCodeAt(0) - 65 < items.length)) continue
+    list.classList.add('exam-options')
+    list.setAttribute('aria-label', '选择题选项')
+    items.forEach((item, index) => {
+      const { node, match } = labeled[index]
+      node.textContent = node.textContent.slice(match[0].length)
+      item.classList.add('exam-option')
+      const badge = document.createElement('span')
+      badge.className = 'exam-option-letter'
+      badge.setAttribute('aria-hidden', 'true')
+      badge.textContent = match[1]
+      const content = document.createElement('div')
+      content.className = 'exam-option-content'
+      while (item.firstChild) content.append(item.firstChild)
+      item.prepend(badge)
+      item.append(content)
+    })
+    items.sort((a, b) => a.querySelector('.exam-option-letter').textContent.localeCompare(b.querySelector('.exam-option-letter').textContent))
+    list.append(...items)
+  }
+}
 async function renderDoc(id,anchor='') {
   const doc=docMap.get(id)
   if (!doc) { location.hash='#/';return }
@@ -110,6 +147,7 @@ async function renderDoc(id,anchor='') {
     const html=marked.parse(preprocessMarkdown(md))
     const container=document.querySelector('#article-body')
     container.innerHTML=DOMPurify.sanitize(html,{ADD_ATTR:['target','rel','style']})
+    styleAnswerChoices(container)
     container.querySelectorAll('a[href^="http"]').forEach(a=>{a.target='_blank';a.rel='noopener noreferrer'})
     const topTitle=container.querySelector('h1'); if(topTitle) topTitle.style.display='none'
     const fav=favoriteSet()

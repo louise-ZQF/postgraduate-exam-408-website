@@ -25,13 +25,13 @@ specs = [
  ('10-计组强化题型', '强化题型', '计算机组成原理'),
  ('11-操作系统强化题型', '强化题型', '操作系统'),
  ('12-计网强化题型', '强化题型', '计算机网络'),
- ('13-历年真题', '强化题型', '历年真题'),
  ('14-数据结构错题补充', '错题补充', '数据结构'),
  ('15-计算机组成原理错题补充', '错题补充', '计算机组成原理'),
  ('16-操作系统错题补充', '错题补充', '操作系统'),
 ]
 
 def clean(text):
+    text = re.sub(r'<!--.*?-->', ' ', text, flags=re.S)
     text = re.sub(r'</?(?:img|div|span|sub|sup|br|p|table|tr|td|th|blockquote|pre|code|strong|em|u|a)[^>]*>', ' ', text, flags=re.I)
     text = re.sub(r'!\[([^]]*)\]\([^)]*\)', r' \1 ', text)
     text = re.sub(r'\$+|\\[a-zA-Z]+|[`*_{}|>#]', ' ', text)
@@ -39,7 +39,9 @@ def clean(text):
     return re.sub(r'\s+', ' ', text).strip()
 
 def options(match):
-    raw = html.unescape(match.group(1))
+    encoded = re.sub(r'&lt;?', '&amp;lt;', match.group(1))
+    encoded = re.sub(r'&gt;?', '&amp;gt;', encoded)
+    raw = html.unescape(encoded)
     try:
         arr = ast.literal_eval(raw)
         if not isinstance(arr, list): return ''
@@ -70,9 +72,10 @@ def options(match):
                     formatted.append('  ' * depth + line)
                     if line.endswith('{'):
                         depth += 1
-                cards.append(f'<div class="code-option" role="listitem"><span class="code-option-label">{label}.</span><pre><code>{html.escape(chr(10).join(formatted))}</code></pre></div>')
+                cards.append(f'<div class="code-option" role="listitem"><span class="code-option-label">{label}</span><pre><code>{html.escape(chr(10).join(formatted))}</code></pre></div>')
             return '\n<div class="code-options" role="list">\n' + '\n'.join(cards) + '\n</div>\n'
-        return '\n' + '\n'.join('- ' + str(x) for x in arr) + '\n'
+        # A block boundary keeps statement lists (Ⅰ–Ⅳ) separate from A–D choices.
+        return '\n<!-- option-set -->\n\n' + '\n'.join('- ' + str(x) for x in arr) + '\n'
     except (SyntaxError, ValueError):
         return '\n' + raw + '\n'
 
@@ -106,7 +109,7 @@ for name, group, subject in specs:
         body='\n'.join(current_lines)
         plain=clean(body)
         if not plain: return
-        # Each heading becomes a searchable result. Long year-paper sections split into smaller records.
+        # Each heading becomes a searchable result. Long sections split into smaller records.
         chunks=[plain[i:i+1100] for i in range(0,len(plain),1000)] if len(plain)>2500 else [plain]
         for idx,chunk in enumerate(chunks):
             records.append({'doc':name,'group':group,'subject':subject,'title':current_title + (f' · 第{idx+1}段' if len(chunks)>1 else ''),'anchor':current_anchor,'text':chunk})
@@ -125,7 +128,7 @@ for name, group, subject in specs:
     source_url = (f'https://github.com/louise-ZQF/postgraduate-exam-408-website/blob/main/source/supplements/{name}.md'
                   if group == '错题补充' else
                   f'https://github.com/yyx-dev/yyx-dev.github.io/blob/325bdaa/docs/408/{name}.md')
-    docs.append({'id':name,'group':group,'subject':subject,'title':subject if group=='知识体系' else (subject+' · '+group if subject!='历年真题' else subject),'sections':sections,'source':source_url})
+    docs.append({'id':name,'group':group,'subject':subject,'title':subject if group=='知识体系' else subject+' · '+group,'sections':sections,'source':source_url})
 (PUBLIC/'catalog.json').write_text(json.dumps({'docs':docs,'records':records},ensure_ascii=False,separators=(',',':')),encoding='utf-8')
 print(f'{len(docs)} documents, {len(records)} search records, {len(copied)} images; missing references: {len(missing)}')
 if missing: print('Missing examples:',missing[:8])
