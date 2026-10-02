@@ -17,14 +17,14 @@ specs = [
  ('02-计算机组成原理', '知识体系', '计算机组成原理'),
  ('03-操作系统', '知识体系', '操作系统'),
  ('04-计算机网络', '知识体系', '计算机网络'),
- ('05-数据结构基础题型', '基础题型', '数据结构'),
- ('06-计组基础题型', '基础题型', '计算机组成原理'),
- ('07-操作系统基础题型', '基础题型', '操作系统'),
- ('08-计网基础题型', '基础题型', '计算机网络'),
- ('09-数据结构强化题型', '强化题型', '数据结构'),
- ('10-计组强化题型', '强化题型', '计算机组成原理'),
- ('11-操作系统强化题型', '强化题型', '操作系统'),
- ('12-计网强化题型', '强化题型', '计算机网络'),
+ ('05-数据结构基础题型', '小题', '数据结构'),
+ ('06-计组基础题型', '小题', '计算机组成原理'),
+ ('07-操作系统基础题型', '小题', '操作系统'),
+ ('08-计网基础题型', '小题', '计算机网络'),
+ ('09-数据结构强化题型', '大题', '数据结构'),
+ ('10-计组强化题型', '大题', '计算机组成原理'),
+ ('11-操作系统强化题型', '大题', '操作系统'),
+ ('12-计网强化题型', '大题', '计算机网络'),
  ('14-数据结构错题补充', '错题补充', '数据结构'),
  ('15-计算机组成原理错题补充', '错题补充', '计算机组成原理'),
  ('16-操作系统错题补充', '错题补充', '操作系统'),
@@ -34,8 +34,10 @@ def clean(text):
     text = re.sub(r'<!--.*?-->', ' ', text, flags=re.S)
     text = re.sub(r'</?(?:img|div|span|sub|sup|br|p|table|tr|td|th|blockquote|pre|code|strong|em|u|a)[^>]*>', ' ', text, flags=re.I)
     text = re.sub(r'!\[([^]]*)\]\([^)]*\)', r' \1 ', text)
-    text = re.sub(r'\$+|\\[a-zA-Z]+|[`*_{}|>#]', ' ', text)
     text = html.unescape(text)
+    text = text.replace('\\*','*').replace('**',' ').replace('__',' ')
+    text = re.sub(r'(?m)^\s*>\s?', ' ', text)
+    text = re.sub(r'\$+|\\[a-zA-Z]+|[`{}|#]', ' ', text)
     return re.sub(r'\s+', ' ', text).strip()
 
 def options(match):
@@ -89,6 +91,43 @@ def convert(raw):
     raw = re.sub(r'\s*\{\.[^}]+\}\s*$', '', raw, flags=re.M)
     return raw
 
+def image_dimensions(path):
+    with path.open('rb') as image:
+        header=image.read(24)
+    if header.startswith(b'\x89PNG\r\n\x1a\n'):
+        return int.from_bytes(header[16:20],'big'),int.from_bytes(header[20:24],'big')
+    if header.startswith((b'GIF87a',b'GIF89a')):
+        return int.from_bytes(header[6:8],'little'),int.from_bytes(header[8:10],'little')
+    return None
+
+def prepare_images(content):
+    def decorate(match):
+        tag=match.group(0)
+        source=re.search(r'\bsrc=["\']\./([^"\']+)["\']',tag)
+        if not source: return tag
+        path=ASSETS/source.group(1)
+        if not path.is_file(): return tag
+        dimensions=image_dimensions(path)
+        if not dimensions: return tag
+        width,height=dimensions
+        return tag[:-1].rstrip().rstrip('/')+f' width="{width}" height="{height}" loading="lazy" decoding="async" />'
+    return re.sub(r'<img\b[^>]*>',decorate,content,flags=re.I)
+
+def add_search_marker(line, anchor):
+    marker = f'<span class="content-anchor" id="{anchor}"></span>'
+    if re.match(r'^\s*(?:`{3,}|~{3,}|<pre\b)',line,flags=re.I):
+        return marker+'\n\n'+line
+    if line.lstrip().startswith('|'):
+        position = line.index('|') + 1
+        return line[:position] + marker + line[position:]
+    quote = re.match(r'^(\s*>\s*)',line)
+    if quote:
+        return line[:quote.end()] + marker + line[quote.end():]
+    bullet = re.match(r'^(\s*(?:[-*+]\s+|\d+[.)]\s+))', line)
+    if bullet:
+        return line[:bullet.end()] + marker + line[bullet.end():]
+    return marker + line
+
 records=[]; docs=[]; copied=set(); missing=[]
 for name, group, subject in specs:
     source_dir = SUPPLEMENTS if group == '错题补充' else SOURCE
@@ -103,32 +142,64 @@ for name, group, subject in specs:
         if rel not in copied:
             target=ASSETS/rel; target.parent.mkdir(parents=True,exist_ok=True)
             shutil.copy2(path,target); copied.add(rel)
-    content = convert(raw)
-    sections=[]; current_title=subject; current_anchor='start'; current_lines=[]; heading_no=0
+    content = prepare_images(convert(raw))
+    if group in ('小题','大题'):
+        content = re.sub(r'^#\s+[^\n]+',f'# {subject}{group}',content,count=1,flags=re.M)
+    sections=[]; current_title=subject; heading_no=0; block_no=[0]; pending=[]; out=[]
+    record_type = group if group in ('小题', '大题') else '知识点'
     def flush():
-        body='\n'.join(current_lines)
-        plain=clean(body)
-        if not plain: return
-        # Each heading becomes a searchable result. Long sections split into smaller records.
-        chunks=[plain[i:i+1100] for i in range(0,len(plain),1000)] if len(plain)>2500 else [plain]
-        for idx,chunk in enumerate(chunks):
-            records.append({'doc':name,'group':group,'subject':subject,'title':current_title + (f' · 第{idx+1}段' if len(chunks)>1 else ''),'anchor':current_anchor,'text':chunk})
-    out=[]
+        if not pending: return
+        plain=clean('\n'.join(out[i] for i in pending))
+        if plain:
+            block_no[0]+=1
+            anchor=f'p-{block_no[0]}'
+            out[pending[0]]=add_search_marker(out[pending[0]],anchor)
+            local_records.append({'doc':name,'group':group,'type':record_type,'subject':subject,'section':current_title,'title':current_title,'anchor':anchor,'kind':'content','text':plain})
+        pending.clear()
+    local_records=[]; fence=None; in_pre=False
     for line in content.splitlines():
+        marker=re.match(r'^\s*(`{3,}|~{3,})',line)
+        if fence:
+            out.append(line); pending.append(len(out)-1)
+            if marker and marker.group(1)[0]==fence[0] and len(marker.group(1))>=fence[1]:
+                fence=None; flush()
+            continue
+        if in_pre:
+            out.append(line); pending.append(len(out)-1)
+            if '</pre>' in line.lower(): in_pre=False; flush()
+            continue
+        if marker:
+            flush(); fence=(marker.group(1)[0],len(marker.group(1)))
+            out.append(line); pending.append(len(out)-1)
+            continue
+        if re.match(r'^\s*<pre\b',line,flags=re.I):
+            flush(); in_pre='</pre>' not in line.lower()
+            out.append(line); pending.append(len(out)-1)
+            if not in_pre: flush()
+            continue
         m=re.match(r'^(#{1,4})\s+(.+?)\s*$',line)
         if m:
-            flush(); current_lines=[]; heading_no+=1
+            flush(); heading_no+=1
             current_title=clean(m.group(2)) or subject
             current_anchor=f's-{heading_no}'
             sections.append({'title':current_title,'anchor':current_anchor,'level':len(m.group(1))})
+            local_records.append({'doc':name,'group':group,'type':record_type,'subject':subject,'section':current_title,'title':current_title,'anchor':current_anchor,'kind':'heading','text':current_title})
             out.append(f'<a id="{current_anchor}"></a>')
-        current_lines.append(line); out.append(line)
+            out.append(line)
+            continue
+        if not line.strip() or re.match(r'^\s*\|\s*[:\-]+(?:\s*\|\s*[:\-]+)*\s*\|?\s*$',line):
+            flush(); out.append(line); continue
+        if line.lstrip().startswith('|'):
+            flush(); out.append(line); pending.append(len(out)-1); flush(); continue
+        out.append(line); pending.append(len(out)-1)
     flush()
+    records.extend(local_records)
     (DOCS/f'{name}.md').write_text('\n'.join(out),encoding='utf-8')
     source_url = (f'https://github.com/louise-ZQF/postgraduate-exam-408-website/blob/main/source/supplements/{name}.md'
                   if group == '错题补充' else
                   f'https://github.com/yyx-dev/yyx-dev.github.io/blob/325bdaa/docs/408/{name}.md')
-    docs.append({'id':name,'group':group,'subject':subject,'title':subject if group=='知识体系' else subject+' · '+group,'sections':sections,'source':source_url})
-(PUBLIC/'catalog.json').write_text(json.dumps({'docs':docs,'records':records},ensure_ascii=False,separators=(',',':')),encoding='utf-8')
+    docs.append({'id':name,'group':group,'type':record_type,'subject':subject,'title':subject if group=='知识体系' else subject+' · '+group,'sections':sections,'source':source_url})
+(PUBLIC/'catalog.json').write_text(json.dumps({'docs':docs},ensure_ascii=False,separators=(',',':')),encoding='utf-8')
+(PUBLIC/'search-index.json').write_text(json.dumps(records,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
 print(f'{len(docs)} documents, {len(records)} search records, {len(copied)} images; missing references: {len(missing)}')
 if missing: print('Missing examples:',missing[:8])

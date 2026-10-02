@@ -99,3 +99,23 @@
 }
 .markdown .exam-option-content { min-width: 0; overflow-wrap: anywhere; }
 .markdown .exam-option-content > p { margin: 0; }
+.search-page{padding-top:34px}
+.search-page .intro h1{font-size:clamp(38px,4.8vw,60px)}
+.search-page .intro>p:not(.eyebrow){margin-top:10px}
+.search-page .hero-search{margin-top:23px}
+.search-page .result-section{margin-top:34px}
+.header-search select{flex:none;max-width:92px;min-height:34px;border:0;border-right:1px solid var(--line);padding:0 9px 0 1px;background:transparent;color:var(--ink);font-size:13px;font-weight:700;cursor:pointer}
+.search-scope{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:15px 0 0;border:0;padding:0}
+.search-scope legend{float:left;min-height:44px;margin-right:7px;line-height:44px;color:var(--muted);font-size:14px;font-weight:650}
+.search-scope label{position:relative;display:inline-flex;cursor:pointer}
+.search-scope input{position:absolute;width:1px;height:1px;opacity:0}
+.search-scope label span{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:1px solid var(--line-strong);border-radius:8px;padding:0 16px;background:var(--paper);color:var(--ink-soft);font-size:14px;font-weight:650;transition:background .16s,border-color .16s,color .16s}
+.search-scope input:checked+span{border-color:var(--accent);background:var(--accent-tint);color:var(--accent-dark)}
+.search-scope input:focus-visible+span{outline:3px solid var(--accent);outline-offset:3px}
+.search-scope label:hover span{border-color:var(--accent)}
+.filters>span{align-self:center;margin-right:5px;color:var(--muted);font-size:13px;font-weight:650}
+.markdown .content-anchor{scroll-margin-top:96px}
+.markdown .search-target{background:#fff2df;outline:2px solid #e2aa79;outline-offset:5px}
+.markdown tr.search-target td{background:#fff2df}
+.markdown .search-hit{border-radius:3px;padding:2px 3px;background:#ffd894;color:#37251c;box-shadow:0 0 0 2px #fff1cf}
+@media(max-width:600px){.search-page{padding-top:25px}.search-page .hero-search{margin-top:18px}.search-page .result-section{margin-top:29px}.search-scope{gap:7px}.search-scope legend{flex-basis:100%;min-height:27px;line-height:27px}.search-scope label span{padding:0 12px}.header-search select{max-width:85px}}
