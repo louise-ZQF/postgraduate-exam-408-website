@@ -154,7 +154,7 @@ for name, group, subject in specs:
             block_no[0]+=1
             anchor=f'p-{block_no[0]}'
             out[pending[0]]=add_search_marker(out[pending[0]],anchor)
-            local_records.append({'doc':name,'group':group,'type':record_type,'subject':subject,'section':current_title,'title':current_title,'anchor':anchor,'kind':'content','text':plain})
+            local_records.append({'doc':name,'section_no':heading_no,'anchor_no':block_no[0],'text':plain})
         pending.clear()
     local_records=[]; fence=None; in_pre=False
     for line in content.splitlines():
@@ -183,7 +183,7 @@ for name, group, subject in specs:
             current_title=clean(m.group(2)) or subject
             current_anchor=f's-{heading_no}'
             sections.append({'title':current_title,'anchor':current_anchor,'level':len(m.group(1))})
-            local_records.append({'doc':name,'group':group,'type':record_type,'subject':subject,'section':current_title,'title':current_title,'anchor':current_anchor,'kind':'heading','text':current_title})
+            local_records.append({'doc':name,'section_no':heading_no,'anchor_no':-heading_no,'text':current_title})
             out.append(f'<a id="{current_anchor}"></a>')
             out.append(line)
             continue
@@ -200,6 +200,10 @@ for name, group, subject in specs:
                   f'https://github.com/yyx-dev/yyx-dev.github.io/blob/325bdaa/docs/408/{name}.md')
     docs.append({'id':name,'group':group,'type':record_type,'subject':subject,'title':subject if group=='知识体系' else subject+' · '+group,'sections':sections,'source':source_url})
 (PUBLIC/'catalog.json').write_text(json.dumps({'docs':docs},ensure_ascii=False,separators=(',',':')),encoding='utf-8')
-(PUBLIC/'search-index.json').write_text(json.dumps(records,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
+doc_indexes={doc['id']:i for i,doc in enumerate(docs)}
+for record_type,filename in (('知识点','search-knowledge.json'),('小题','search-small.json'),('大题','search-big.json')):
+    compact_records=[[doc_indexes[r['doc']],r['section_no'],r['anchor_no'],r['text']]
+                     for r in records if docs[doc_indexes[r['doc']]]['type']==record_type]
+    (PUBLIC/filename).write_text(json.dumps(compact_records,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
 print(f'{len(docs)} documents, {len(records)} search records, {len(copied)} images; missing references: {len(missing)}')
 if missing: print('Missing examples:',missing[:8])

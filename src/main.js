@@ -6,7 +6,8 @@ const app = document.querySelector('#app')
 const catalog = await fetch(`${BASE}catalog.json?v=${CONTENT_VERSION}`).then(r => { if (!r.ok) throw new Error('资料目录加载失败'); return r.json() })
 const docs = catalog.docs
 let records = null
-let searchPromise = null
+let loadedScope = null
+const searchPromises = new Map()
 const docMap = new Map(docs.map(d => [d.id, d]))
 const subjectOrder = ['数据结构', '计算机组成原理', '操作系统', '计算机网络']
 const groups = ['知识体系', '小题', '大题', '错题补充']
@@ -20,12 +21,28 @@ let currentDoc = null
 let currentRoute = ''
 let searchTimer = null
 
-function loadSearchIndex() {
-  if (!searchPromise) searchPromise = fetch(`${BASE}search-index.json?v=${CONTENT_VERSION}`)
-    .then(r => { if (!r.ok) throw new Error('搜索索引加载失败'); return r.json() })
-    .then(data => { records = data.map(r => ({ ...r, searchText: normalize(r.text) })); return records })
-    .catch(err => { searchPromise = null; throw err })
-  return searchPromise
+const indexFiles = { '知识点': 'search-knowledge.json', '小题': 'search-small.json', '大题': 'search-big.json' }
+function loadSearchPart(type) {
+  if (!searchPromises.has(type)) {
+    const promise = fetch(`${BASE}${indexFiles[type]}?v=${CONTENT_VERSION}`)
+      .then(r => { if (!r.ok) throw new Error('搜索索引加载失败'); return r.json() })
+      .then(data => data.map(([docIndex, sectionNo, anchorNo, text]) => {
+        const doc = docs[docIndex]
+        const section = doc.sections[sectionNo - 1]?.title || doc.subject
+        return {
+          doc: doc.id, group: doc.group, type: doc.type, subject: doc.subject,
+          section, title: section, anchor: anchorNo < 0 ? `s-${-anchorNo}` : `p-${anchorNo}`,
+          kind: anchorNo < 0 ? 'heading' : 'content', text, searchText: normalize(text),
+        }
+      }))
+      .catch(err => { searchPromises.delete(type); throw err })
+    searchPromises.set(type, promise)
+  }
+  return searchPromises.get(type)
+}
+function loadSearchIndex(scope) {
+  const types = scope === '全部' ? ['知识点', '小题', '大题'] : [scope]
+  return Promise.all(types.map(loadSearchPart)).then(parts => parts.flat())
 }
 
 function escapeHtml(value = '') { return String(value).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[c]) }
@@ -110,6 +127,17 @@ function resultHtml(r,q,fav) {
 }
 function renderResults() {
   const box=document.querySelector('#result-body'); if (!box) return
+  if (loadedScope !== currentScope) {
+    const scope = currentScope
+    loadedScope = scope
+    records = null
+    loadSearchIndex(scope).then(data => {
+      if (currentScope === scope) { records = data; renderResults() }
+    }).catch(err => {
+      if (currentScope !== scope) return
+      box.innerHTML=`<div class="empty"><h3>搜索暂时不可用</h3><p>${escapeHtml(err.message)}</p></div>`
+    })
+  }
   const q=liveQuery.trim()
   const count=document.querySelector('#result-count')
   if (!records) {
@@ -128,7 +156,6 @@ function renderSearch(q='') {
   liveQuery=q; showCount=10
   app.innerHTML=`${header('search',q)}<main class="search-page"><section class="intro"><p class="eyebrow">计算机学科专业基础 · 408</p><h1>408 知识库</h1><p>搜索正文中的知识点、题干或解题步骤，点击结果即可定位到具体位置。</p><form class="hero-search" id="hero-search" role="search"><label for="main-search">搜索具体内容</label><div class="search-control"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg><input id="main-search" name="q" value="${escapeHtml(q)}" autocomplete="off" maxlength="60" placeholder="例如：二叉树、流水线、死锁、子网划分"><button type="submit">搜索</button></div><fieldset class="search-scope"><legend>搜索范围</legend>${searchScopes.map(scope=>`<label><input type="radio" name="type" value="${scope}" ${currentScope===scope?'checked':''}><span>${scope}</span></label>`).join('')}</fieldset></form></section><section class="result-section" aria-labelledby="result-title"><div class="section-head"><h2 id="result-title">搜索结果</h2><span id="result-count" role="status"></span></div><div class="filters" role="group" aria-label="按科目筛选"><span>科目</span>${['全部',...subjectOrder].map(subject=>`<button type="button" class="filter ${currentSubject===subject?'active':''}" data-subject="${subject}" aria-pressed="${currentSubject===subject}">${subject}</button>`).join('')}</div><div id="result-body"></div></section>${docGrid()}</main>${footer()}`
   renderResults()
-  loadSearchIndex().then(()=>renderResults()).catch(err=>{const box=document.querySelector('#result-body'); if(box) box.innerHTML=`<div class="empty"><h3>搜索暂时不可用</h3><p>${escapeHtml(err.message)}</p></div>`})
 }
 function renderCatalog() { app.innerHTML=`${header('catalog')}<main class="catalog-page"><p class="eyebrow">资料目录</p><h1>按科目和阶段浏览</h1>${docGrid()}</main>${footer()}` }
 function renderFavorites() {
