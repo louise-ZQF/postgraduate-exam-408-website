@@ -62,7 +62,7 @@ AVL 方向参考 [Cornell AVL 讲义](https://www.cs.cornell.edu/courses/cs312/2
 
 浮点下溢参考 [Oracle 数值计算文档](https://docs.oracle.com/cd/E37069_01/html/E39019/z4000ac019677.html)；RISC 指令长度参考 [RISC-V ISA 规范](https://docs.riscv.org/reference/isa/v20240411/unpriv/intro.html)；NEG 语义核对 [Intel 指令手册 Volume 2，NEG 条目](https://cdrdv2-public.intel.com/774492/325383-sdm-vol-2abcd.pdf)。硬件相关结论仍按本页明确写出的考试模型使用。
 
-银行家及多实例检测参考 [Cornell CS4410 讲义，第 9、17 页](https://www.cs.cornell.edu/courses/cs4410/2011su/slides/lecture10.pdf)，并与 [UIC 死锁讲义](https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/7_Deadlocks.html)对照；软件互斥参考 [UIC 同步讲义](https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/5_Synchronization.html)。删除文件语义核对 [Linux unlink 手册](https://man7.org/linux/man-pages/man2/unlink.2.html)。
+银行家及多实例检测参考 [Cornell CS4410 讲义，安全性与检测算法](https://www.cs.cornell.edu/courses/cs4410/2011su/slides/lecture10.pdf)，并与 [UIC 死锁讲义](https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/7_Deadlocks.html)对照；软件互斥参考 [UIC 同步讲义](https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/5_Synchronization.html)。删除文件语义核对 [Linux unlink 手册](https://man7.org/linux/man-pages/man2/unlink.2.html)。
 
 TCP/MSS/关闭依据 [RFC 9293](https://www.rfc-editor.org/rfc/rfc9293.html)，经典拥塞依据 [RFC 5681](https://www.rfc-editor.org/rfc/rfc5681.html)，DHCP 依据 [RFC 2131](https://www.rfc-editor.org/rfc/rfc2131.html)，PPP 填充依据 [RFC 1662](https://www.rfc-editor.org/rfc/rfc1662.html)，IPv6 分片依据 [RFC 8200](https://www.rfc-editor.org/rfc/rfc8200.html)，DNS 依据 [RFC 1035](https://www.rfc-editor.org/info/rfc1035/)及 [EDNS RFC 6891](https://www.rfc-editor.org/rfc/inline-errata/rfc6891.html)。无线 NAV/确认依据 [Cisco 802.11 教学文档](https://www.cisco.com/E-Learning/bulk/guest/celc/fwl/ch2/2_2_3/content.html)。这些标准与课程资料用于核对具体结论，非本次逐条复制来源。
 
