@@ -119,3 +119,32 @@
 .markdown tr.search-target td{background:#fff2df}
 .markdown .search-hit{border-radius:3px;padding:2px 3px;background:#ffd894;color:#37251c;box-shadow:0 0 0 2px #fff1cf}
 @media(max-width:600px){.search-page{padding-top:25px}.search-page .hero-search{margin-top:18px}.search-page .result-section{margin-top:29px}.search-scope{gap:7px}.search-scope legend{flex-basis:100%;min-height:27px;line-height:27px}.search-scope label span{padding:0 12px}.header-search select{max-width:85px}}
+
+/* Keep search available while reading, with enough room for a useful query. */
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%)}
+.site-header{position:sticky;top:0;z-index:100;box-shadow:0 5px 18px rgba(50,38,27,.08)}
+.header-inner{grid-template-columns:auto minmax(300px,1fr) auto;width:min(1500px,calc(100% - 48px));gap:20px}
+.header-search{height:50px;border:2px solid var(--accent);padding:4px 4px 4px 12px;box-shadow:0 2px 8px rgba(92,49,31,.09)}
+.header-search select{max-width:100px;min-height:38px;font-size:14px}
+.header-search input{font-size:16px}
+.header-search button{align-self:stretch;min-width:72px;border:0;border-radius:5px;background:var(--accent);color:white;font-size:14px;font-weight:700}
+.header-search button:hover{background:var(--accent-dark)}
+.reader-side,.reader-toc{top:96px;max-height:calc(100vh - 112px)}
+.reader-toc>div{max-height:calc(100vh - 160px)}
+.markdown .content-anchor,.markdown [id^="s-"]{scroll-margin-top:104px}
+@media(max-width:850px){.header-inner{grid-template-columns:1fr auto}.header-search{grid-column:1/-1;grid-row:2}}
+@media(max-width:600px){
+  .header-inner{grid-template-columns:auto minmax(0,1fr);width:calc(100% - 24px);gap:6px 8px;padding:7px 0 9px}
+  .brand{grid-column:1;grid-row:1;gap:7px;min-height:34px}
+  .brand b{font-size:16px}
+  .brand small{display:none}
+  .brand-rule{height:24px}
+  nav{grid-column:2;grid-row:1;justify-self:end;gap:0;flex-wrap:nowrap}
+  nav a{min-height:34px;padding:0 6px;font-size:12px}
+  nav a:first-child{display:none}
+  .header-search{grid-column:1/-1;grid-row:2;height:46px;margin:0;padding:3px 3px 3px 7px;gap:4px}
+  .header-search select{max-width:73px;min-height:36px;padding:0 3px;font-size:12px}
+  .header-search input{font-size:16px}
+  .header-search button{min-width:56px;font-size:13px}
+  .markdown .content-anchor,.markdown [id^="s-"]{scroll-margin-top:120px}
+}
