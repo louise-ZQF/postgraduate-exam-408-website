@@ -155,6 +155,13 @@ def build(here, specs, clean, convert, prepare_images, image_dimensions):
             converted=re.sub(r'<img\b(?![^>]*\balt=)',lambda m:'<img alt="'+html.escape(img_context,quote=True)+'"',converted)
             out.append(converted);local.append(record)
         updated_text='\n\n'.join(updated)+'\n';file.write_text(updated_text)
+        (public/'editable').mkdir(exist_ok=True)
+        editable={}
+        for block in updated:
+            match=re.match(r'<!-- unit-id:([\w-]+) -->\n([\s\S]*)',block)
+            if match and not re.match(r'^#{1,4}\s',match[2]):
+                editable[match[1]]={'raw':match[2],'markdown':prepare_images(convert(match[2]))}
+        (public/'editable'/(name+'.json')).write_text(json.dumps({'path':file.relative_to(here).as_posix(),'blocks':editable},ensure_ascii=False,separators=(',',':'))+'\n')
         for unit in units:
             line=updated_text[:updated_text.index('<!-- unit-id:'+unit['questionId']+' -->')].count('\n')+1
             unit['source']+='#L'+str(line)

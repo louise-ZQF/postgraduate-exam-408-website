@@ -9,7 +9,7 @@
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "validate:content": "node scripts/validate_content.mjs",
-    "test": "node scripts/regression.mjs && python3 scripts/test_content_model.py",
+    "test": "node scripts/regression.mjs && python3 scripts/test_content_model.py && node scripts/test_editor.mjs",
     "prebuild": "npm run prepare:content && npm run validate:content"
   },
   "dependencies": {

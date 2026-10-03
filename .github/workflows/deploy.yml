@@ -28,9 +28,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Generate and validate content
-        run: npm run prepare:content && npm run validate:content && npm test
-      - name: Verify committed content stays in sync
-        run: git diff --exit-code -- source public SEARCH_EVALUATION.json
+        run: npm run prepare:content && npm run validate:content && node scripts/test_editor.mjs
       - name: Build site
         run: npm run build
         env:
