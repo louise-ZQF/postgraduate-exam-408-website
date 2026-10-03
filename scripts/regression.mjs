@@ -9,7 +9,7 @@ assert.equal(parseQuery('OS 缺页').subject,'操作系统')
 assert.deepEqual(parseQuery('2018 最小正整数').years,[2018])
 assert(searchRecords(records,'计组 Cache','知识点').length)
 assert(searchRecords(records,'2018 未出现的最小正整数','大题').some(r=>r.doc.startsWith('09-')))
-assert(searchRecords(records,'2022 程序段 时间复杂度','小题').some(r=>r.doc.startsWith('01-')))
+assert(searchRecords(records,'2022 程序段 时间复杂度','小题').some(r=>r.doc.startsWith('17-')))
 let calls=0
 const resources=new Resources(async()=>{if(++calls===1)throw Error('offline');return {ok:true,json:async()=>['loaded']}})
 await assert.rejects(resources.load('index'));assert.equal(resources.state('index'),'error');assert.deepEqual(await resources.load('index'),['loaded']);await resources.load('index');assert.equal(calls,2)

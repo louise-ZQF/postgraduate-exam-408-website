@@ -60,6 +60,7 @@ export function renderMarkdown(md, base, container) {
     strict: 'ignore',
   })
   styleAnswerChoices(container)
+  container.querySelectorAll('a[href^="/docs/"]').forEach(a=>{const [path,hash]=a.getAttribute('href').split('#');a.href='https://yyx-dev.github.io'+path+(path.endsWith('.html')?'':'.html')+(hash?'#'+hash:'')})
   container.querySelectorAll('a[href^="http"]').forEach(a => { a.target = '_blank'; a.rel = 'noopener noreferrer' })
   const topTitle = container.querySelector('h1')
   if (topTitle) topTitle.style.display = 'none'

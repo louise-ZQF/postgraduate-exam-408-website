@@ -1,6 +1,6 @@
 export const subjects = ['数据结构', '计算机组成原理', '操作系统', '计算机网络']
 const subjectAliases = [['数据结构','数据结构','DS'],['计算机组成原理','计算机组成原理','计组','CO'],['操作系统','操作系统','OS'],['计算机网络','计算机网络','计网','CN']]
-const synonymGroups = [['快表','TLB'],['缺页','page fault'],['缓存','Cache','高速缓存'],['死锁','deadlock'],['虚拟内存','虚拟存储','virtual memory'],['信号量','semaphore'],['后备缓冲','后备缓冲器','victim cache'],['最小生成树','MST'],['先来先服务','FCFS'],['最近最少使用','LRU'],['先进先出','FIFO'],['往返时间','RTT'],['磁盘调度','磁盘调度算法']]
+const synonymGroups = [['写回','回写'],['快表','TLB'],['缺页','page fault'],['缓存','Cache','高速缓存'],['死锁','deadlock'],['虚拟内存','虚拟存储','virtual memory'],['信号量','semaphore'],['后备缓冲','后备缓冲器','victim cache'],['最小生成树','MST'],['先来先服务','FCFS'],['最近最少使用','LRU'],['先进先出','FIFO'],['往返时间','RTT'],['磁盘调度','磁盘调度算法']]
 export const normalize = text => String(text || '').toLowerCase().replace(/\s+/g,'')
 const escapeRE = text => text.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')
 export function parseQuery(query) {

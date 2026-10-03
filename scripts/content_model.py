@@ -15,6 +15,12 @@ def build(here, specs, clean, convert, prepare_images, image_dimensions):
     option_file=source/'question-options.json'
     option_registry=json.loads(option_file.read_text()) if option_file.exists() else {}
     reviews_file=source/'answer-reviews.json'; reviews=json.loads(reviews_file.read_text()) if reviews_file.exists() else {}
+    moves_path=source/'question-moves.json';moves=json.loads(moves_path.read_text()) if moves_path.exists() else [];redirects={}
+    moved_targets={m['anchor'] for m in moves}
+    for move in moves:
+        redirects.setdefault(move['origin'],{})[move['anchor']]={'doc':move['doc'],'anchor':move['anchor']}
+        for alias,old in history.get(move['origin'],{}).items():
+            if old.get('target')==move['anchor']:redirects[move['origin']][alias]={'doc':move['doc'],'anchor':move['anchor']}
     used=set(); records=[]; catalog=[]; count_images=set()
     def key(prefix, value): return prefix+'-'+hashlib.sha256(value.encode()).hexdigest()[:12]
     def register(proposed):
@@ -80,7 +86,7 @@ def build(here, specs, clean, convert, prepare_images, image_dimensions):
                 if inside:explicit=inside.group(1);inner=re.sub(r'<!-- unit-id:[\w-]+ -->\s*','',inner)
                 text='<question>\n'+inner.strip()+'\n</question>'
             hm=re.match(r'^(#{1,4})\s+(.+)$',text)
-            title=clean(hm.group(2)) if hm else ''
+            title=clean(re.sub(r'\s*\{\.[^}]+\}\s*$','',hm.group(2))) if hm else ''
             identity=clean(text)[:240]
             occurrence[identity]=occurrence.get(identity,0)+1
             prefix=('q' if q else 's' if hm else 'u')+'-'+docprefix
@@ -163,6 +169,9 @@ def build(here, specs, clean, convert, prepare_images, image_dimensions):
                 r['summary']=' '.join(body)[:650]
         # Initial old-to-new matching uses the frozen title/text, not today's traversal numbers.
         old=history.get(name,{})
+        current_anchors={r['anchor'] for r in local}
+        for value in old.values():
+            if value.get('target') not in current_anchors and value.get('target') not in moved_targets:value['target']=None
         old_headings=[(a,v) for a,v in old.items() if a.startswith('s-')]
         section_targets={}
         for (a,v),s in zip(old_headings,sections):
@@ -188,11 +197,11 @@ def build(here, specs, clean, convert, prepare_images, image_dimensions):
         (public/'docs'/(name+'.md')).write_text(generated+'\n')
         (public/'units').mkdir(exist_ok=True)
         (public/'units'/(name+'.json')).write_text(json.dumps(units,ensure_ascii=False,separators=(',',':')))
-        catalog.append({'id':name,'group':group,'type':group if group in ('小题','大题') else '知识点','subject':subject,'title':subject if group=='知识体系' else subject+' · '+group,'sections':sections,'source':'https://github.com/louise-ZQF/postgraduate-exam-408-website/blob/main/'+file.relative_to(here).as_posix()})
+        catalog.append({'id':name,'group':group,'type':group if group in ('小题','大题') else '知识点','subject':subject,'title':subject if group=='知识体系' else subject+' · 知识配套题目' if name.startswith(('17-','18-')) else subject+' · '+group,'label':subject+'（知识配套）' if name.startswith(('17-','18-')) else subject,'sections':sections,'source':'https://github.com/louise-ZQF/postgraduate-exam-408-website/blob/main/'+file.relative_to(here).as_posix()})
         records.extend(local)
     def save(path,data):path.write_text(json.dumps(data,ensure_ascii=False,separators=(',',':'))+'\n')
     save(history_file,history);save(option_file,option_registry)
-    save(public/'anchor-map.json',history);save(public/'targets.json',{doc['id']:[r['anchor'] for r in records if r['doc']==doc['id']] for doc in catalog});save(public/'catalog.json',{'schema':2,'docs':catalog})
+    save(public/'anchor-map.json',history);save(public/'targets.json',{doc['id']:[r['anchor'] for r in records if r['doc']==doc['id']] for doc in catalog});save(public/'catalog.json',{'schema':2,'docs':catalog,'redirects':redirects})
     save(public/'search-index.json',records)
     doc_indexes={d['id']:i for i,d in enumerate(catalog)}
     section_indexes={d['id']:{s['anchor']:i for i,s in enumerate(d['sections'])} for d in catalog}

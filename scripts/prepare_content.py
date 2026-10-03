@@ -28,6 +28,8 @@ specs = [
  ('14-数据结构错题补充', '错题补充', '数据结构'),
  ('15-计算机组成原理错题补充', '错题补充', '计算机组成原理'),
  ('16-操作系统错题补充', '错题补充', '操作系统'),
+ ('17-数据结构知识配套题目', '小题', '数据结构'),
+ ('18-计算机网络知识配套题目', '小题', '计算机网络'),
 ]
 
 def clean(text):
@@ -84,7 +86,13 @@ def options(match):
     except (SyntaxError, ValueError):
         return '\n' + raw + '\n'
 
+def fraction(match):
+    attrs=dict(re.findall(r'(\w+)="([^"]*)"',match.group(1)))
+    left=attrs.get('left',''); numerator=attrs.get('num',''); denominator=attrs.get('den','')
+    return '$'+('\\text{'+left+'}=' if left else '')+'\\dfrac{\\text{'+numerator+'}}{\\text{'+denominator+'}}$'
+
 def convert(raw):
+    raw = re.sub(r'<frac\b([^>]*)/>', fraction, raw)
     raw = re.sub(r'<options\s+:options="([^"]+)"[^>]*/>', options, raw)
     raw = re.sub(r'</?(?:question|syllabus|tip|warn|add|num|v|x|thd)[^>]*>', '', raw)
     for a,b in [('emp','strong'),('mono','code')]:
