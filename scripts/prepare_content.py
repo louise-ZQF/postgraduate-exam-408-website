@@ -35,8 +35,11 @@ def clean(text):
     text = re.sub(r'</?(?:img|div|span|sub|sup|br|p|table|tr|td|th|blockquote|pre|code|strong|em|u|a)[^>]*>', ' ', text, flags=re.I)
     text = re.sub(r'!\[([^]]*)\]\([^)]*\)', r' \1 ', text)
     text = html.unescape(text)
+    text = re.sub(r'\\([.()])', r'\1', text)
     text = text.replace('\\*','*').replace('**',' ').replace('__',' ')
     text = re.sub(r'(?m)^\s*>\s?', ' ', text)
+    for command, readable in [('log','log'),('lg','lg'),('ln','ln'),('Theta','Θ'),('Omega','Ω'),('theta','θ'),('times','×'),('cdot','·'),('leq','≤'),('geq','≥'),('le','≤'),('ge','≥'),('sim','～'),('approx','≈'),('to','→'),('in','∈')]:
+        text = re.sub(r'\\'+command+r'(?![A-Za-z])', lambda m: readable, text)
     text = re.sub(r'\$+|\\[a-zA-Z]+|[`{}|#]', ' ', text)
     return re.sub(r'\s+', ' ', text).strip()
 
@@ -128,97 +131,5 @@ def add_search_marker(line, anchor):
         return line[:bullet.end()] + marker + line[bullet.end():]
     return marker + line
 
-records=[]; docs=[]; copied=set(); missing=[]
-for name, group, subject in specs:
-    source_dir = SUPPLEMENTS if group == '错题补充' else SOURCE
-    raw = (source_dir / f'{name}.md').read_text(encoding='utf-8')
-    for rel in re.findall(r'(?:src=["\']|!\[[^]]*\]\()\.?/([^"\')]+)', raw):
-        rel = rel.split('#')[0]
-        path = (source_dir / rel).resolve()
-        if source_dir.resolve() not in path.parents or not path.is_file():
-            if (ASSETS/rel).is_file():
-                copied.add(rel); continue
-            missing.append((name,rel)); continue
-        if rel not in copied:
-            target=ASSETS/rel; target.parent.mkdir(parents=True,exist_ok=True)
-            shutil.copy2(path,target); copied.add(rel)
-    content = prepare_images(convert(raw))
-    if group in ('小题','大题'):
-        content = re.sub(r'^#\s+[^\n]+',f'# {subject}{group}',content,count=1,flags=re.M)
-    sections=[]; current_title=subject; heading_no=0; block_no=[0]; pending=[]; out=[]
-    record_type = group if group in ('小题', '大题') else '知识点'
-    def flush():
-        if not pending: return
-        plain=clean('\n'.join(out[i] for i in pending))
-        if plain:
-            block_no[0]+=1
-            anchor=f'p-{block_no[0]}'
-            out[pending[0]]=add_search_marker(out[pending[0]],anchor)
-            local_records.append({'doc':name,'section_no':heading_no,'anchor_no':block_no[0],'text':plain})
-        pending.clear()
-    local_records=[]; fence=None; in_pre=False
-    for line in content.splitlines():
-        marker=re.match(r'^\s*(`{3,}|~{3,})',line)
-        if fence:
-            out.append(line); pending.append(len(out)-1)
-            if marker and marker.group(1)[0]==fence[0] and len(marker.group(1))>=fence[1]:
-                fence=None; flush()
-            continue
-        if in_pre:
-            out.append(line); pending.append(len(out)-1)
-            if '</pre>' in line.lower(): in_pre=False; flush()
-            continue
-        if marker:
-            flush(); fence=(marker.group(1)[0],len(marker.group(1)))
-            out.append(line); pending.append(len(out)-1)
-            continue
-        if re.match(r'^\s*<pre\b',line,flags=re.I):
-            flush(); in_pre='</pre>' not in line.lower()
-            out.append(line); pending.append(len(out)-1)
-            if not in_pre: flush()
-            continue
-        m=re.match(r'^(#{1,4})\s+(.+?)\s*$',line)
-        if m:
-            flush(); heading_no+=1
-            current_title=clean(m.group(2)) or subject
-            current_anchor=f's-{heading_no}'
-            sections.append({'title':current_title,'anchor':current_anchor,'level':len(m.group(1))})
-            local_records.append({'doc':name,'section_no':heading_no,'anchor_no':-heading_no,'text':current_title})
-            out.append(f'<a id="{current_anchor}"></a>')
-            out.append(line)
-            continue
-        if not line.strip() or re.match(r'^\s*\|\s*[:\-]+(?:\s*\|\s*[:\-]+)*\s*\|?\s*$',line):
-            flush(); out.append(line); continue
-        if line.lstrip().startswith('|'):
-            flush(); out.append(line); pending.append(len(out)-1); flush(); continue
-        out.append(line); pending.append(len(out)-1)
-    flush()
-    records.extend(local_records)
-    (DOCS/f'{name}.md').write_text('\n'.join(out),encoding='utf-8')
-    source_url = (f'https://github.com/louise-ZQF/postgraduate-exam-408-website/blob/main/source/supplements/{name}.md'
-                  if group == '错题补充' else
-                  f'https://github.com/louise-ZQF/postgraduate-exam-408-website/blob/main/source/408/{name}.md'
-                  if group == '知识体系' else
-                  f'https://github.com/yyx-dev/yyx-dev.github.io/blob/325bdaa/docs/408/{name}.md')
-    docs.append({'id':name,'group':group,'type':record_type,'subject':subject,'title':subject if group=='知识体系' else subject+' · '+group,'sections':sections,'source':source_url})
-(PUBLIC/'catalog.json').write_text(json.dumps({'docs':docs},ensure_ascii=False,separators=(',',':')),encoding='utf-8')
-doc_indexes={doc['id']:i for i,doc in enumerate(docs)}
-# Keep the index used by previously opened app versions aligned with revised text.
-legacy_records=[]
-for record in records:
-    doc=docs[doc_indexes[record['doc']]]
-    section=doc['sections'][record['section_no']-1]['title'] if record['section_no'] else doc['subject']
-    number=record['anchor_no']
-    legacy_records.append({
-        'doc':doc['id'],'group':doc['group'],'type':doc['type'],'subject':doc['subject'],
-        'section':section,'title':section,
-        'anchor':f's-{-number}' if number<0 else f'p-{number}',
-        'kind':'heading' if number<0 else 'content','text':record['text'],
-    })
-(PUBLIC/'search-index.json').write_text(json.dumps(legacy_records,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
-for record_type,filename in (('知识点','search-knowledge.json'),('小题','search-small.json'),('大题','search-big.json')):
-    compact_records=[[doc_indexes[r['doc']],r['section_no'],r['anchor_no'],r['text']]
-                     for r in records if docs[doc_indexes[r['doc']]]['type']==record_type]
-    (PUBLIC/filename).write_text(json.dumps(compact_records,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
-print(f'{len(docs)} documents, {len(records)} search records, {len(copied)} images; missing references: {len(missing)}')
-if missing: print('Missing examples:',missing[:8])
+from content_model import build
+build(HERE, specs, clean, convert, prepare_images, image_dimensions)

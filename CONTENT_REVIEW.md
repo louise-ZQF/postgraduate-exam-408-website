@@ -69,3 +69,15 @@ TCP/MSS/关闭依据 [RFC 9293](https://www.rfc-editor.org/rfc/rfc9293.html)，�
 ## 来源署名
 
 原始资料来自 [yyx-dev/yyx-dev.github.io](https://github.com/yyx-dev/yyx-dev.github.io/tree/325bdaa/docs/408)，另包含用户自有错题整理。本次参考的《408 简纲》来自 [liangbohan/postgraduate-exam-website 及其贡献者](https://github.com/liangbohan/postgraduate-exam-website/tree/f22f7e431b3afc876e6d198d94cf7f8ce3ec26de)，其知识内容使用 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)，许可声明见[原仓库 README](https://github.com/liangbohan/postgraduate-exam-website/blob/f22f7e431b3afc876e6d198d94cf7f8ce3ec26de/README.md)。本站对参考内容作了删减、改写和纠错，页面保留署名与审查依据入口。
+
+## 根据工程审查建议补充（2026-10-03）
+
+知识规则增加 −5 的 8 位补码、偏置 128 移码与 IEEE 754 偏置 127 阶码对照；两幅复杂度代码图片转成可检索代码，原图保留在折叠区；小题资料中的同题解析也更正为精确求和与增长阶的区分。
+
+内容现在通过 source 中的显式 unit-id 持久定位，source/anchor-history.json 冻结迁移前 s-N/p-N 映射，source/question-options.json 保存选项身份和答案身份。旧编号仍作为别名保留；收藏只有在保存的标题与文本通过核验后迁移，否则保留旧记录并提示重新定位。答案核验记录独立保存在 source/answer-reviews.json，并绑定当前题干及解析的摘要；修改后核验标记自动失效。
+
+当前按语义整理出 1,368 个题目单元，其中 5 题核对了程序推导或原卷题干与栈模拟；其余有答案者显示“资料答案 · 待复核”，355 题暂无资料答案，2 题存在重复选项并暂停自动判分。这个统计不意味着题库其余答案已经逐题审定。
+
+搜索独立区分科目、年份、来源分组与内容类型；确认术语同义关系后按标题、章节和正文的权重、词频、稀有度与长度归一化排序，并合并同节命中。离线人工设定 50 条查询的期望入口，指标与口径见 SEARCH_EVALUATION.json；每条只标一个期望章节，因此采用 Hit@10 与 MRR@10，没有冒称完整 Recall 或真实用户性能。
+
+发布前自动生成并校验搜索定位、唯一 ID、图片、答案选项引用及可解析公式，执行针对搜索、重试、过期请求、收藏迁移和源内容插入的回归检查。400 像素宽度实查目录入口、Escape 与焦点返回、搜索框同步、隐藏答案和打乱选项后判分。没有采集真实用户 Core Web Vitals；当前优化是按需加载索引、缓存文章、同文定位跳过重新渲染、图片懒加载及索引压缩。图片的通用上下文标签用于定位与原图查看，不等同于逐幅完整文字解读。

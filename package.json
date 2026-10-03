@@ -7,7 +7,10 @@
     "prepare:content": "python3 scripts/prepare_content.py",
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "preview": "vite preview --host 0.0.0.0"
+    "preview": "vite preview --host 0.0.0.0",
+    "validate:content": "node scripts/validate_content.mjs",
+    "test": "node scripts/regression.mjs && python3 scripts/test_content_model.py",
+    "prebuild": "npm run prepare:content && npm run validate:content"
   },
   "dependencies": {
     "dompurify": "^3.2.6",

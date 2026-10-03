@@ -1,0 +1,33 @@
+{
+  "q-01-b84275d2aa06": {
+    "status": "verified",
+    "reviewedAt": "2026-10-03",
+    "method": "核对程序与次数推导",
+    "proofHash": "4b2e02cad7625ef91385c8e7cdf65de7e412501757cc8b2a53408fd02d3c07af"
+  },
+  "q-01-fdc918295871": {
+    "status": "verified",
+    "reviewedAt": "2026-10-03",
+    "method": "核对程序与次数推导",
+    "proofHash": "669647ec30345c8213fe89aac0850ce2d771f30643d486a11c96689831c9cf83"
+  },
+  "q-01-3373baf27718": {
+    "status": "verified",
+    "reviewedAt": "2026-10-03",
+    "method": "核对原卷题干与栈模拟",
+    "proofHash": "f54c4126e1560987735ea3d875cb66a1289bd313c782d741f8a1e13d352b3e12",
+    "evidence": "https://www.xit.edu.cn/_upload/article/files/c1/ce/26986f79493495bbaacba9738587/aa16fad1-1b4a-443d-8371-f1ca40cfaf76.pdf"
+  },
+  "q-05-0fa4011a7147": {
+    "status": "verified",
+    "reviewedAt": "2026-10-03",
+    "method": "核对程序与次数推导",
+    "proofHash": "4630e04567cfde095b566aea05c2c5ec2273373e42070b61a7af4d82aa38b59b"
+  },
+  "q-05-c31100d29314": {
+    "status": "verified",
+    "reviewedAt": "2026-10-03",
+    "method": "核对程序与次数推导",
+    "proofHash": "cb5252cb79e41d98d2f6a46241b1ea2a2bcc196535656bf22de1cd6a1849619d"
+  }
+}

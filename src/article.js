@@ -66,45 +66,27 @@ export function renderMarkdown(md, base, container) {
 }
 
 export function revealSearchTarget(anchor, query, searchTerms = []) {
-  const marker = document.getElementById(anchor)
+  document.querySelectorAll('.search-target').forEach(el=>el.classList.remove('search-target'))
+  document.querySelectorAll('mark.search-hit').forEach(el=>el.replaceWith(document.createTextNode(el.textContent)))
+  let marker=document.getElementById(anchor)
   if (!marker) return
-  if (!anchor.startsWith('p-')) {
-    const wrapper = marker.parentElement?.tagName === 'P' && marker.parentElement.textContent.trim() === '' ? marker.parentElement : marker
-    const heading = wrapper.nextElementSibling
-    if (heading && /^H[1-4]$/.test(heading.tagName)) { heading.classList.add('search-target'); heading.scrollIntoView({ block: 'center', behavior: 'instant' }) }
-    else marker.scrollIntoView({ block: 'center', behavior: 'instant' })
-    return
+  if(marker.dataset.target)marker=document.getElementById(marker.dataset.target)||marker
+  let block=marker
+  if(marker.tagName==='A') {
+    const wrapper=marker.parentElement?.tagName==='P'?marker.parentElement:marker
+    block=wrapper.nextElementSibling||marker
   }
-  const block = marker.closest('tr,li,p,pre,blockquote') || marker.nextElementSibling || marker.parentElement
-  const candidates = [block]
-  let sibling = block.nextElementSibling
-  while (sibling && candidates.length < 8 && !sibling.matches('h1,h2,h3,h4') && !sibling.querySelector('.content-anchor,a[id^="s-"]')) {
-    candidates.push(sibling)
-    sibling = sibling.nextElementSibling
-  }
-  const needles = [query.trim(), ...searchTerms].filter(Boolean)
-  let hit = null, hitBlock = block
-  for (const candidate of candidates) {
-    const walker = document.createTreeWalker(candidate, NodeFilter.SHOW_TEXT)
-    let node
-    while ((node = walker.nextNode()) && !hit) {
-      if (node.parentElement?.closest('.katex,.content-anchor')) continue
-      for (const needle of needles) {
-        const at = node.textContent.toLocaleLowerCase().indexOf(needle.toLocaleLowerCase())
-        if (at < 0) continue
-        const match = node.splitText(at)
-        match.splitText(needle.length)
-        hit = document.createElement('mark')
-        hit.className = 'search-hit'
-        hit.textContent = match.textContent
-        match.replaceWith(hit)
-        hitBlock = candidate
-        break
-      }
+  const needles=[...searchTerms,query.trim()].filter(Boolean)
+  const walker=document.createTreeWalker(block,NodeFilter.SHOW_TEXT)
+  let node,hit
+  while((node=walker.nextNode())&&!hit) {
+    if(node.parentElement?.closest('.katex,[hidden],button,input,.question-meta'))continue
+    for(const needle of needles) {
+      const at=node.textContent.toLowerCase().indexOf(needle.toLowerCase());if(at<0)continue
+      const match=node.splitText(at);match.splitText(needle.length)
+      hit=document.createElement('mark');hit.className='search-hit';hit.textContent=match.textContent;match.replaceWith(hit);break
     }
-    if (hit) break
   }
-  hitBlock.classList.add('search-target')
-  const scrollTarget = hit || block
-  scrollTarget.scrollIntoView({ block: 'center', behavior: 'instant' })
+  block.classList.add('search-target')
+  ;(hit||block).scrollIntoView({block:'center',behavior:'instant'})
 }
