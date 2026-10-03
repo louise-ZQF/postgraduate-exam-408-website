@@ -197,10 +197,25 @@ for name, group, subject in specs:
     (DOCS/f'{name}.md').write_text('\n'.join(out),encoding='utf-8')
     source_url = (f'https://github.com/louise-ZQF/postgraduate-exam-408-website/blob/main/source/supplements/{name}.md'
                   if group == '错题补充' else
+                  f'https://github.com/louise-ZQF/postgraduate-exam-408-website/blob/main/source/408/{name}.md'
+                  if group == '知识体系' else
                   f'https://github.com/yyx-dev/yyx-dev.github.io/blob/325bdaa/docs/408/{name}.md')
     docs.append({'id':name,'group':group,'type':record_type,'subject':subject,'title':subject if group=='知识体系' else subject+' · '+group,'sections':sections,'source':source_url})
 (PUBLIC/'catalog.json').write_text(json.dumps({'docs':docs},ensure_ascii=False,separators=(',',':')),encoding='utf-8')
 doc_indexes={doc['id']:i for i,doc in enumerate(docs)}
+# Keep the index used by previously opened app versions aligned with revised text.
+legacy_records=[]
+for record in records:
+    doc=docs[doc_indexes[record['doc']]]
+    section=doc['sections'][record['section_no']-1]['title'] if record['section_no'] else doc['subject']
+    number=record['anchor_no']
+    legacy_records.append({
+        'doc':doc['id'],'group':doc['group'],'type':doc['type'],'subject':doc['subject'],
+        'section':section,'title':section,
+        'anchor':f's-{-number}' if number<0 else f'p-{number}',
+        'kind':'heading' if number<0 else 'content','text':record['text'],
+    })
+(PUBLIC/'search-index.json').write_text(json.dumps(legacy_records,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
 for record_type,filename in (('知识点','search-knowledge.json'),('小题','search-small.json'),('大题','search-big.json')):
     compact_records=[[doc_indexes[r['doc']],r['section_no'],r['anchor_no'],r['text']]
                      for r in records if docs[doc_indexes[r['doc']]]['type']==record_type]
