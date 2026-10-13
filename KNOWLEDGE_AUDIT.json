@@ -1,0 +1,56 @@
+{
+  "baseline": "264c2a5",
+  "subjects": [
+    {
+      "subject": "01-数据结构",
+      "headings": 38,
+      "rewrittenBodies": 31,
+      "preservedImageFiles": 32,
+      "redirectedParagraphLinks": 78
+    },
+    {
+      "subject": "02-计算机组成原理",
+      "headings": 127,
+      "rewrittenBodies": 104,
+      "preservedImageFiles": 133,
+      "redirectedParagraphLinks": 213
+    },
+    {
+      "subject": "03-操作系统",
+      "headings": 107,
+      "rewrittenBodies": 92,
+      "preservedImageFiles": 107,
+      "redirectedParagraphLinks": 242
+    },
+    {
+      "subject": "04-计算机网络",
+      "headings": 89,
+      "rewrittenBodies": 70,
+      "preservedImageFiles": 50,
+      "redirectedParagraphLinks": 184
+    }
+  ],
+  "checks": {
+    "originalHeadingOrderAndIdsPreserved": true,
+    "allLeafKnowledgeSectionsExplained": true,
+    "allOriginalTeachingImagesPreserved": true,
+    "allPublishedParagraphLinksResolvable": true,
+    "questionAndSupplementSourcesUnchanged": true,
+    "questionPayloadsAndReviewStatusesUnchanged": true
+  },
+  "limits": "结构与入口核验配合人工内容审查；标题齐全不是所有未来考点的完备证明，题库答案不属于本次逐题复核范围。",
+  "checkedExamples": [
+    "六种磁盘调度路径及总移动",
+    "ababaa 的 next 与 nextval（1 起始下标）",
+    "IEEE float -8.25 = C1040000H",
+    "IPv4 分片 0 / 185 / 370 偏移"
+  ],
+  "browserChecks": {
+    "allFourKnowledgePagesRendered": true,
+    "formulaRenderErrors": 0,
+    "allKnowledgeImagesInsideExpanders": true,
+    "diskFiguresExpandedAndLoaded": true,
+    "originalDiskUrlRedirected": true,
+    "workingSetSearchReturnedKnowledge": true
+  }
+}

@@ -34,6 +34,8 @@ specs = [
 
 def clean(text):
     text = re.sub(r'<!--.*?-->', ' ', text, flags=re.S)
+    if '<details class="knowledge-figures">' in text:
+        text = text.replace('<details class="knowledge-figures">',' ').replace('</details>',' ').replace('<summary>查看示意图</summary>',' ')
     text = re.sub(r'</?(?:img|div|span|sub|sup|br|p|table|tr|td|th|blockquote|pre|code|strong|em|u|a)[^>]*>', ' ', text, flags=re.I)
     text = re.sub(r'!\[([^]]*)\]\([^)]*\)', r' \1 ', text)
     text = html.unescape(text)

@@ -115,6 +115,9 @@
 .search-scope label:hover span{border-color:var(--accent)}
 .filters>span{align-self:center;margin-right:5px;color:var(--muted);font-size:13px;font-weight:650}
 .markdown .content-anchor{scroll-margin-top:96px}
+.markdown .knowledge-figures{margin:18px 0;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--paper)}
+.markdown .knowledge-figures>summary{cursor:pointer;color:var(--accent-dark);font-weight:600;line-height:1.8}
+.markdown .knowledge-figures[open]>summary{margin-bottom:12px}
 .markdown .search-target{background:#fff2df;outline:2px solid #e2aa79;outline-offset:5px}
 .markdown tr.search-target td{background:#fff2df}
 .markdown .search-hit{border-radius:3px;padding:2px 3px;background:#ffd894;color:#37251c;box-shadow:0 0 0 2px #fff1cf}

@@ -21,6 +21,10 @@ def build(here, specs, clean, convert, prepare_images, image_dimensions):
         redirects.setdefault(move['origin'],{})[move['anchor']]={'doc':move['doc'],'anchor':move['anchor']}
         for alias,old in history.get(move['origin'],{}).items():
             if old.get('target')==move['anchor']:redirects[move['origin']][alias]={'doc':move['doc'],'anchor':move['anchor']}
+    # Condensed paragraphs replace obsolete paragraph / illustration targets.
+    # Keep their URLs and bookmarks resolving to the same knowledge section.
+    knowledge_aliases_file=source/'knowledge-aliases.json'
+    knowledge_aliases=json.loads(knowledge_aliases_file.read_text()) if knowledge_aliases_file.exists() else {}
     used=set(); records=[]; catalog=[]; count_images=set()
     def key(prefix, value): return prefix+'-'+hashlib.sha256(value.encode()).hexdigest()[:12]
     def register(proposed):
@@ -45,7 +49,7 @@ def build(here, specs, clean, convert, prepare_images, image_dimensions):
             return prefix+'\n'+ '\n\n'.join('<question>\n'+body[a:b].strip()+'\n</question>' for a,b in zip(starts,starts[1:]+[len(body)]))
         return re.sub(r'<question>(.*?)</question>',split,raw,flags=re.S)
     def tokenize(raw):
-        tokens=[]; block=[]; pending_id=None; fence=None; pre=False; question=False; math=False
+        tokens=[]; block=[]; pending_id=None; fence=None; pre=False; question=False; math=False; details=False
         def flush():
             nonlocal block,pending_id
             if block:
@@ -53,7 +57,7 @@ def build(here, specs, clean, convert, prepare_images, image_dimensions):
                 if text:tokens.append((pending_id,text))
                 block=[];pending_id=None
         for line in raw.splitlines():
-            if not (question or fence or pre or math):
+            if not (question or fence or pre or math or details):
                 m=re.match(r'^<!-- unit-id:([\w-]+) -->$',line.strip())
                 if m:flush();pending_id=m.group(1);continue
                 if not line.strip():flush();continue
@@ -62,6 +66,8 @@ def build(here, specs, clean, convert, prepare_images, image_dimensions):
             if '<question>' in line:question=True
             if '</question>' in line:question=False;flush();continue
             if question:continue
+            if '<details' in line:details=True
+            if '</details>' in line:details=False;flush();continue
             fm=re.match(r'^\s*(`{3,}|~{3,})',line)
             if fm:fence=None if fence else fm.group(1)
             if '<pre' in line and '</pre>' not in line:pre=True
@@ -78,6 +84,7 @@ def build(here, specs, clean, convert, prepare_images, image_dimensions):
         directory=source/('supplements' if group=='错题补充' else '408'); file=directory/(name+'.md')
         raw=split_questions(file.read_text()); tokens=tokenize(raw); out=[]; updated=[]; sections=[]; local=[]; units=[]; path=[]; section=None
         occurrence={}; docprefix=name.split('-')[0]
+        explicit_ids=set(re.findall(r'<!-- unit-id:([\w-]+) -->',raw))
         for explicit, text in tokens:
             q=text.startswith('<question>')
             if q:
@@ -92,7 +99,15 @@ def build(here, specs, clean, convert, prepare_images, image_dimensions):
             prefix=('q' if q else 's' if hm else 'u')+'-'+docprefix
             default=key(prefix,identity+str(occurrence[identity]))
             if hm and name.startswith('02-') and title=='定点数的机器数转换':default='co-number-representation'
-            uid=register(explicit or default)
+            proposed=explicit or default
+            # A rewritten paragraph may hash to an ID reserved by an explicit
+            # source marker elsewhere. Implicit identities must not steal it.
+            if not explicit:
+                salt=0
+                while proposed in used or proposed in explicit_ids or proposed in knowledge_aliases.get(name,{}):
+                    salt+=1
+                    proposed=key(prefix,identity+str(occurrence[identity])+':implicit:'+str(salt))
+            uid=register(proposed)
             updated.append('<!-- unit-id:'+uid+' -->\n'+text)
             if hm:
                 level=len(hm.group(1));path=path[:level-1];path.append(title)
@@ -193,6 +208,13 @@ def build(here, specs, clean, convert, prepare_images, image_dimensions):
         for alias,v in old.items():
             if v['target']:aliases.setdefault(v['target'],[]).append(alias)
         generated='\n\n'.join(out)
+        for alias,target in knowledge_aliases.get(name,{}).items():
+            if alias in current_anchors:
+                raise ValueError('Knowledge alias collides with current target: '+alias)
+            if target not in current_anchors:
+                raise ValueError('Knowledge alias target missing: '+target)
+            redirects.setdefault(name,{})[alias]={'doc':name,'anchor':target}
+            aliases.setdefault(target,[]).append(alias)
         for target,old_ids in aliases.items():
             tags=''.join('<span class="legacy-anchor" data-target="'+target+'" id="'+a+'"></span>' for a in old_ids)
             generated=generated.replace('id="'+target+'"','id="'+target+'"',1) # insert siblings BEFORE target

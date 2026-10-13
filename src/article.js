@@ -89,5 +89,8 @@ export function revealSearchTarget(anchor, query, searchTerms = []) {
     }
   }
   block.classList.add('search-target')
-  ;(hit||block).scrollIntoView({block:'center',behavior:'instant'})
+  // A search hit inside a collapsed illustration must become visible before scrolling.
+  for(let parent=block.closest('details');parent;parent=parent.parentElement?.closest('details'))parent.open=true
+  const heading=/^H[1-4]$/.test(block.tagName)
+  ;(heading?block:hit||block).scrollIntoView({block:heading?'start':'center',behavior:'instant'})
 }
