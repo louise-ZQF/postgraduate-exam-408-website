@@ -1,5 +1,7 @@
 # 408 内容审查记录
 
+2026-10-13 可读性补充：对压缩后仍需读者自行推断的算法、变量和条件增加短解释及算例，覆盖四科；补清“松弛”、KMP 跳转、Cache 地址字段、P/V 等待顺序、银行家 Work 变化、累计确认等中间过程，磁盘路径改为分行对照表。保留上一轮缩写释义、已有知识标题和定位 ID、公式规则及配图，不为单纯增加字数而展开已清楚的基础定义。逐处修改见 [CONTENT_CLARITY_UPDATES.json](./CONTENT_CLARITY_UPDATES.json)。
+
 2026-10-13 补充：为四科知识讲解中的缩写补上中文名称，必要处补英文全称，包括数据结构算法、硬件寄存器／性能指标、操作系统管理表和调度／置换算法、网络协议／字段。既有公式、算法规则、目录 ID、配图与题目保持不变；具体编辑见 [ABBREVIATION_UPDATES.json](./ABBREVIATION_UPDATES.json)。
 
 2026-10-13：按用户本次要求，四科知识体系改为便于检索的简明讲解，逐知识点重写含义、算法步骤、条件、优缺点和计算规则。保留原有 361 个目录标题与其定位 ID，297 个直接讲解条目重新编写，原有示意图可展开查看，旧段落链接转向对应知识点。此要求更新了 10 月 3 日的“只局部纠错、恢复原全文”安排。详细范围、参考资料和验证见 [CONTENT_SIMPLIFICATION.md](./CONTENT_SIMPLIFICATION.md)，逐条覆盖记录见 [CONTENT_SIMPLIFICATION.json](./CONTENT_SIMPLIFICATION.json)，结构核对见 [KNOWLEDGE_AUDIT.json](./KNOWLEDGE_AUDIT.json)。

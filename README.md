@@ -6,7 +6,7 @@
 
 本地运行：`npm ci` 后执行 `npm run dev`。构建执行 `npm run build`。原始资料保存在 `source/408/`，错题补充保存在 `source/supplements/`，展示内容与搜索索引保存在 `public/`；更新 Markdown 后运行 `npm run prepare:content`。推送到 `main` 后，GitHub Actions 会自动构建并发布到 GitHub Pages。
 
-四科知识正文按“含义、执行过程、条件和常考区别”组织，对比用表格，图示按需展开。2026-10-13 的精简与核对范围见 [CONTENT_SIMPLIFICATION.md](./CONTENT_SIMPLIFICATION.md)。
+四科知识正文按“含义、执行过程、条件和常考区别”组织，对比用表格，图示按需展开。复杂条目保留必要的变量解释、中间步骤和短算例，让读者能顺着理解与复算；简单定义保持简洁。2026-10-13 的精简与核对范围见 [CONTENT_SIMPLIFICATION.md](./CONTENT_SIMPLIFICATION.md)。
 
 ## 网页编辑
 
