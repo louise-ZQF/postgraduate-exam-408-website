@@ -1,0 +1,882 @@
+[
+  {
+    "subject": "01-数据结构",
+    "before": "抽象数据类型 ADT",
+    "after": "抽象数据类型 ADT（Abstract Data Type）"
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "**KMP**：",
+    "after": "**KMP（Knuth–Morris–Pratt 模式匹配算法）**："
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "后进先出 LIFO",
+    "after": "后进先出 LIFO（Last In, First Out）"
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "先进先出 FIFO",
+    "after": "先进先出 FIFO（First In, First Out）"
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "**WPL=",
+    "after": "**带权路径长度 WPL（Weighted Path Length）="
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "**DFS**：",
+    "after": "**DFS（深度优先搜索，Depth-First Search）**："
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "**BFS**：",
+    "after": "**BFS（广度优先搜索，Breadth-First Search）**："
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "最小生成树 MST",
+    "after": "最小生成树 MST（Minimum Spanning Tree）"
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "DAG（有向无环图）",
+    "after": "DAG（有向无环图，Directed Acyclic Graph）"
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "表达式 DAG 以",
+    "after": "表达式 DAG（有向无环图）以"
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "AOE 网以",
+    "after": "AOE 网（边表示活动的网，Activity On Edge）以"
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "**ASL=ΣpᵢCᵢ**",
+    "after": "**平均查找长度 ASL（Average Search Length）=ΣpᵢCᵢ**"
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "BST 左子树",
+    "after": "BST（二叉搜索树 / 二叉排序树，Binary Search Tree）左子树"
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "AVL 是任意",
+    "after": "AVL 平衡二叉树是任意"
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "| LL |",
+    "after": "| LL（左—左型） |"
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "| RR |",
+    "after": "| RR（右—右型） |"
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "| LR |",
+    "after": "| LR（左—右型） |"
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "| RL |",
+    "after": "| RL（右—左型） |"
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "NIL 空叶黑",
+    "after": "NIL（空叶结点）均为黑色"
+  },
+  {
+    "subject": "01-数据结构",
+    "before": "| 基数 LSD |",
+    "after": "| 基数 LSD（最低位优先，Least Significant Digit） |"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "ISA 是软硬件界面",
+    "after": "ISA（指令集体系结构，Instruction Set Architecture）是软硬件界面"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "机器字长是 CPU 一次",
+    "after": "机器字长是 CPU（中央处理器）一次"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "通用寄存器 / ALU 宽度",
+    "after": "通用寄存器 / ALU（算术逻辑单元）宽度"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "| 平均 CPI |",
+    "after": "| 平均 CPI（每条指令的平均时钟周期数） |"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "| IPS / MIPS |",
+    "after": "| IPS（每秒指令数） / MIPS（每秒百万条指令数） |"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "| FLOPS |",
+    "after": "| FLOPS（每秒浮点运算次数） |"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "| ZF |",
+    "after": "| ZF（零标志，Zero Flag） |"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "| SF |",
+    "after": "| SF（符号标志，Sign Flag） |"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "| OF |",
+    "after": "| OF（溢出标志，Overflow Flag） |"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "| CF |",
+    "after": "| CF（进位 / 借位标志，Carry Flag） |"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "随机存取 RAM：",
+    "after": "随机存取 RAM（Random Access Memory，随机存取存储器）："
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "顺序存取 SAM 如",
+    "after": "顺序存取 SAM（Sequential Access Memory，顺序存取存储器）如"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "直接存取 DAM 如",
+    "after": "直接存取 DAM（Direct Access Memory，直接存取存储器）如"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "相联存储 CAM 按",
+    "after": "相联存储 CAM（Content Addressable Memory，内容寻址存储器）按"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "SRAM 用双稳态",
+    "after": "SRAM（Static RAM，静态随机存取存储器）用双稳态"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "DRAM 用电容",
+    "after": "DRAM（Dynamic RAM，动态随机存取存储器）用电容"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "SDRAM 与时钟",
+    "after": "SDRAM（Synchronous DRAM，同步动态随机存取存储器）与时钟"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "ROM 通常非易失",
+    "after": "ROM（Read-Only Memory，只读存储器）通常非易失"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "PROM 用户一次编程",
+    "after": "PROM（可编程只读存储器）用户一次编程"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "EPROM 紫外擦除",
+    "after": "EPROM（可擦除可编程只读存储器）紫外擦除"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "EEPROM 电擦除",
+    "after": "EEPROM（电可擦除可编程只读存储器）电擦除"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "经典 CHS 地址：",
+    "after": "经典 CHS（Cylinder–Head–Sector，柱面—磁头—扇区）地址："
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "逻辑块地址 LBA",
+    "after": "逻辑块地址 LBA（Logical Block Address）"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "SSD 由控制器",
+    "after": "SSD（Solid-State Drive，固态硬盘）由控制器"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "FIFO 淘汰最早",
+    "after": "FIFO（先进先出）淘汰最早"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "LRU 淘汰最长",
+    "after": "LRU（最近最少使用，Least Recently Used）淘汰最长"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "RAND 随机；LFU 淘汰",
+    "after": "RAND（随机替换）随机；LFU（最不经常使用，Least Frequently Used）淘汰"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "地址翻译由 MMU、",
+    "after": "地址翻译由 MMU（内存管理单元，Memory Management Unit）、"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "虚拟地址拆 VPN+",
+    "after": "虚拟地址拆 VPN（虚页号，Virtual Page Number）+"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "TLB 缓存近期页表项",
+    "after": "TLB（Translation Lookaside Buffer，快表 / 地址转换后备缓冲器）缓存近期页表项"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "零地址只有 OP，",
+    "after": "零地址只有 OP（操作码，Operation Code），"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "隐含在 ACC；",
+    "after": "隐含在 ACC（累加器）；"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "有效地址 EA 是",
+    "after": "有效地址 EA（Effective Address）是"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "| 基址 | EA=(BR)+A |",
+    "after": "| 基址 | EA=(BR)+A，BR 为基址寄存器 |"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "| 变址 | EA=A+(IX) |",
+    "after": "| 变址 | EA=A+(IX)，IX 为变址寄存器 |"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "栈顶 SP 隐含",
+    "after": "栈顶 SP（栈指针，Stack Pointer）隐含"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "CISC（复杂指令集）",
+    "after": "CISC（复杂指令集，Complex Instruction Set Computer）"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "RISC（精简指令集）",
+    "after": "RISC（精简指令集，Reduced Instruction Set Computer）"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "PC 存下一取指位置，IR 存当前指令，MAR 存访存地址，MDR 缓冲访存数据；GPR 保存操作数 / 结果，PSW 保存状态。",
+    "after": "PC（程序计数器）存下一取指位置，IR（指令寄存器）存当前指令，MAR（存储器地址寄存器）存访存地址，MDR（存储器数据寄存器）缓冲访存数据；GPR（通用寄存器）保存操作数 / 结果，PSW（程序状态字）保存状态。"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "ALU、MUX、总线等",
+    "after": "ALU、MUX（多路选择器）、总线等"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "高电平有效三态门 EN=1",
+    "after": "高电平有效三态门的 EN（使能信号）=1"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "控制存储器 CM 存微程序",
+    "after": "控制存储器 CM（Control Memory）存微程序"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "不可屏蔽中断不受普通",
+    "after": "不可屏蔽中断 NMI（Non-Maskable Interrupt）不受普通"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "吞吐率 TP=n/T",
+    "after": "吞吐率 TP（Throughput）=n/T"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "数据 RAW |",
+    "after": "数据 RAW（写后读相关，Read After Write） |"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "| WAR / WAW |",
+    "after": "| WAR（读后写相关） / WAW（写后写相关） |"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "VLIW：编译器",
+    "after": "VLIW（超长指令字，Very Long Instruction Word）：编译器"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "SISD 单指令单数据",
+    "after": "SISD（Single Instruction, Single Data）单指令单数据"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "SIMD 单指令多数据",
+    "after": "SIMD（Single Instruction, Multiple Data）单指令多数据"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "MISD 多指令单数据",
+    "after": "MISD（Multiple Instruction, Single Data）多指令单数据"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "MIMD 多指令多数据",
+    "after": "MIMD（Multiple Instruction, Multiple Data）多指令多数据"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "UMA 访问代价较均匀，NUMA 与访问位置有关",
+    "after": "UMA（统一存储访问）访问代价较均匀，NUMA（非统一存储访问）与访问位置有关"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "SMT 同周期可发射",
+    "after": "SMT（同时多线程，Simultaneous Multithreading）同周期可发射"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "DDR 每周期两次",
+    "after": "DDR（双倍数据速率，Double Data Rate）每周期两次"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "I/O 接口协调主机",
+    "after": "I/O（Input / Output，输入 / 输出）接口协调主机"
+  },
+  {
+    "subject": "02-计算机组成原理",
+    "before": "DMA 直接在设备",
+    "after": "DMA（Direct Memory Access，直接存储器访问）直接在设备"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "操作系统管理 CPU、",
+    "after": "操作系统（OS，Operating System）管理 CPU（中央处理器）、"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "异常和 NMI。",
+    "after": "异常和 NMI（不可屏蔽中断）。"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "传统 BIOS/MBR 模型：",
+    "after": "传统 BIOS（基本输入输出系统）/ MBR（主引导记录）模型："
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "分区引导记录 PBR",
+    "after": "分区引导记录 PBR（Partition Boot Record）"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "UEFI/GPT 流程不同",
+    "after": "UEFI（统一可扩展固件接口）/ GPT（全局唯一标识符分区表）流程不同"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "代码、数据、PCB。",
+    "after": "代码、数据、PCB（进程控制块，Process Control Block）。"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "各有 PC、寄存器状态、栈和 TCB。",
+    "after": "各有 PC（程序计数器）、寄存器状态、栈和 TCB（线程控制块，Thread Control Block）。"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "| FCFS |",
+    "after": "| FCFS（先来先服务） |"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "| SJF |",
+    "after": "| SJF（短作业优先） |"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "| SRTF |",
+    "after": "| SRTF（最短剩余时间优先） |"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "| HRRN |",
+    "after": "| HRRN（高响应比优先） |"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "| 时间片 RR |",
+    "after": "| RR（时间片轮转，Round Robin） |"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "Cache / TLB 局部性",
+    "after": "Cache（高速缓存） / TLB（快表）局部性"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "| OPT |",
+    "after": "| OPT（最佳置换，Optimal） |"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "| FIFO |",
+    "after": "| FIFO（先进先出） |"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "| LRU |",
+    "after": "| LRU（最近最少使用） |"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "| CLOCK |",
+    "after": "| CLOCK（时钟置换） |"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "文件控制信息 FCB / inode",
+    "after": "文件控制信息 FCB（文件控制块） / inode（索引结点）"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "| 显式链接 FAT |",
+    "after": "| 显式链接 FAT（文件分配表，File Allocation Table） |"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "ACL、用户 / 组权限",
+    "after": "ACL（访问控制列表，Access Control List）、用户 / 组权限"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "VFS 给不同文件系统",
+    "after": "VFS（Virtual File System，虚拟文件系统）给不同文件系统"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "I/O 软件从上到下：",
+    "after": "I/O（输入 / 输出，Input / Output）软件从上到下："
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "SPOOLing 用磁盘",
+    "after": "SPOOLing（假脱机，Simultaneous Peripheral Operations On-Line，外部设备联机并行操作）用磁盘"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "LUT 记录逻辑设备名",
+    "after": "LUT（逻辑设备表，Logical Unit Table）记录逻辑设备名"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "DCT 一设备一表，COCT 一控制器一表，通道表一通道一表，SDT 为系统设备目录。",
+    "after": "DCT（设备控制表）一设备一表，COCT（控制器控制表）一控制器一表，CHCT（通道控制表）一通道一表，SDT（系统设备表）记录系统设备目录。"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "| LOOK |",
+    "after": "| LOOK（扫描到最后请求即折返） |"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "| C-LOOK |",
+    "after": "| C-LOOK（循环 LOOK） |"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "SSD 无机械寻道",
+    "after": "SSD（固态硬盘）无机械寻道"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "| RTT |",
+    "after": "| RTT（Round-Trip Time，往返时间） |"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "PDU=本层协议控制信息 PCI+本层服务数据 SDU",
+    "after": "PDU（协议数据单元）=PCI（协议控制信息）+SDU（服务数据单元）"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "OSI 自上而下：",
+    "after": "OSI（开放系统互连参考模型，Open Systems Interconnection）自上而下："
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "TCP/UDP→传输",
+    "after": "TCP（传输控制协议）/UDP（用户数据报协议）→传输"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "IP/ICMP→网际",
+    "after": "IP（网际协议）/ICMP（网际控制报文协议）→网际"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "| NRZ |",
+    "after": "| NRZ（不归零编码） |"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "| RZ |",
+    "after": "| RZ（归零编码） |"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "| NRZI |",
+    "after": "| NRZI（反向不归零编码） |"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "ASK 改振幅，FSK 改频率，PSK 改相位；QAM 联合",
+    "after": "ASK（幅移键控）改振幅，FSK（频移键控）改频率，PSK（相移键控）改相位；QAM（正交幅度调制）联合"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "PPP 用 LCP 建立 / 配置链路，NCP 配置网络层协议，FCS 检错；",
+    "after": "PPP（点对点协议）用 LCP（链路控制协议）建立 / 配置链路，NCP（网络控制协议）配置网络层协议，FCS（帧检验序列）检错；"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "ARQ=检错+重传，FEC=前向纠错",
+    "after": "ARQ（自动重传请求）=检错+重传，FEC（前向纠错）"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "SECDED。",
+    "after": "SECDED（单错纠正、双错检测）。"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "GBN 发送窗口",
+    "after": "GBN（Go-Back-N，后退 N 帧协议）发送窗口"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "SR 发送和接收窗口",
+    "after": "SR（Selective Repeat，选择重传协议）发送和接收窗口"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "正确 ACK 后发下一帧",
+    "after": "正确 ACK（确认，Acknowledgment）后发下一帧"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "FDM 把频带分开，TDM 把时间分隙，WDM 在光纤分不同波长，CDM 用正交码片",
+    "after": "FDM（频分复用）把频带分开，TDM（时分复用）把时间分隙，WDM（波分复用）在光纤分不同波长，CDM（码分复用）用正交码片"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "CSMA 先监听：",
+    "after": "CSMA（载波监听多路访问）先监听："
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "CSMA/CD 用于经典",
+    "after": "CSMA/CD（带碰撞检测的载波监听多路访问）用于经典"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "CSMA/CA 用监听",
+    "after": "CSMA/CA（带碰撞避免的载波监听多路访问）用监听"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "DCF：空闲 DIFS 后",
+    "after": "DCF（分布式协调功能）：空闲 DIFS（分布式协调帧间间隔）后"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "SIFS<PIFS<DIFS，",
+    "after": "SIFS（短帧间间隔）<PIFS（点协调帧间间隔）<DIFS，"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "RTS/CTS 过程：",
+    "after": "RTS（请求发送）/CTS（允许发送）过程："
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "Duration 更新 NAV，",
+    "after": "Duration 更新 NAV（网络分配向量），"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "MAC 地址通常 48bit",
+    "after": "MAC（介质访问控制）地址通常 48bit"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "AP 是接入点，BSS 是基本服务集，SSID 标识网络，多个 BSS 经分布系统组成 ESS。",
+    "after": "AP（Access Point，接入点）连接无线站点；BSS（基本服务集）是基本单元，SSID（服务集标识）标识网络，多个 BSS 经分布系统组成 ESS（扩展服务集）。"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "固定设施 WLAN 经",
+    "after": "固定设施 WLAN（无线局域网）经"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "VLAN 在交换网络",
+    "after": "VLAN（Virtual Local Area Network，虚拟局域网）在交换网络"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "SDN 将控制逻辑",
+    "after": "SDN（Software-Defined Networking，软件定义网络）将控制逻辑"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "首部长度 IHL 单位",
+    "after": "首部长度 IHL（Internet Header Length）单位"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "标识重组对象；DF=1 禁止分片；MF=1 后面还有",
+    "after": "标识重组对象；DF（不分片）=1 禁止分片；MF（更多分片）=1 后面还有"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "| TTL |",
+    "after": "| TTL（Time To Live，生存时间） |"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "MTU 通常限制",
+    "after": "MTU（Maximum Transmission Unit，最大传输单元）通常限制"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "FLSM 从主机部分",
+    "after": "FLSM（定长子网掩码）从主机部分"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "CIDR 用 IP/p",
+    "after": "CIDR（无分类域间路由，Classless Inter-Domain Routing）用 IP/p"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "**VLSM 划分**：",
+    "after": "**VLSM（可变长子网掩码）划分**："
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "NAT 把内部地址",
+    "after": "NAT（网络地址转换）把内部地址"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "NAPT 再用端口",
+    "after": "NAPT（网络地址与端口转换）再用端口"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "ARP 在本地链路",
+    "after": "ARP（Address Resolution Protocol，地址解析协议）在本地链路"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "DHCP 为应用层",
+    "after": "DHCP（Dynamic Host Configuration Protocol，动态主机配置协议）为应用层"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "IPv6 可用 SLAAC / DHCPv6",
+    "after": "IPv6 可用 SLAAC（无状态地址自动配置） / DHCPv6"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "AS 是受统一管理",
+    "after": "AS（Autonomous System，自治系统）是受统一管理"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "内部协议 IGP 如",
+    "after": "内部协议 IGP（Interior Gateway Protocol，内部网关协议）如"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "IGMP 管理主机",
+    "after": "IGMP（Internet Group Management Protocol，网际组管理协议）管理主机"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "LSA，不是简单",
+    "after": "LSA（Link-State Advertisement，链路状态通告），不是简单"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "更新分组 LSU 可携带 LSA，确认分组 LSAck",
+    "after": "更新分组 LSU（链路状态更新）可携带 LSA，确认分组 LSAck（链路状态确认）"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "ABR 连区域，ASBR 对外交换",
+    "after": "ABR（区域边界路由器）连区域，ASBR（自治系统边界路由器）对外交换"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "DR/BDR 减少完整邻接",
+    "after": "DR（指定路由器）/BDR（备份指定路由器）减少完整邻接"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "UDP 无连接、",
+    "after": "UDP（User Datagram Protocol，用户数据报协议）无连接、"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "TCP 面向连接、",
+    "after": "TCP（Transmission Control Protocol，传输控制协议）面向连接、"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "ACK 控制位=1",
+    "after": "ACK（确认）控制位=1"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "MSS 仅最大 TCP 数据字段",
+    "after": "MSS（Maximum Segment Size，最大报文段长度）仅指最大 TCP 数据字段"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "SYN 建连同步、FIN 关闭发送方向、RST 复位、PSH 推送、URG 配合紧急指针",
+    "after": "SYN（同步标志）用于建连同步、FIN（终止标志）关闭发送方向、RST（复位标志）重置连接、PSH（推送标志）请求及时交付、URG（紧急标志）配合紧急指针"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "TIME-WAIT 保留以便",
+    "after": "TIME-WAIT（时间等待）保留以便"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "客户等 2MSL 后",
+    "after": "客户等 2MSL（两倍最大报文段生存时间）后"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "RTO 触发",
+    "after": "RTO（重传超时时间）触发"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "SRTT=(1−α)",
+    "after": "SRTT（平滑往返时间）=(1−α)"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "SACK 可告知",
+    "after": "SACK（选择确认）可告知"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "接收方通告 rwnd 限制",
+    "after": "接收方通告 rwnd（接收窗口）限制"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "发送同时受 cwnd 限制",
+    "after": "发送同时受 cwnd（拥塞窗口）限制"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "门限 ssthresh 控制",
+    "after": "门限 ssthresh（慢开始门限）控制"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "C/S：持续提供服务",
+    "after": "C/S（Client / Server，客户—服务器模型）：持续提供服务"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "P2P：节点既请求",
+    "after": "P2P（Peer-to-Peer，对等模型）：节点既请求"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "A 对应 IPv4，AAAA 对应 IPv6，CNAME 为别名，MX 为邮件交换。",
+    "after": "A（地址记录）对应 IPv4，AAAA（IPv6 地址记录）对应 IPv6，CNAME（规范名称记录）为别名，MX（邮件交换记录）指定邮件服务器。"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "POP3 / IMAP 从邮箱读取",
+    "after": "POP3（邮局协议第 3 版） / IMAP（因特网报文存取协议）从邮箱读取"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "通常用 SMTP；",
+    "after": "通常用 SMTP（简单邮件传送协议）；"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "TFTP 是简化文件传输",
+    "after": "TFTP（Trivial File Transfer Protocol，简单文件传输协议）是简化文件传输"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "MIME 扩展邮件内容类型",
+    "after": "MIME（Multipurpose Internet Mail Extensions，多用途因特网邮件扩展）扩展邮件内容类型"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "WWW 用 URL 标识资源",
+    "after": "WWW（World Wide Web，万维网）用 URL（Uniform Resource Locator，统一资源定位符）标识资源"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "HTTP 为应用层请求",
+    "after": "HTTP（Hypertext Transfer Protocol，超文本传输协议）为应用层请求"
+  },
+  {
+    "subject": "04-计算机网络",
+    "before": "基本 HTML 才能",
+    "after": "基本 HTML（超文本标记语言文档）才能"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "引导代码通常在 ROM / 固件",
+    "after": "引导代码通常在 ROM（只读存储器） / 固件"
+  },
+  {
+    "subject": "03-操作系统",
+    "before": "RAID 条带提高并行吞吐",
+    "after": "RAID（独立磁盘冗余阵列）条带提高并行吞吐"
+  }
+]

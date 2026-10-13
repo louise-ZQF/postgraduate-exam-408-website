@@ -1,5 +1,7 @@
 # 408 内容审查记录
 
+2026-10-13 补充：为四科知识讲解中的缩写补上中文名称，必要处补英文全称，包括数据结构算法、硬件寄存器／性能指标、操作系统管理表和调度／置换算法、网络协议／字段。既有公式、算法规则、目录 ID、配图与题目保持不变；具体编辑见 [ABBREVIATION_UPDATES.json](./ABBREVIATION_UPDATES.json)。
+
 2026-10-13：按用户本次要求，四科知识体系改为便于检索的简明讲解，逐知识点重写含义、算法步骤、条件、优缺点和计算规则。保留原有 361 个目录标题与其定位 ID，297 个直接讲解条目重新编写，原有示意图可展开查看，旧段落链接转向对应知识点。此要求更新了 10 月 3 日的“只局部纠错、恢复原全文”安排。详细范围、参考资料和验证见 [CONTENT_SIMPLIFICATION.md](./CONTENT_SIMPLIFICATION.md)，逐条覆盖记录见 [CONTENT_SIMPLIFICATION.json](./CONTENT_SIMPLIFICATION.json)，结构核对见 [KNOWLEDGE_AUDIT.json](./KNOWLEDGE_AUDIT.json)。
 
 以下为 10 月 3 日的历史记录，用于保留此前纠错依据与来源，不代表当前正文仍与旧版逐字一致。
