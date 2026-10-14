@@ -1,0 +1,441 @@
+[
+  {
+    "doc": "01-数据结构",
+    "title": "描述表达式",
+    "page": 3,
+    "reason": "图的基本应用未列表达式 DAG 的公共子表达式优化，删除独立扩展条目",
+    "action": "delete"
+  },
+  {
+    "doc": "02-计算机组成原理",
+    "title": "独立磁盘冗余阵列 RAID",
+    "page": 7,
+    "reason": "外存只列磁盘与 SSD，未列 RAID 级别和容量容错计算",
+    "action": "delete"
+  },
+  {
+    "doc": "02-计算机组成原理",
+    "title": "高级流水线",
+    "page": 9,
+    "reason": "按超标量与动态流水线收束，删除 VLIW、超流水",
+    "action": "revise"
+  },
+  {
+    "doc": "02-计算机组成原理",
+    "title": "高级流水线",
+    "page": 9,
+    "reason": "只讲大纲所列基本概念",
+    "action": "revise"
+  },
+  {
+    "doc": "02-计算机组成原理",
+    "title": "计算架构的概念",
+    "page": 9,
+    "reason": "大纲只列 SISD、SIMD、MIMD 和向量处理器",
+    "action": "revise"
+  },
+  {
+    "doc": "02-计算机组成原理",
+    "title": "IO方式的比较",
+    "page": 9,
+    "reason": "I/O 方式只列查询、中断、DMA，不列通道方式",
+    "action": "revise"
+  },
+  {
+    "doc": "02-计算机组成原理",
+    "title": "只读存储器 ROM",
+    "page": 6,
+    "reason": "只在存储器分类保留 ROM 的基本含义，删除独立的 PROM/EPROM/EEPROM 编程擦除扩展",
+    "action": "delete"
+  },
+  {
+    "doc": "03-操作系统",
+    "title": "虚拟机",
+    "page": 11,
+    "reason": "保留虚拟机，删去容器扩展",
+    "action": "revise"
+  },
+  {
+    "doc": "03-操作系统",
+    "title": "提升效率的方式",
+    "page": 15,
+    "reason": "外存管理未列 RAID",
+    "action": "revise"
+  },
+  {
+    "doc": "03-操作系统",
+    "title": "磁盘调度算法",
+    "page": 15,
+    "reason": "保留扫描调度基本原理，删去扩展算法名",
+    "action": "revise"
+  },
+  {
+    "doc": "03-操作系统",
+    "title": "管程",
+    "page": 12,
+    "reason": "大纲明确列条件变量，改为该知识点入口",
+    "action": "revise"
+  },
+  {
+    "doc": "03-操作系统",
+    "title": "条件变量",
+    "page": 12,
+    "reason": "保留条件等待所需背景，收束独立管程讲解",
+    "action": "revise"
+  },
+  {
+    "doc": "04-计算机网络",
+    "title": "文件传输协议 FTP",
+    "page": 20,
+    "reason": "应用层只列 FTP，不列 TFTP",
+    "action": "revise"
+  },
+  {
+    "doc": "04-计算机网络",
+    "title": "邮件发送和读取协议",
+    "page": 20,
+    "reason": "邮件协议只列 SMTP、POP3，不列 IMAP",
+    "action": "revise"
+  },
+  {
+    "doc": "04-计算机网络",
+    "title": "邮件发送和读取协议",
+    "page": 20,
+    "reason": "删除大纲外协议端口",
+    "action": "revise"
+  },
+  {
+    "doc": "04-计算机网络",
+    "title": "邮件发送和读取协议",
+    "page": 20,
+    "reason": "删除 IMAP 独立机制",
+    "action": "revise"
+  },
+  {
+    "doc": "04-计算机网络",
+    "title": "HTTP协议特点",
+    "page": 20,
+    "reason": "保留 HTTP 常规工作过程，删除 HTTP/3 扩展",
+    "action": "revise"
+  },
+  {
+    "doc": "01-数据结构",
+    "title": "算法的基本概念",
+    "page": 1,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-01-outline-f06554d616"
+  },
+  {
+    "doc": "01-数据结构",
+    "title": "堆及其应用",
+    "page": 3,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-01-outline-661538b761"
+  },
+  {
+    "doc": "01-数据结构",
+    "title": "图的基本操作",
+    "page": 3,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-01-outline-31b8c01edd"
+  },
+  {
+    "doc": "02-计算机组成原理",
+    "title": "计算机系统层次与软硬件关系",
+    "page": 5,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-02-outline-9adb78e45d"
+  },
+  {
+    "doc": "02-计算机组成原理",
+    "title": "加法器与算术逻辑部件",
+    "page": 6,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-02-outline-7ff60f8a7b"
+  },
+  {
+    "doc": "02-计算机组成原理",
+    "title": "乘除运算电路的基本结构",
+    "page": 6,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-02-outline-e1e640bee2"
+  },
+  {
+    "doc": "02-计算机组成原理",
+    "title": "向量处理器与共享内存多处理器",
+    "page": 9,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-02-outline-03ffb58579"
+  },
+  {
+    "doc": "02-计算机组成原理",
+    "title": "DMA控制器的组成",
+    "page": 10,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-02-outline-e5a952c272"
+  },
+  {
+    "doc": "03-操作系统",
+    "title": "程序内存映像与地址空间",
+    "page": 11,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-03-outline-f4e760f0be"
+  },
+  {
+    "doc": "03-操作系统",
+    "title": "进程与线程的组织和控制",
+    "page": 11,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-03-outline-57d3bb1a73"
+  },
+  {
+    "doc": "03-操作系统",
+    "title": "调度器与闲逛进程",
+    "page": 11,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-03-outline-4001616c9c"
+  },
+  {
+    "doc": "03-操作系统",
+    "title": "虚拟存储器性能与改进",
+    "page": 13,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-03-outline-4281589178"
+  },
+  {
+    "doc": "03-操作系统",
+    "title": "文件的基本概念与逻辑结构",
+    "page": 13,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-03-outline-54e9651760"
+  },
+  {
+    "doc": "03-操作系统",
+    "title": "目录的操作",
+    "page": 13,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-03-outline-68c49835cc"
+  },
+  {
+    "doc": "03-操作系统",
+    "title": "I/O控制方式",
+    "page": 14,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-03-outline-1dc631a492"
+  },
+  {
+    "doc": "03-操作系统",
+    "title": "设备驱动程序接口",
+    "page": 14,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-03-outline-fad9fbccd0"
+  },
+  {
+    "doc": "04-计算机网络",
+    "title": "网络的定义、组成与分类",
+    "page": 15,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-04-outline-2a276fae99"
+  },
+  {
+    "doc": "04-计算机网络",
+    "title": "网络接口与服务",
+    "page": 15,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-04-outline-4b0dd96d8e"
+  },
+  {
+    "doc": "04-计算机网络",
+    "title": "信源、信宿与信道",
+    "page": 16,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-04-outline-8d6471ab78"
+  },
+  {
+    "doc": "04-计算机网络",
+    "title": "数据链路层的功能",
+    "page": 16,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-04-outline-6bd346be51"
+  },
+  {
+    "doc": "04-计算机网络",
+    "title": "广域网与PPP协议",
+    "page": 17,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-04-outline-df32dc20da"
+  },
+  {
+    "doc": "04-计算机网络",
+    "title": "层次路由",
+    "page": 18,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-04-outline-9e15852d51"
+  },
+  {
+    "doc": "04-计算机网络",
+    "title": "传输层服务与端口寻址",
+    "page": 19,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-04-outline-e63a4dac6a"
+  },
+  {
+    "doc": "04-计算机网络",
+    "title": "电子邮件格式",
+    "page": 20,
+    "reason": "大纲列项原讲解缺失或缺少可检索入口",
+    "action": "add",
+    "anchor": "s-04-outline-f4e19f6120"
+  },
+  {
+    "doc": "04-计算机网络",
+    "title": "IP组播",
+    "action": "separate",
+    "page": 19,
+    "reason": "将已存在的讲解从路由算法中移到大纲所列独立入口"
+  },
+  {
+    "doc": "04-计算机网络",
+    "title": "移动IP",
+    "action": "separate",
+    "page": 19,
+    "reason": "将已存在的讲解从路由算法中移到大纲所列独立入口"
+  },
+  {
+    "doc": "01-数据结构",
+    "title": "线性表的应用",
+    "page": 1,
+    "action": "add",
+    "anchor": "s-01-outline-cb076ef2a0",
+    "reason": "补齐大纲明确列项的应用／结构讲解"
+  },
+  {
+    "doc": "01-数据结构",
+    "title": "矩阵",
+    "page": 2,
+    "action": "revise",
+    "reason": "补齐多维数组地址计算，而不只覆盖二维"
+  },
+  {
+    "doc": "01-数据结构",
+    "title": "线索二叉树",
+    "page": 2,
+    "action": "revise",
+    "reason": "补齐线索二叉树的构造过程"
+  },
+  {
+    "doc": "02-计算机组成原理",
+    "title": "DRAM芯片、内存条与CPU连接",
+    "page": 7,
+    "action": "add",
+    "anchor": "s-02-outline-913765f3e4",
+    "reason": "补齐大纲明确列项的应用／结构讲解"
+  },
+  {
+    "doc": "02-计算机组成原理",
+    "title": "计算机性能指标",
+    "page": 5,
+    "action": "revise",
+    "reason": "补齐 MFLOPS 至 ZFLOPS 的全称与量级"
+  },
+  {
+    "doc": "02-计算机组成原理",
+    "title": "按存储介质分类",
+    "page": 6,
+    "action": "revise",
+    "reason": "保留存储分类所需 ROM 基本含义"
+  },
+  {
+    "doc": "01-数据结构",
+    "title": "B+树",
+    "page": 4,
+    "action": "revise",
+    "reason": "按基本概念收束，不单独展开插入分裂操作"
+  },
+  {
+    "doc": "02-计算机组成原理",
+    "title": "高级流水线",
+    "page": 9,
+    "action": "revise",
+    "reason": "区分动态流水线与动态调度；旧图含超流水和 VLIW，替换为大纲内超标量矢量示意图"
+  },
+  {
+    "doc": "01-数据结构",
+    "title": "并查集及其应用",
+    "page": 2,
+    "action": "separate",
+    "reason": "为原有并查集正文建立独立入口，归入树的应用"
+  },
+  {
+    "doc": "01-数据结构",
+    "title": "第四章 串",
+    "page": 4,
+    "action": "revise",
+    "reason": "收束为字符串模式匹配，删除独立串存储实现扩展"
+  },
+  {
+    "doc": "01-数据结构",
+    "title": "树和二叉树",
+    "page": 2,
+    "action": "revise",
+    "reason": "补清二叉树左右有序和可为空的基本定义"
+  },
+  {
+    "doc": "05-数据结构基础题型",
+    "title": "q-05-7ea89cb80260",
+    "page": 3,
+    "action": "delete_question",
+    "reason": "表达式DAG优化不在所列图应用内"
+  },
+  {
+    "doc": "06-计组基础题型",
+    "title": "q-06-24466fd8f1ce",
+    "page": 7,
+    "action": "delete_question",
+    "reason": "RAID级别与容错属于已移除扩展"
+  },
+  {
+    "doc": "06-计组基础题型",
+    "title": "q-06-ab9d97c1a670",
+    "page": 7,
+    "action": "delete_question",
+    "reason": "RAID级别与容错属于已移除扩展"
+  },
+  {
+    "doc": "06-计组基础题型",
+    "title": "q-06-111eb48cf65d",
+    "page": 9,
+    "action": "delete_question",
+    "reason": "包含超流水、超长指令字扩展的整道题移除"
+  },
+  {
+    "doc": "17-数据结构知识配套题目",
+    "title": "q-01-f4a752ab35a3",
+    "page": 3,
+    "action": "delete_question",
+    "reason": "表达式DAG优化的知识配套重复题移除"
+  }
+]
