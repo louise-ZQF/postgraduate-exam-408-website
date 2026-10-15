@@ -1,8 +1,10 @@
 import 'katex/dist/katex.min.css'
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
+import { installMathTokens } from './markdown-math.js'
 import renderMathInElement from 'katex/contrib/auto-render'
 
+installMathTokens(marked)
 marked.setOptions({ gfm: true, breaks: false })
 
 function preprocessMarkdown(md, base) {
@@ -58,6 +60,12 @@ export function renderMarkdown(md, base, container) {
     ignoredClasses: ['katex'],
     throwOnError: false,
     strict: 'ignore',
+  })
+  container.querySelectorAll('.math-inline-source').forEach(el => {
+    if (!el.closest('table') && el.textContent.length > 90) el.classList.add('math-emphasis')
+  })
+  container.querySelectorAll('p').forEach(el => {
+    if (/^(总流程|主线|负数转换顺序|记忆线索|流程)[：:]/.test(el.textContent) && el.textContent.includes('→')) el.classList.add('study-flow')
   })
   styleAnswerChoices(container)
   container.querySelectorAll('a[href^="/docs/"]').forEach(a=>{const [path,hash]=a.getAttribute('href').split('#');a.href='https://yyx-dev.github.io'+path+(path.endsWith('.html')?'':'.html')+(hash?'#'+hash:'')})

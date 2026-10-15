@@ -1,0 +1,2086 @@
+[
+  {
+    "original": "T=1/f",
+    "latex": "T=\\frac{1}{f}"
+  },
+  {
+    "original": "MIPS=IPS/10⁶",
+    "latex": "MIPS=\\frac{IPS}{10^{6}}"
+  },
+  {
+    "original": "10³/10⁶/10⁹",
+    "latex": "10^{3}/10^{6}/10^{9}"
+  },
+  {
+    "original": "2¹⁰/2²⁰",
+    "latex": "2^{10}/2^{20}"
+  },
+  {
+    "original": "1B=8bit",
+    "latex": "1B=8bit"
+  },
+  {
+    "original": "1s=10³ms=10⁶μs=10⁹ns",
+    "latex": "1s=10^{3}ms=10^{6}\\mu s=10^{9}ns"
+  },
+  {
+    "original": "10⁶",
+    "latex": "10^{6}"
+  },
+  {
+    "original": "CPI=2",
+    "latex": "CPI=2"
+  },
+  {
+    "original": "2×10⁶",
+    "latex": "2\\times 10^{6}"
+  },
+  {
+    "original": "10⁶",
+    "latex": "10^{6}"
+  },
+  {
+    "original": "10⁹",
+    "latex": "10^{9}"
+  },
+  {
+    "original": "10¹²",
+    "latex": "10^{12}"
+  },
+  {
+    "original": "10¹⁵",
+    "latex": "10^{15}"
+  },
+  {
+    "original": "10¹⁸",
+    "latex": "10^{18}"
+  },
+  {
+    "original": "10²¹",
+    "latex": "10^{21}"
+  },
+  {
+    "original": "0～2^w−1",
+    "latex": "0\\sim 2^{w}-1"
+  },
+  {
+    "original": "0～1−2^(−w)",
+    "latex": "0\\sim 1-2^{-w}"
+  },
+  {
+    "original": "−(2^(w−1)−1)～2^(w−1)−1",
+    "latex": "-(2^{w-1}-1)\\sim 2^{w-1}-1"
+  },
+  {
+    "original": "−(1−2^(−(w−1)))～1−2^(−(w−1))",
+    "latex": "-(1-2^{-(w-1)})\\sim 1-2^{-(w-1)}"
+  },
+  {
+    "original": "−2^(w−1)～2^(w−1)−1",
+    "latex": "-2^{w-1}\\sim 2^{w-1}-1"
+  },
+  {
+    "original": "−1～1−2^(−(w−1))",
+    "latex": "-1\\sim 1-2^{-(w-1)}"
+  },
+  {
+    "original": "−2^(−(w−1))",
+    "latex": "-2^{-(w-1)}"
+  },
+  {
+    "original": "Pᵢ=Aᵢ XOR Bᵢ",
+    "latex": "P_{i}=A_{i} XOR B_{i}"
+  },
+  {
+    "original": "Gᵢ=Aᵢ AND Bᵢ",
+    "latex": "G_{i}=A_{i} AND B_{i}"
+  },
+  {
+    "original": "Sᵢ=Pᵢ XOR Cᵢ",
+    "latex": "S_{i}=P_{i} XOR C_{i}"
+  },
+  {
+    "original": "₁=Gᵢ OR (Pᵢ AND Cᵢ)",
+    "latex": "_{1}=G_{i} OR (P_{i} AND C_{i})"
+  },
+  {
+    "original": "X−Y=X+NOT(Y)+1",
+    "latex": "X-Y=X+NOT(Y)+1"
+  },
+  {
+    "original": "Sub=0",
+    "latex": "Sub=0"
+  },
+  {
+    "original": "Cin=0",
+    "latex": "Cin=0"
+  },
+  {
+    "original": "Sub=1",
+    "latex": "Sub=1"
+  },
+  {
+    "original": "Cin=1",
+    "latex": "Cin=1"
+  },
+  {
+    "original": "Cin=1",
+    "latex": "Cin=1"
+  },
+  {
+    "original": "X=0101",
+    "latex": "X=0101"
+  },
+  {
+    "original": "Y=1110",
+    "latex": "Y=1110"
+  },
+  {
+    "original": "X−Y=0111=7",
+    "latex": "X-Y=0111=7"
+  },
+  {
+    "original": "OF=0",
+    "latex": "OF=0"
+  },
+  {
+    "original": "5−14",
+    "latex": "5-14"
+  },
+  {
+    "original": "CF=1",
+    "latex": "CF=1"
+  },
+  {
+    "original": "OF=Cₙ XOR Cₙ",
+    "latex": "OF=C_{n} XOR C_{n}"
+  },
+  {
+    "original": "0111+0001",
+    "latex": "0111+0001"
+  },
+  {
+    "original": "7+1",
+    "latex": "7+1"
+  },
+  {
+    "original": "OF=1",
+    "latex": "OF=1"
+  },
+  {
+    "original": "7+1=8",
+    "latex": "7+1=8"
+  },
+  {
+    "original": "CF=0",
+    "latex": "CF=0"
+  },
+  {
+    "original": "2^k",
+    "latex": "2^{k}"
+  },
+  {
+    "original": "N=(−1)^s×M×R^E",
+    "latex": "N=(-1)^{s}\\times M\\times R^{E}"
+  },
+  {
+    "original": "1.25×10³",
+    "latex": "1.25\\times 10^{3}"
+  },
+  {
+    "original": "e=1～254",
+    "latex": "e=1\\sim 254"
+  },
+  {
+    "original": "double e=1～2046",
+    "latex": "double e=1\\sim 2046"
+  },
+  {
+    "original": "e=0",
+    "latex": "e=0"
+  },
+  {
+    "original": "f=0",
+    "latex": "f=0"
+  },
+  {
+    "original": "e=0",
+    "latex": "e=0"
+  },
+  {
+    "original": "f≠0",
+    "latex": "f\\ne 0"
+  },
+  {
+    "original": "(−1)^s×0.f×2^−126",
+    "latex": "(-1)^{s}\\times 0.f\\times 2^-126"
+  },
+  {
+    "original": "f=0",
+    "latex": "f=0"
+  },
+  {
+    "original": "f≠0",
+    "latex": "f\\ne 0"
+  },
+  {
+    "original": "−8.25=−1000.01B=−1.00001B×2³",
+    "latex": "-8.25=-1000.01B=-1.00001B\\times 2^{3}"
+  },
+  {
+    "original": "s=1",
+    "latex": "s=1"
+  },
+  {
+    "original": "e=130=10000010B",
+    "latex": "e=130=10000010B"
+  },
+  {
+    "original": "f=00001",
+    "latex": "f=00001"
+  },
+  {
+    "original": "2^−126",
+    "latex": "2^-126"
+  },
+  {
+    "original": "2^−149",
+    "latex": "2^-149"
+  },
+  {
+    "original": "(2−2^−23)×2^127=2^128−2^104",
+    "latex": "(2-2^-23)\\times 2^{127}=2^{128}-2^{104}"
+  },
+  {
+    "original": "2^−1022",
+    "latex": "2^-1022"
+  },
+  {
+    "original": "2^−1074",
+    "latex": "2^-1074"
+  },
+  {
+    "original": "(2−2^−52)×2^1023",
+    "latex": "(2-2^-52)\\times 2^{1023}"
+  },
+  {
+    "original": "≤2²⁴",
+    "latex": "\\le 2^{24}"
+  },
+  {
+    "original": "2⁵³",
+    "latex": "2^{53}"
+  },
+  {
+    "original": "1.1×2² + 1.0×2⁰",
+    "latex": "1.1\\times 2^{2} + 1.0\\times 2^{0}"
+  },
+  {
+    "original": "0.01×2²",
+    "latex": "0.01\\times 2^{2}"
+  },
+  {
+    "original": "1.11×2²",
+    "latex": "1.11\\times 2^{2}"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "2^a",
+    "latex": "2^{a}"
+  },
+  {
+    "original": "=2^MAR×MDR",
+    "latex": "=2^{MAR}\\times MDR"
+  },
+  {
+    "original": "≈",
+    "latex": "\\approx"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "4M×4b",
+    "latex": "4M\\times 4b"
+  },
+  {
+    "original": "2²²",
+    "latex": "2^{22}"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "16K×4",
+    "latex": "16K\\times 4"
+  },
+  {
+    "original": "64K×8",
+    "latex": "64K\\times 8"
+  },
+  {
+    "original": "=A mod m",
+    "latex": "=A \\bmod  m"
+  },
+  {
+    "original": "=⌊A/m⌋",
+    "latex": "=\\lfloor \\frac{A}{m}\\rfloor"
+  },
+  {
+    "original": "=⌊A/L⌋",
+    "latex": "=\\lfloor \\frac{A}{L}\\rfloor"
+  },
+  {
+    "original": "=A mod L",
+    "latex": "=A \\bmod  L"
+  },
+  {
+    "original": "m≥⌈T/r⌉",
+    "latex": "m\\ge \\lceil \\frac{T}{r}\\rceil"
+  },
+  {
+    "original": "T+(n−1)r",
+    "latex": "T+(n-1)r"
+  },
+  {
+    "original": "(A+ks) mod m",
+    "latex": "(A+ks) \\bmod  m"
+  },
+  {
+    "original": "T=40ns",
+    "latex": "T=40ns"
+  },
+  {
+    "original": "r=10ns",
+    "latex": "r=10ns"
+  },
+  {
+    "original": "40+3×10=70ns",
+    "latex": "40+3\\times 10=70ns"
+  },
+  {
+    "original": "≈",
+    "latex": "\\approx"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "=b/(rN)",
+    "latex": "=\\frac{b}{rN}"
+  },
+  {
+    "original": "7200rpm=120",
+    "latex": "7200rpm=120"
+  },
+  {
+    "original": "H=",
+    "latex": "H="
+  },
+  {
+    "original": "Tc+(1−H)Tm",
+    "latex": "Tc+(1-H)Tm"
+  },
+  {
+    "original": "H·Tc+(1−H)·Tmiss",
+    "latex": "H\\cdot Tc+(1-H)\\cdot Tmiss"
+  },
+  {
+    "original": "Tc=2ns",
+    "latex": "Tc=2ns"
+  },
+  {
+    "original": "Tm=40ns",
+    "latex": "Tm=40ns"
+  },
+  {
+    "original": "2+0.05×40=4ns",
+    "latex": "2+0.05\\times 40=4ns"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "=C/B",
+    "latex": "=\\frac{C}{B}"
+  },
+  {
+    "original": "=C/(Br)",
+    "latex": "=\\frac{C}{Br}"
+  },
+  {
+    "original": "Tag=",
+    "latex": "Tag="
+  },
+  {
+    "original": "=Tag",
+    "latex": "=Tag"
+  },
+  {
+    "original": "⌈log₂r⌉",
+    "latex": "\\lceil log_{2}r\\rceil"
+  },
+  {
+    "original": "**=",
+    "latex": "**="
+  },
+  {
+    "original": "64×8=512bit",
+    "latex": "64\\times 8=512bit"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "OP+A₁",
+    "latex": "OP+A_{1}"
+  },
+  {
+    "original": "64(16−P)−⌈Q/64⌉",
+    "latex": "64(16-P)-\\lceil \\frac{Q}{64}\\rceil"
+  },
+  {
+    "original": "⌈Q/64⌉",
+    "latex": "\\lceil \\frac{Q}{64}\\rceil"
+  },
+  {
+    "original": "PC+4",
+    "latex": "PC+4"
+  },
+  {
+    "original": "PC+1",
+    "latex": "PC+1"
+  },
+  {
+    "original": "D=A",
+    "latex": "D=A"
+  },
+  {
+    "original": "EA=A",
+    "latex": "EA=A"
+  },
+  {
+    "original": "D=M[A]",
+    "latex": "D=M[A]"
+  },
+  {
+    "original": "EA=M[A]",
+    "latex": "EA=M[A]"
+  },
+  {
+    "original": "D=M[EA]",
+    "latex": "D=M[EA]"
+  },
+  {
+    "original": "D=(Rᵢ)",
+    "latex": "D=(R_{i})"
+  },
+  {
+    "original": "EA=(Rᵢ)",
+    "latex": "EA=(R_{i})"
+  },
+  {
+    "original": "D=M[EA]",
+    "latex": "D=M[EA]"
+  },
+  {
+    "original": "EA=",
+    "latex": "EA="
+  },
+  {
+    "original": "EA=(BR)+A",
+    "latex": "EA=(BR)+A"
+  },
+  {
+    "original": "EA=A+(IX)",
+    "latex": "EA=A+(IX)"
+  },
+  {
+    "original": "A=100",
+    "latex": "A=100"
+  },
+  {
+    "original": "M[100]=500",
+    "latex": "M[100]=500"
+  },
+  {
+    "original": "M[500]=7",
+    "latex": "M[500]=7"
+  },
+  {
+    "original": "ZF=1",
+    "latex": "ZF=1"
+  },
+  {
+    "original": "ZF=0",
+    "latex": "ZF=0"
+  },
+  {
+    "original": "SF≠OF",
+    "latex": "SF\\ne OF"
+  },
+  {
+    "original": "ZF=0",
+    "latex": "ZF=0"
+  },
+  {
+    "original": "SF=OF",
+    "latex": "SF=OF"
+  },
+  {
+    "original": "CF=1",
+    "latex": "CF=1"
+  },
+  {
+    "original": "CF=0",
+    "latex": "CF=0"
+  },
+  {
+    "original": "ZF=0",
+    "latex": "ZF=0"
+  },
+  {
+    "original": "CPU=",
+    "latex": "CPU="
+  },
+  {
+    "original": "⌈log₂A⌉",
+    "latex": "\\lceil log_{2}A\\rceil"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "=1",
+    "latex": "=1"
+  },
+  {
+    "original": "EN=0",
+    "latex": "EN=0"
+  },
+  {
+    "original": "R1+R2",
+    "latex": "R1+R2"
+  },
+  {
+    "original": "CPI=1",
+    "latex": "CPI=1"
+  },
+  {
+    "original": "μPC+1",
+    "latex": "\\mu PC+1"
+  },
+  {
+    "original": "⌈log₂(k+1)⌉",
+    "latex": "\\lceil log_{2}(k+1)\\rceil"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "1=",
+    "latex": "1="
+  },
+  {
+    "original": "A=1111",
+    "latex": "A=1111"
+  },
+  {
+    "original": "B=0100",
+    "latex": "B=0100"
+  },
+  {
+    "original": "C=0110",
+    "latex": "C=0110"
+  },
+  {
+    "original": "D=0111",
+    "latex": "D=0111"
+  },
+  {
+    "original": "1=",
+    "latex": "1="
+  },
+  {
+    "original": "T=(k+n−1)Δt",
+    "latex": "T=(k+n-1)\\Delta t"
+  },
+  {
+    "original": "=n/T",
+    "latex": "=\\frac{n}{T}"
+  },
+  {
+    "original": "≈1/Δt",
+    "latex": "\\approx 1/\\Delta t"
+  },
+  {
+    "original": "S=kn/(k+n−1)",
+    "latex": "S=\\frac{kn}{k+n-1}"
+  },
+  {
+    "original": "T=(k+n−1+s)Δt",
+    "latex": "T=(k+n-1+s)\\Delta t"
+  },
+  {
+    "original": "f=1/Tclk",
+    "latex": "f=\\frac{1}{Tclk}"
+  },
+  {
+    "original": "=f/n",
+    "latex": "=\\frac{f}{n}"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "4B×5MHz=20MB/s",
+    "latex": "4B\\times 5MHz=20MB/s"
+  },
+  {
+    "original": "5×10⁶",
+    "latex": "5\\times 10^{6}"
+  },
+  {
+    "original": "≤B/R",
+    "latex": "\\le \\frac{B}{R}"
+  },
+  {
+    "original": "≈(R/B)×c×CPI/f",
+    "latex": "\\approx (\\frac{R}{B})\\times c\\times \\frac{CPI}{f}"
+  },
+  {
+    "original": "CPI=4",
+    "latex": "CPI=4"
+  },
+  {
+    "original": "i*=2",
+    "latex": "i*=2"
+  },
+  {
+    "original": "O(log n)",
+    "latex": "O(\\log  n)"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "O(log n)",
+    "latex": "O(\\log  n)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "O(n²)",
+    "latex": "O(n^{2})"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "n−i+1",
+    "latex": "n-i+1"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "i+1～n",
+    "latex": "i+1\\sim n"
+  },
+  {
+    "original": "n−i",
+    "latex": "n-i"
+  },
+  {
+    "original": "(n−1)/2",
+    "latex": "\\frac{n-1}{2}"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "O(m+n)",
+    "latex": "O(m+n)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "C₃=5",
+    "latex": "C_{3}=5"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "(a+b)*c+d−(e+g)*h",
+    "latex": "(a+b)*c+d-(e+g)*h"
+  },
+  {
+    "original": "ab+c*d+eg+h*−",
+    "latex": "ab+c*d+eg+h*-"
+  },
+  {
+    "original": "front == rear",
+    "latex": "front == rear"
+  },
+  {
+    "original": "(rear+1)%M == front",
+    "latex": "(rear+1)\\%M == front"
+  },
+  {
+    "original": "rear=(rear+1)%M",
+    "latex": "rear=(rear+1)\\%M"
+  },
+  {
+    "original": "front=(front+1)%M",
+    "latex": "front=(front+1)\\%M"
+  },
+  {
+    "original": "(rear−front+M)%M",
+    "latex": "(rear-front+M)\\%M"
+  },
+  {
+    "original": "M−1",
+    "latex": "M-1"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "M=5",
+    "latex": "M=5"
+  },
+  {
+    "original": "front=3",
+    "latex": "front=3"
+  },
+  {
+    "original": "rear=1",
+    "latex": "rear=1"
+  },
+  {
+    "original": "(1−3+5)%5=3",
+    "latex": "(1-3+5)\\%5=3"
+  },
+  {
+    "original": "rear=2",
+    "latex": "rear=2"
+  },
+  {
+    "original": "(rear+1)%5=front",
+    "latex": "(rear+1)\\%5=front"
+  },
+  {
+    "original": "LOC(i,j)=a+(im+j)L",
+    "latex": "LOC(i,j)=a+(im+j)L"
+  },
+  {
+    "original": "a+(jn+i)L",
+    "latex": "a+(jn+i)L"
+  },
+  {
+    "original": "i≥j",
+    "latex": "i\\ge j"
+  },
+  {
+    "original": "k=i(i−1)/2+j−1",
+    "latex": "k=i(i-1)/2+j-1"
+  },
+  {
+    "original": "a+kL",
+    "latex": "a+kL"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "i(i−1)/2",
+    "latex": "i(i-1)/2"
+  },
+  {
+    "original": "j−1",
+    "latex": "j-1"
+  },
+  {
+    "original": "1+2=3",
+    "latex": "1+2=3"
+  },
+  {
+    "original": "LOC(i,j,k)=a+((i·d₂+j)·d₃+k)L",
+    "latex": "LOC(i,j,k)=a+((i\\cdot d_{2}+j)\\cdot d_{3}+k)L"
+  },
+  {
+    "original": "LOC(i,j,k)=a+(i+d₁(j+d₂k))L",
+    "latex": "LOC(i,j,k)=a+(i+d_{1}(j+d_{2}k))L"
+  },
+  {
+    "original": "O(nm)",
+    "latex": "O(nm)"
+  },
+  {
+    "original": "next O(m)",
+    "latex": "next O(m)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "O(n+m)",
+    "latex": "O(n+m)"
+  },
+  {
+    "original": "next[1]=0",
+    "latex": "next[1]=0"
+  },
+  {
+    "original": "j=0",
+    "latex": "j=0"
+  },
+  {
+    "original": "P[1..j−1]",
+    "latex": "P[1..j-1]"
+  },
+  {
+    "original": "P=ababaa",
+    "latex": "P=ababaa"
+  },
+  {
+    "original": "P[j]==P[next[j]]",
+    "latex": "P[j]==P[next[j]]"
+  },
+  {
+    "original": "nextval[j]=nextval[next[j]]",
+    "latex": "nextval[j]=nextval[next[j]]"
+  },
+  {
+    "original": "nextval[1]=0",
+    "latex": "nextval[1]=0"
+  },
+  {
+    "original": "P=ababaa",
+    "latex": "P=ababaa"
+  },
+  {
+    "original": "next[5]=3",
+    "latex": "next[5]=3"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "n−1",
+    "latex": "n-1"
+  },
+  {
+    "original": "k≥1",
+    "latex": "k\\ge 1"
+  },
+  {
+    "original": "n−k+1",
+    "latex": "n-k+1"
+  },
+  {
+    "original": "2^(i−1)",
+    "latex": "2^{i-1}"
+  },
+  {
+    "original": "2^h−1",
+    "latex": "2^{h}-1"
+  },
+  {
+    "original": "n₀=n₂+1",
+    "latex": "n_{0}=n_{2}+1"
+  },
+  {
+    "original": "⌊log₂n⌋+1=⌈log₂(n+1)⌉",
+    "latex": "\\lfloor log_{2}n\\rfloor +1=\\lceil log_{2}(n+1)\\rceil"
+  },
+  {
+    "original": "2i+1",
+    "latex": "2i+1"
+  },
+  {
+    "original": "⌊i/2⌋",
+    "latex": "\\lfloor \\frac{i}{2}\\rfloor"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "O(h)",
+    "latex": "O(h)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "n−1",
+    "latex": "n-1"
+  },
+  {
+    "original": "n+1",
+    "latex": "n+1"
+  },
+  {
+    "original": "ltag=0",
+    "latex": "ltag=0"
+  },
+  {
+    "original": "ltag=1",
+    "latex": "ltag=1"
+  },
+  {
+    "original": "rtag=1",
+    "latex": "rtag=1"
+  },
+  {
+    "original": "rtag=0",
+    "latex": "rtag=0"
+  },
+  {
+    "original": "rtag=1",
+    "latex": "rtag=1"
+  },
+  {
+    "original": "rtag=0",
+    "latex": "rtag=0"
+  },
+  {
+    "original": "=Σwᵢlᵢ",
+    "latex": "=\\sum w_{i}l_{i}"
+  },
+  {
+    "original": "n−1",
+    "latex": "n-1"
+  },
+  {
+    "original": "2n−1",
+    "latex": "2n-1"
+  },
+  {
+    "original": "=WPL/Σwᵢ",
+    "latex": "=WPL/\\sum w_{i}"
+  },
+  {
+    "original": "WPL=1×2+2×2+4×1=10",
+    "latex": "WPL=1\\times 2+2\\times 2+4\\times 1=10"
+  },
+  {
+    "original": "3+7",
+    "latex": "3+7"
+  },
+  {
+    "original": "2i+1",
+    "latex": "2i+1"
+  },
+  {
+    "original": "O(log n)",
+    "latex": "O(\\log  n)"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "G=(V,E)",
+    "latex": "G=(V,E)"
+  },
+  {
+    "original": "n(n−1)/2",
+    "latex": "n\\frac{n-1}{2}"
+  },
+  {
+    "original": "n(n−1)",
+    "latex": "n(n-1)"
+  },
+  {
+    "original": "n−1",
+    "latex": "n-1"
+  },
+  {
+    "original": "> (n−1)(n−2)/2",
+    "latex": "> (n-1)(n-2)/2"
+  },
+  {
+    "original": "n−1",
+    "latex": "n-1"
+  },
+  {
+    "original": "n×n",
+    "latex": "n\\times n"
+  },
+  {
+    "original": "O(n²)",
+    "latex": "O(n^{2})"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "O(n+e)",
+    "latex": "O(n+e)"
+  },
+  {
+    "original": "O(n+e)",
+    "latex": "O(n+e)"
+  },
+  {
+    "original": "O(n²)",
+    "latex": "O(n^{2})"
+  },
+  {
+    "original": "O(n+e)",
+    "latex": "O(n+e)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "n−1",
+    "latex": "n-1"
+  },
+  {
+    "original": "O(n²)",
+    "latex": "O(n^{2})"
+  },
+  {
+    "original": "n−1",
+    "latex": "n-1"
+  },
+  {
+    "original": "O(e log e)",
+    "latex": "O(e \\log  e)"
+  },
+  {
+    "original": "O(n+e)",
+    "latex": "O(n+e)"
+  },
+  {
+    "original": "O(n²)",
+    "latex": "O(n^{2})"
+  },
+  {
+    "original": "d[i][j]=min(d[i][j],d[i][k]+d[k][j])",
+    "latex": "d[i][j]=\\min (d[i][j],d[i][k]+d[k][j])"
+  },
+  {
+    "original": "O(n³)",
+    "latex": "O(n^{3})"
+  },
+  {
+    "original": "=ΣpᵢCᵢ**",
+    "latex": "=\\sum p_{i}C_{i}**"
+  },
+  {
+    "original": "ASL=(n+1)/2",
+    "latex": "ASL=\\frac{n+1}{2}"
+  },
+  {
+    "original": "n+1",
+    "latex": "n+1"
+  },
+  {
+    "original": "O(log n)",
+    "latex": "O(\\log  n)"
+  },
+  {
+    "original": "ASL=(b+1)/2+(s+1)/2",
+    "latex": "ASL=\\frac{b+1}{2}+\\frac{s+1}{2}"
+  },
+  {
+    "original": "b·s=n",
+    "latex": "b\\cdot s=n"
+  },
+  {
+    "original": "s≈√n",
+    "latex": "s\\approx \\sqrt{n}"
+  },
+  {
+    "original": "n+1",
+    "latex": "n+1"
+  },
+  {
+    "original": "ASL=5/3",
+    "latex": "ASL=\\frac{5}{3}"
+  },
+  {
+    "original": "O(h)",
+    "latex": "O(h)"
+  },
+  {
+    "original": "O(log n)",
+    "latex": "O(\\log  n)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "≤1",
+    "latex": "\\le 1"
+  },
+  {
+    "original": "O(log n)",
+    "latex": "O(\\log  n)"
+  },
+  {
+    "original": "N(h)=N(h−1)+N(h−2)+1",
+    "latex": "N(h)=N(h-1)+N(h-2)+1"
+  },
+  {
+    "original": "N(0)=0",
+    "latex": "N(0)=0"
+  },
+  {
+    "original": "N(1)=1",
+    "latex": "N(1)=1"
+  },
+  {
+    "original": "≤",
+    "latex": "\\le"
+  },
+  {
+    "original": "≤2log₂(n+1)",
+    "latex": "\\le 2log_{2}(n+1)"
+  },
+  {
+    "original": "O(log n)",
+    "latex": "O(\\log  n)"
+  },
+  {
+    "original": "≤1",
+    "latex": "\\le 1"
+  },
+  {
+    "original": "k−1",
+    "latex": "k-1"
+  },
+  {
+    "original": "m−1",
+    "latex": "m-1"
+  },
+  {
+    "original": "⌈m/2⌉",
+    "latex": "\\lceil \\frac{m}{2}\\rceil"
+  },
+  {
+    "original": "⌈m/2⌉−1",
+    "latex": "\\lceil \\frac{m}{2}\\rceil -1"
+  },
+  {
+    "original": "m≥3",
+    "latex": "m\\ge 3"
+  },
+  {
+    "original": "q=⌈m/2⌉",
+    "latex": "q=\\lceil \\frac{m}{2}\\rceil"
+  },
+  {
+    "original": "2q^(h−1)−1≤n≤m^h−1",
+    "latex": "2q^{h-1}-1\\le n\\le m^{h}-1"
+  },
+  {
+    "original": "⌈m/2⌉",
+    "latex": "\\lceil \\frac{m}{2}\\rceil"
+  },
+  {
+    "original": "k−1",
+    "latex": "k-1"
+  },
+  {
+    "original": "**α=",
+    "latex": "**\\alpha ="
+  },
+  {
+    "original": "H+1",
+    "latex": "H+1"
+  },
+  {
+    "original": "H+2",
+    "latex": "H+2"
+  },
+  {
+    "original": "H(key)=key mod p",
+    "latex": "H(key)=key \\bmod  p"
+  },
+  {
+    "original": "H(k)=k mod 7",
+    "latex": "H(k)=k \\bmod  7"
+  },
+  {
+    "original": "n / n² / n²",
+    "latex": "n / n^{2} / n^{2}"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "O(n log n)",
+    "latex": "O(n \\log  n)"
+  },
+  {
+    "original": "O(n²)",
+    "latex": "O(n^{2})"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "n^1.3",
+    "latex": "n^{1}.3"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "n / n² / n²",
+    "latex": "n / n^{2} / n^{2}"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "n log n / n log n / n²",
+    "latex": "n \\log  n / n \\log  n / n^{2}"
+  },
+  {
+    "original": "O(log n)",
+    "latex": "O(\\log  n)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "n² / n² / n²",
+    "latex": "n^{2} / n^{2} / n^{2}"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "O(1)",
+    "latex": "O(1)"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "O(d(n+r))",
+    "latex": "O(d(n+r))"
+  },
+  {
+    "original": "O(r)",
+    "latex": "O(r)"
+  },
+  {
+    "original": "O(n+r)",
+    "latex": "O(n+r)"
+  },
+  {
+    "original": "O(·)",
+    "latex": "O(\\cdot )"
+  },
+  {
+    "original": "≥",
+    "latex": "\\ge"
+  },
+  {
+    "original": "O(n)",
+    "latex": "O(n)"
+  },
+  {
+    "original": "O(n log n)",
+    "latex": "O(n \\log  n)"
+  },
+  {
+    "original": "⌈logₖr⌉",
+    "latex": "\\lceil log_{k}r\\rceil"
+  },
+  {
+    "original": "O(log k)",
+    "latex": "O(\\log  k)"
+  },
+  {
+    "original": "(r−1) mod (k−1)≠0",
+    "latex": "(r-1) \\bmod  (k-1)\\ne 0"
+  },
+  {
+    "original": "=(n+h−1)L/R+hd",
+    "latex": "=(n+h-1)\\frac{L}{R}+hd"
+  },
+  {
+    "original": "hD/R+hd",
+    "latex": "\\frac{hD}{R}+hd"
+  },
+  {
+    "original": "1B=8bit",
+    "latex": "1B=8bit"
+  },
+  {
+    "original": "8000/10⁶=8ms",
+    "latex": "\\frac{8000}{10^{6}}=8ms"
+  },
+  {
+    "original": "2×10⁸m/s",
+    "latex": "2\\times 10^{8}m/s"
+  },
+  {
+    "original": "=PCI",
+    "latex": "=PCI"
+  },
+  {
+    "original": "R=B·log₂V",
+    "latex": "R=B\\cdot log_{2}V"
+  },
+  {
+    "original": "W=f₂−f₁",
+    "latex": "W=f_{2}-f_{1}"
+  },
+  {
+    "original": "C=2W log₂V bit/s",
+    "latex": "C=2W log_{2}V bit/s"
+  },
+  {
+    "original": "C=W log₂(1+S/N)",
+    "latex": "C=W log_{2}(1+\\frac{S}{N})"
+  },
+  {
+    "original": "S/N=10^(dB/10)",
+    "latex": "\\frac{S}{N}=10^{\\frac{dB}{10}}"
+  },
+  {
+    "original": "1+S/N",
+    "latex": "1+\\frac{S}{N}"
+  },
+  {
+    "original": "W=3000Hz",
+    "latex": "W=3000Hz"
+  },
+  {
+    "original": "S/N=1000",
+    "latex": "\\frac{S}{N}=1000"
+  },
+  {
+    "original": "C=3000log₂(1001)≈29.9kb/s",
+    "latex": "C=3000log_{2}(1001)\\approx 29.9kb/s"
+  },
+  {
+    "original": "d−1",
+    "latex": "d-1"
+  },
+  {
+    "original": "⌊(d−1)/2⌋",
+    "latex": "\\lfloor \\frac{d-1}{2}\\rfloor"
+  },
+  {
+    "original": "r+1",
+    "latex": "r+1"
+  },
+  {
+    "original": "1101000 XOR 1011000=0110000",
+    "latex": "1101000 XOR 1011000=0110000"
+  },
+  {
+    "original": "2^k≥n+k+1",
+    "latex": "2^{k}\\ge n+k+1"
+  },
+  {
+    "original": "Wr=1",
+    "latex": "Wr=1"
+  },
+  {
+    "original": "Wt≤2^n−1",
+    "latex": "Wt\\le 2^{n}-1"
+  },
+  {
+    "original": "n=3",
+    "latex": "n=3"
+  },
+  {
+    "original": "Wt+Wr≤2^n",
+    "latex": "Wt+Wr\\le 2^{n}"
+  },
+  {
+    "original": "≤2^(n−1)",
+    "latex": "\\le 2^{n-1}"
+  },
+  {
+    "original": "Wt≤2^n−Wr",
+    "latex": "Wt\\le 2^{n}-Wr"
+  },
+  {
+    "original": "TD=L/R",
+    "latex": "TD=\\frac{L}{R}"
+  },
+  {
+    "original": "U=TD/(TD+RTT+TA)",
+    "latex": "U=\\frac{TD}{TD+RTT+TA}"
+  },
+  {
+    "original": "U=min(1,W·TD/(TD+RTT+TA))",
+    "latex": "U=\\min (1,W\\cdot \\frac{TD}{TD+RTT+TA})"
+  },
+  {
+    "original": "≈U×R",
+    "latex": "\\approx U\\times R"
+  },
+  {
+    "original": "W·TD",
+    "latex": "W\\cdot TD"
+  },
+  {
+    "original": "(R·S)/m",
+    "latex": "\\frac{R\\cdot S}{m}"
+  },
+  {
+    "original": "S=(1,1,1,1)",
+    "latex": "S=(1,1,1,1)"
+  },
+  {
+    "original": "R=(2,0,2,0)",
+    "latex": "R=(2,0,2,0)"
+  },
+  {
+    "original": "1−p",
+    "latex": "1-p"
+  },
+  {
+    "original": "≥2τR",
+    "latex": "\\ge 2\\tau R"
+  },
+  {
+    "original": "512bit=64B",
+    "latex": "512bit=64B"
+  },
+  {
+    "original": "k=min(j,10)",
+    "latex": "k=\\min (j,10)"
+  },
+  {
+    "original": "r∈[0,2^k−1]",
+    "latex": "r\\in [0,2^{k}-1]"
+  },
+  {
+    "original": "r·2τ",
+    "latex": "r\\cdot 2\\tau"
+  },
+  {
+    "original": "RTS Duration=3SIFS+TCTS+TDATA+TACK",
+    "latex": "RTS Duration=3SIFS+TCTS+TDATA+TACK"
+  },
+  {
+    "original": "CTS=2SIFS+TDATA+TACK",
+    "latex": "CTS=2SIFS+TDATA+TACK"
+  },
+  {
+    "original": "DATA=SIFS+TACK",
+    "latex": "DATA=SIFS+TACK"
+  },
+  {
+    "original": "46～1500B+FCS 4B",
+    "latex": "46\\sim 1500B+FCS 4B"
+  },
+  {
+    "original": "ToDS=FromDS=1",
+    "latex": "ToDS=FromDS=1"
+  },
+  {
+    "original": "=1",
+    "latex": "=1"
+  },
+  {
+    "original": "=1",
+    "latex": "=1"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "MF=1",
+    "latex": "MF=1"
+  },
+  {
+    "original": "=0",
+    "latex": "=0"
+  },
+  {
+    "original": "MF=1",
+    "latex": "MF=1"
+  },
+  {
+    "original": "MF=1",
+    "latex": "MF=1"
+  },
+  {
+    "original": "=1480/8=185",
+    "latex": "=\\frac{1480}{8}=185"
+  },
+  {
+    "original": "/(p+s)",
+    "latex": "/(p+s)"
+  },
+  {
+    "original": "2^s",
+    "latex": "2^{s}"
+  },
+  {
+    "original": "2^(32−p−s)−2",
+    "latex": "2^{32-p-s}-2"
+  },
+  {
+    "original": "=IP AND",
+    "latex": "=IP AND"
+  },
+  {
+    "original": "**ack=N",
+    "latex": "**ack=N"
+  },
+  {
+    "original": "=1",
+    "latex": "=1"
+  },
+  {
+    "original": "SYN=1",
+    "latex": "SYN=1"
+  },
+  {
+    "original": "seq=x",
+    "latex": "seq=x"
+  },
+  {
+    "original": "SYN=1",
+    "latex": "SYN=1"
+  },
+  {
+    "original": "ACK=1",
+    "latex": "ACK=1"
+  },
+  {
+    "original": "seq=y",
+    "latex": "seq=y"
+  },
+  {
+    "original": "ack=x+1",
+    "latex": "ack=x+1"
+  },
+  {
+    "original": "ACK=1",
+    "latex": "ACK=1"
+  },
+  {
+    "original": "seq=x+1",
+    "latex": "seq=x+1"
+  },
+  {
+    "original": "ack=y+1",
+    "latex": "ack=y+1"
+  },
+  {
+    "original": "x+1",
+    "latex": "x+1"
+  },
+  {
+    "original": "x+1",
+    "latex": "x+1"
+  },
+  {
+    "original": "FIN=1",
+    "latex": "FIN=1"
+  },
+  {
+    "original": "seq=x",
+    "latex": "seq=x"
+  },
+  {
+    "original": "ACK=1",
+    "latex": "ACK=1"
+  },
+  {
+    "original": "seq=y",
+    "latex": "seq=y"
+  },
+  {
+    "original": "ack=x+1",
+    "latex": "ack=x+1"
+  },
+  {
+    "original": "FIN=1",
+    "latex": "FIN=1"
+  },
+  {
+    "original": "ACK=1",
+    "latex": "ACK=1"
+  },
+  {
+    "original": "seq=z",
+    "latex": "seq=z"
+  },
+  {
+    "original": "ack=x+1",
+    "latex": "ack=x+1"
+  },
+  {
+    "original": "ACK=1",
+    "latex": "ACK=1"
+  },
+  {
+    "original": "seq=x+1",
+    "latex": "seq=x+1"
+  },
+  {
+    "original": "ack=z+1",
+    "latex": "ack=z+1"
+  },
+  {
+    "original": "RTT+2MSL",
+    "latex": "RTT+2MSL"
+  },
+  {
+    "original": "=(1−α)",
+    "latex": "=(1-\\alpha )"
+  },
+  {
+    "original": "seq=100",
+    "latex": "seq=100"
+  },
+  {
+    "original": "ack=150",
+    "latex": "ack=150"
+  },
+  {
+    "original": "=min(rwnd,cwnd)",
+    "latex": "=\\min (rwnd,cwnd)"
+  },
+  {
+    "original": "rwnd=0",
+    "latex": "rwnd=0"
+  },
+  {
+    "original": "rwnd=6000B",
+    "latex": "rwnd=6000B"
+  },
+  {
+    "original": "cwnd=4000B",
+    "latex": "cwnd=4000B"
+  },
+  {
+    "original": "cwnd=1MSS",
+    "latex": "cwnd=1MSS"
+  },
+  {
+    "original": "ssthresh=",
+    "latex": "ssthresh="
+  },
+  {
+    "original": "cwnd=ssthresh",
+    "latex": "cwnd=ssthresh"
+  },
+  {
+    "original": "cwnd=ssthresh+3MSS",
+    "latex": "cwnd=ssthresh+3MSS"
+  },
+  {
+    "original": "2(N+1)RTT",
+    "latex": "2(N+1)RTT"
+  },
+  {
+    "original": "(N+2)RTT",
+    "latex": "(N+2)RTT"
+  },
+  {
+    "original": "(N+1)RTT",
+    "latex": "(N+1)RTT"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "=10",
+    "latex": "=10"
+  },
+  {
+    "original": "=10/4=2.5",
+    "latex": "=\\frac{10}{4}=2.5"
+  },
+  {
+    "original": "=10−4−2=4",
+    "latex": "=10-4-2=4"
+  },
+  {
+    "original": "(6+3)/3=3",
+    "latex": "\\frac{6+3}{3}=3"
+  },
+  {
+    "original": "flag=true",
+    "latex": "flag=true"
+  },
+  {
+    "original": "flag[i]=true",
+    "latex": "flag[i]=true"
+  },
+  {
+    "original": "turn=j",
+    "latex": "turn=j"
+  },
+  {
+    "original": "flag[j]=false",
+    "latex": "flag[j]=false"
+  },
+  {
+    "original": "flag+turn",
+    "latex": "flag+turn"
+  },
+  {
+    "original": "key=true",
+    "latex": "key=true"
+  },
+  {
+    "original": "lock=false",
+    "latex": "lock=false"
+  },
+  {
+    "original": "lock=false",
+    "latex": "lock=false"
+  },
+  {
+    "original": "value=0",
+    "latex": "value=0"
+  },
+  {
+    "original": "value=−1",
+    "latex": "value=-1"
+  },
+  {
+    "original": "value=0",
+    "latex": "value=0"
+  },
+  {
+    "original": "semaphore mutex=1",
+    "latex": "semaphore mutex=1"
+  },
+  {
+    "original": "s=0",
+    "latex": "s=0"
+  },
+  {
+    "original": "empty=n",
+    "latex": "empty=n"
+  },
+  {
+    "original": "full=0",
+    "latex": "full=0"
+  },
+  {
+    "original": "mutex=1",
+    "latex": "mutex=1"
+  },
+  {
+    "original": "rw=1",
+    "latex": "rw=1"
+  },
+  {
+    "original": "mutex=1",
+    "latex": "mutex=1"
+  },
+  {
+    "original": "count=0",
+    "latex": "count=0"
+  },
+  {
+    "original": "(i+1)%n",
+    "latex": "(i+1)\\%n"
+  },
+  {
+    "original": "n−1",
+    "latex": "n-1"
+  },
+  {
+    "original": "m≥n(k−1)+1",
+    "latex": "m\\ge n(k-1)+1"
+  },
+  {
+    "original": "Need=Max−Allocation",
+    "latex": "Need=Max-Allocation"
+  },
+  {
+    "original": "Available=1",
+    "latex": "Available=1"
+  },
+  {
+    "original": "0≤a",
+    "latex": "0\\le a"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "2^k",
+    "latex": "2^{k}"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "p=⌊A/P⌋",
+    "latex": "p=\\lfloor \\frac{A}{P}\\rfloor"
+  },
+  {
+    "original": "d=A mod P",
+    "latex": "d=A \\bmod  P"
+  },
+  {
+    "original": "PA=bP+d",
+    "latex": "PA=bP+d"
+  },
+  {
+    "original": "P=2^k",
+    "latex": "P=2^{k}"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "4KB=0x1000",
+    "latex": "4KB=0x1000"
+  },
+  {
+    "original": "9×0x1000+0x234=0x9234",
+    "latex": "9\\times 0x1000+0x234=0x9234"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "d≤length",
+    "latex": "d\\le length"
+  },
+  {
+    "original": "5. PA=bP+d",
+    "latex": "5. PA=bP+d"
+  },
+  {
+    "original": "32−12−10=10",
+    "latex": "32-12-10=10"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "≠",
+    "latex": "\\ne"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "(1−p)t+pF",
+    "latex": "(1-p)t+pF"
+  },
+  {
+    "original": "q=⌊B/a⌋",
+    "latex": "q=\\lfloor \\frac{B}{a}\\rfloor"
+  },
+  {
+    "original": "=(d+q+q²+q³)B",
+    "latex": "=(d+q+q^{2}+q^{3})B"
+  },
+  {
+    "original": "=⌊b/w⌋",
+    "latex": "=\\lfloor \\frac{b}{w}\\rfloor"
+  },
+  {
+    "original": "=b mod w",
+    "latex": "=b \\bmod  w"
+  },
+  {
+    "original": "19÷8",
+    "latex": "19\\div 8"
+  },
+  {
+    "original": "max(T,M+C)",
+    "latex": "\\max (T,M+C)"
+  },
+  {
+    "original": "M+C",
+    "latex": "M+C"
+  },
+  {
+    "original": "=",
+    "latex": "="
+  },
+  {
+    "original": "O(√n)",
+    "latex": "O(\\sqrt{n})"
+  },
+  {
+    "original": "n(n−1)/2",
+    "latex": "n(n-1)/2"
+  },
+  {
+    "original": "O(n²)",
+    "latex": "O(n^{2})"
+  },
+  {
+    "original": "n(n+1)/2",
+    "latex": "n(n+1)/2"
+  },
+  {
+    "original": "n(n+1)/2+1",
+    "latex": "n(n+1)/2+1"
+  },
+  {
+    "original": "abs(i−j)≤1",
+    "latex": "abs(i-j)\\le 1"
+  },
+  {
+    "original": "k=2i+j−3",
+    "latex": "k=2i+j-3"
+  },
+  {
+    "original": "3n−2",
+    "latex": "3n-2"
+  },
+  {
+    "original": "value≤0",
+    "latex": "value\\le 0"
+  },
+  {
+    "original": "base+a",
+    "latex": "base+a"
+  },
+  {
+    "original": "4. PA=base+d",
+    "latex": "4. PA=base+d"
+  }
+]

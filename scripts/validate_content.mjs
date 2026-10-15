@@ -2,6 +2,8 @@ import fs from 'node:fs'
 import path from 'node:path'
 import {marked} from 'marked'
 import katex from 'katex'
+import { installMathTokens } from '../src/markdown-math.js'
+installMathTokens(marked)
 const root=path.resolve('public'), catalog=JSON.parse(fs.readFileSync(path.join(root,'catalog.json'))).docs
 const index=JSON.parse(fs.readFileSync(path.join(root,'search-index.json')))
 let questions=0,formulas=0,images=0,errors=[];const targets=new Map(),ids=new Set()

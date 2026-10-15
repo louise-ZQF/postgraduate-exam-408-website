@@ -1,0 +1,26 @@
+[
+  {
+    "doc": "02-计算机组成原理",
+    "headingCount": 131,
+    "images": 137,
+    "orderedStepBlocks": 18
+  },
+  {
+    "doc": "01-数据结构",
+    "headingCount": 42,
+    "images": 31,
+    "orderedStepBlocks": 14
+  },
+  {
+    "doc": "04-计算机网络",
+    "headingCount": 99,
+    "images": 50,
+    "orderedStepBlocks": 10
+  },
+  {
+    "doc": "03-操作系统",
+    "headingCount": 115,
+    "images": 109,
+    "orderedStepBlocks": 16
+  }
+]
