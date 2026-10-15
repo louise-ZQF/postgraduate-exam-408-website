@@ -1,0 +1,22 @@
+{
+  "baseline": "7b8398b",
+  "documents": {
+    "01-数据结构.md": {
+      "headings": 42,
+      "image_occurrences": 31
+    },
+    "02-计算机组成原理.md": {
+      "headings": 131,
+      "image_occurrences": 137
+    },
+    "03-操作系统.md": {
+      "headings": 115,
+      "image_occurrences": 109
+    },
+    "04-计算机网络.md": {
+      "headings": 99,
+      "image_occurrences": 50
+    }
+  },
+  "question_sources_unchanged": true
+}

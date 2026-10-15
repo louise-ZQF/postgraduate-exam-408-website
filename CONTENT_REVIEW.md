@@ -1,10 +1,8 @@
 # 408 内容审查记录
 
+2026-10-15：加入逐步交互演示、预测后揭示的自测、文字分支流程和完整过程表；补充模型条件、变量与易混点，对最短路／排序重复讲解做合并，见 [INTERACTIVE_LEARNING.md](./INTERACTIVE_LEARNING.md)。
+
 2026-10-15：四科正文重构为编号步骤、箭头流程和规范公式，补齐关键路径完整计算及机器数分情况转换，修复Markdown破坏TeX的问题。范围继续依据2027大纲，目录、图示与题目内容保留；本轮说明见 [READABILITY_REFACTOR.md](./READABILITY_REFACTOR.md)。
-
-2026-10-14：根据用户提供的2027考查内容，对四科知识讲解按大纲增删并补齐列项，范围外独立扩展移除，保留范围内必要步骤、缩写释义、短例子与图示。当前范围以 [OUTLINE_ALIGNMENT.md](./OUTLINE_ALIGNMENT.md) 及 [OUTLINE_COVERAGE.json](./OUTLINE_COVERAGE.json) 为准；下列10月13日“保留361个标题”是历史阶段记录，本轮有按大纲增删和调整入口。
-
-2026-10-14：根据用户提供的2027考查内容，对四科知识讲解按大纲增删并补齐列项，范围外独立扩展移除，保留范围内必要步骤、缩写释义、短例子与图示。当前范围以 [OUTLINE_ALIGNMENT.md](./OUTLINE_ALIGNMENT.md) 及 [OUTLINE_COVERAGE.json](./OUTLINE_COVERAGE.json) 为准；下列10月13日“保留361个标题”是历史阶段记录，本轮有按大纲增删和调整入口。
 
 2026-10-14：根据用户提供的2027考查内容，对四科知识讲解按大纲增删并补齐列项，范围外独立扩展移除，保留范围内必要步骤、缩写释义、短例子与图示。当前范围以 [OUTLINE_ALIGNMENT.md](./OUTLINE_ALIGNMENT.md) 及 [OUTLINE_COVERAGE.json](./OUTLINE_COVERAGE.json) 为准；下列10月13日“保留361个标题”是历史阶段记录，本轮有按大纲增删和调整入口。
 

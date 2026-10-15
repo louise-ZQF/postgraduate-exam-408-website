@@ -126,6 +126,10 @@ async function renderDoc(id,anchor='',query='',force=false){
     readerReady=true
     editorModule??=await import('./editor.js');if(!nav.current())return
     await editorModule.mountEditor({host:app,doc,render:article.renderMarkdown,base:BASE,storage:safeStorage,notice:notify,signal:nav.signal,load:()=>resources.load(url('editable/'+encodeURIComponent(id)+'.json'),{signal:nav.signal})})
+    if(doc.group==='知识体系'){
+      const labs=await import('./learning/labs.js');if(!nav.current())return
+      labs.mountLearningLabs(container,id,{signal:nav.signal,render:article.renderMarkdown,base:BASE})
+    }
     tocObserver=new IntersectionObserver(entries=>{const hits=entries.filter(e=>e.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top);if(hits.length)markCurrent(hits[0].target.dataset.section)},{rootMargin:'-120px 0px -60% 0px'})
     container.querySelectorAll('[data-section]').forEach(h=>tocObserver.observe(h))
     markCurrent(doc.sections.find(s=>s.level>1)?.anchor||'')
