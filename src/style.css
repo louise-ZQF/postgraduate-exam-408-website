@@ -334,6 +334,54 @@ dialog::backdrop {background:#25211d70}
 @media(max-width:700px){.graph-phases{gap:4px;font-size:12px}.graph-phases span{padding:5px 7px}.graph-summary{grid-template-columns:1fr}.graph-summary strong{font-size:15px}.graph-calculation{font-size:15px!important}.lab-diagram--graph{padding:9px}}
 @media(max-width:700px){.lab-diagram .graph-svg{font-size:38px}.graph-node .graph-node-value{font-size:30px}.graph-node .graph-order-value{font-size:23px}.graph-weight text{font-size:32px}.graph-reject-mark{font-size:40px}}
 @media(prefers-reduced-motion:reduce){.graph-pulse{animation:none;display:none}}
+
+/* Persistent reading controls; the article DOM stays intact when the view changes. */
+.reader{grid-template-columns:minmax(0,1fr);padding-bottom:calc(var(--reading-bar-height,64px) + 36px)}
+.reader.has-reader-left{grid-template-columns:225px minmax(0,1fr)}
+.reader.has-reader-right{grid-template-columns:minmax(0,1fr) 205px}
+.reader.has-reader-left.has-reader-right{grid-template-columns:225px minmax(0,1fr) 205px}
+.reader-content{min-width:0;transform-origin:top left}
+.reader-content .wrong-reason{min-width:min(190px,100%);max-width:100%}
+.reader-content .practice-controls>.action,.reader-content .attempt-result{min-width:0;max-width:100%;overflow-wrap:anywhere;white-space:normal}
+.reading-bar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px}
+.reader-panel-controls,.reading-navigation,.reader-zoom-controls{display:flex;align-items:center;gap:8px;min-width:0}
+.reading-navigation{justify-content:center}
+.reader-panel-controls .action{gap:7px;white-space:nowrap;min-width:104px}
+.reader-panel-controls svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;flex:none}
+.reader-panel-controls [aria-expanded=true]{background:var(--accent-tint)}
+.reader-zoom-controls .action{min-width:44px;padding:7px;font-variant-numeric:tabular-nums}
+.reader-zoom-controls [data-reader-zoom=out],.reader-zoom-controls [data-reader-zoom=in]{font-size:23px;line-height:1}
+.reader-zoom-controls .reader-zoom-reset{min-width:67px}
+.reader-zoom-label{font-size:12px;color:var(--muted);white-space:nowrap}
+.reader-zoom-controls .action:disabled{opacity:.4;cursor:default}
+.reader-zoom-controls .action:disabled:hover{background:var(--paper);border-color:var(--line-strong)}
+.reading-navigation a,.reading-navigation .action{white-space:nowrap}
+#reading-location{min-width:0;max-width:220px}
+#nav-dialog{width:min(480px,calc(100% - 24px))}
+#nav-dialog .side-group{display:block}
+#nav-dialog .side-group a{min-height:44px}
+#notification{bottom:calc(var(--reading-bar-height,64px) + 16px)}
+@media(max-width:1100px){#reading-location{display:none}.reader-zoom-label{display:none}}
+@media(max-width:850px){
+ .reading-bar{grid-template-columns:minmax(0,1fr) auto;gap:8px 10px;padding:8px 12px max(8px,env(safe-area-inset-bottom))}
+ .reader-panel-controls{grid-column:1;grid-row:1}
+ .reader-zoom-controls{grid-column:2;grid-row:1}
+ .reading-navigation{grid-column:1/-1;grid-row:2;gap:8px}
+ .reader-panel-controls .action{min-width:44px;padding:7px 9px}
+ .reader-panel-controls svg{display:none}
+}
+@media(max-width:600px){
+ .reader-panel-controls .action,.reader-zoom-controls .action{font-size:13px;min-height:44px}
+ .reader-zoom-controls [data-reader-zoom=out],.reader-zoom-controls [data-reader-zoom=in]{font-size:23px}
+ .reader-panel-controls,.reader-zoom-controls{gap:6px}
+ .reader-zoom-controls .reader-zoom-reset{min-width:60px}
+}
+@media(max-width:360px){
+ .reading-bar{padding-left:8px;padding-right:8px;column-gap:4px}
+ .reader-panel-controls,.reader-zoom-controls{gap:4px}
+ .reader-panel-controls .action{padding:6px;font-size:12px}
+ .reader-zoom-controls .reader-zoom-reset{min-width:54px}
+}
 .exam-node>path{stroke:#555;stroke-width:1.6;fill:white}.exam-node.active>path{stroke:#a54930;stroke-width:3;fill:#fff3e1}
 
 .exam-center{text-anchor:middle}
