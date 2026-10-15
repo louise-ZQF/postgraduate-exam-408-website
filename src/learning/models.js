@@ -1,5 +1,6 @@
 import {classicOptions, makeClassicExam, aluOptions, exam2024} from './exam-models.js'
 import {prim,kruskal,topological,dijkstra,floyd,primOptions,topoOptions,dijkstraOptions,floydOptions} from './graph-models.js'
+import {outlineLessons} from './outline-lessons.js'
 // Deterministic traces shared by the diagram, explanations and tests.
 const copy = v => JSON.parse(JSON.stringify(v))
 const frame = (title, why, state, extra = {}) => ({ title, why, state: copy(state), ...copy(extra) })
@@ -85,13 +86,14 @@ export function diskSchedule(policy='LOOK') {
   const requests=[40,10,70],initial=50,max=99;let pending=[...requests],pos=initial,path=[],services=[]
   if(policy==='FCFS')path=[...requests]
   else if(policy==='SSTF')while(pending.length){pending.sort((a,b)=>Math.abs(a-pos)-Math.abs(b-pos)||a-b);pos=pending.shift();path.push(pos)}
-  else {const right=requests.filter(x=>x>=initial).sort((a,b)=>a-b),left=requests.filter(x=>x<initial).sort((a,b)=>b-a);path=[...right];if(left.length){if(policy==='SCAN')path.push(max);path.push(...left)}}
+  else {const right=requests.filter(x=>x>=initial).sort((a,b)=>a-b),left=requests.filter(x=>x<initial).sort((a,b)=>b-a);path=[...right];if(left.length){if(policy==='C-SCAN')path.push(max,0,...left.reverse());else if(policy==='C-LOOK')path.push(...left.reverse());else{if(policy==='SCAN')path.push(max);path.push(...left)}}}
   const s={position:initial,distance:0,done:[],path:[initial]},out=[frame('初始磁头在 50','请求为 40、10、70；初始方向向磁道号增大的方向，磁道范围 0～99。',s)]
   for(const dest of path){const old=s.position,d=Math.abs(dest-old);s.position=dest;s.distance+=d;s.path.push(dest);const service=requests.includes(dest)&&!s.done.includes(dest);if(service){s.done.push(dest);services.push(dest)}out.push(frame(service?`服务请求 ${dest}`:`到物理端点 ${dest}`,`${old} → ${dest}，本段移动 |${dest}−${old}|=${d}，累计 ${s.distance}。${service?'完成一个请求。':'这里只折返，不新增请求数。'}`,s,{question:`下一站是 ${dest} 吗？这一段距离如何计入？`}))}
   out.push(frame('全部请求完成，停止',`完整路径 ${s.path.join('→')}，总移动 ${s.distance}，平均 ${s.distance}/3≈${(s.distance/3).toFixed(2)} 个磁道。`,s))
-  return {kind:'disk',title:'磁盘调度 · '+policy,intro:'初始 50，请求按到达顺序为 40、10、70，初始向右，磁道号 0～99。',condition:'只计算机械磁盘寻道距离，忽略旋转和传输时间；所有请求开始时已到达；最后一个请求完成即停止。SSTF 等距时本例取较小磁道号。',max,requests,flow:'选择未完成请求\n├─ FCFS → 最早到达者\n├─ SSTF → 当前距离最近者\n└─ SCAN／LOOK → 沿当前方向依次服务\n   本方向没有请求\n   ├─ SCAN → 先到物理端点再折返\n   └─ LOOK → 直接在最后请求处折返\n服务后还有请求？\n├─ 是 → 继续选点\n└─ 否 → 停止，累计距离／请求数',frames:out,compare:[['SCAN 与 LOOK','SCAN 为折返走到物理端点；LOOK 只到当前方向最后一个请求。'],['请求数与路径段数','物理端点可能产生额外路段，但不能增加平均距离的分母。']],formula:'$$D=\\sum_{i=1}^{m}|x_i-x_{i-1}|,\\qquad\\overline D=\\frac{D}{n}$$\n\nx₀ 为初始位置，xᵢ 为第 i 段终点，D 为总移动磁道数。本例 n=3 个请求；m 为实际移动段数。'}
+  return {kind:'disk',title:'磁盘调度 · '+policy,intro:'初始 50，请求按到达顺序为 40、10、70，初始向右，磁道号 0～99。',condition:'只计算机械磁盘寻道距离，忽略旋转和传输时间；所有请求开始时已到达；最后一个请求完成即停止。SSTF 等距时本例取较小磁道号。C-SCAN／C-LOOK 回程不服务，但回程距离计入；若题设不计，须另按题设扣除。',max,requests,flow:'选择未完成请求\n├─ FCFS → 最早到达者\n├─ SSTF → 当前距离最近者\n└─ 扫描类 → 沿指定方向依次服务\n   本方向没有请求\n   ├─ SCAN → 物理端点后折返服务\n   ├─ LOOK → 最后请求处折返服务\n   ├─ C-SCAN → 到物理端点，回另一端点，再同方向服务\n   └─ C-LOOK → 直接回另一侧最远请求，再同方向服务\n全部服务 → 停止，累计距离／请求数',frames:out,compare:[['SCAN／LOOK 与循环版本','循环版本只沿一个方向服务；回程不处理经过的请求，但仍移动。'],['请求数与路径段数','物理端点可能产生额外路段，但不能增加平均距离的分母。']],formula:'$$D=\\sum_{i=1}^{m}|x_i-x_{i-1}|,\\qquad\\overline D=\\frac{D}{n}$$\n\nx₀ 为初始位置，xᵢ 为第 i 段终点，D 为总移动磁道数。本例 n=3 个请求；m 为实际移动段数。'}
 }
 export const lessons=[
+ ...outlineLessons,
  {id:'prim',doc:'01-数据结构',heading:'最小生成树',options:primOptions,make:prim},
  {id:'kruskal',doc:'01-数据结构',heading:'最小生成树',options:['2017 真题 · 按权选边','不连通图'],make:kruskal},
  {id:'topo',doc:'01-数据结构',heading:'拓扑排序',options:topoOptions,make:topological},
@@ -112,5 +114,5 @@ export const lessons=[
  {id:'pipeline',doc:'02-计算机组成原理',heading:'流水线冒险和处理',options:['Load-use 停顿','独立指令'],make:v=>pipeline(v!=='独立指令')},
  {id:'gbn',doc:'04-计算机网络',heading:'后退N帧协议 GBN',options:['GBN','SR'],make:v=>slidingWindow(v==='SR')},
  {id:'sr',doc:'04-计算机网络',heading:'选择重传协议 SR',options:['SR','GBN'],make:(v='SR')=>slidingWindow(v==='SR')},
- {id:'disk',doc:'03-操作系统',heading:'磁盘调度算法',options:['LOOK','SCAN','FCFS','SSTF'],make:diskSchedule}
+ {id:'disk',doc:'03-操作系统',heading:'磁盘调度算法',options:['LOOK','SCAN','FCFS','SSTF','C-SCAN','C-LOOK'],make:diskSchedule}
 ]

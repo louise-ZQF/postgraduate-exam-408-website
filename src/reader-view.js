@@ -12,7 +12,7 @@ export function createReaderView(storage,notice){
  return {mount(host,{signal,openDialog,closeDialog}){
   const reader=host.querySelector('.reader'),content=host.querySelector('.reader-content'),bar=host.querySelector('.reading-bar')
   const left=host.querySelector('#reader-nav'),right=host.querySelector('#reader-outline')
-  const smallLeft=matchMedia('(max-width:850px)'),smallRight=matchMedia('(max-width:1100px)')
+  const smallLeft=matchMedia('(max-width:850px)'),smallRight=matchMedia('(max-width:1280px)')
   const toggleButtons=[...host.querySelectorAll('[data-reader-panel]')]
   const zoomOut=host.querySelector('[data-reader-zoom="out"]'),zoomIn=host.querySelector('[data-reader-zoom="in"]'),reset=host.querySelector('[data-reader-zoom="reset"]')
   function refresh(){

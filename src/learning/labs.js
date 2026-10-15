@@ -1,5 +1,6 @@
 import {examDiagram} from './exam-diagrams.js'
 import {graphDiagram,graphStateRows} from './graph-diagrams.js'
+import {traceDiagram,traceStateRows} from './trace-diagrams.js'
 import { lessons } from './models.js'
 const esc = s => String(s??'—').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;')
 const txt=(x,y,s,cls='')=>`<text x="${x}" y="${y}" class="${cls}">${esc(s)}</text>`
@@ -37,6 +38,7 @@ function graph(f){
  return svg(content,'AOE图：A到B为2，A到C为4，B到D为3，C到D为2。高亮边对应当前计算。',480,320)
 }
 function diagram(lesson,f){
+ if(lesson.kind==='trace')return traceDiagram(lesson,f)
  if(lesson.kind==='graph')return graphDiagram(lesson,f)
  if(lesson.kind==='exam')return examDiagram(lesson,f)
  if(lesson.kind==='datapath')return datapath(f)
@@ -63,6 +65,7 @@ function diagram(lesson,f){
 }
 function stateRows(l,f){
  const s=f.state
+ if(l.kind==='trace')return traceStateRows(l,f)
  if(l.kind==='graph')return graphStateRows(l,f)
  if(l.kind==='exam')return [['微操作',f.micro||'尚未执行'],['控制信号',(f.signals||[]).join('，')||'未新增／未指定'],...Object.entries(s)]
  if(l.kind==='datapath')return Object.entries(s)
@@ -78,14 +81,16 @@ function changedRows(l,frames,index){
  return now.map(([k,v])=>[k,v,index&&String(prev.get(k))!==String(v)?`← ${prev.get(k)??'无'}（本步变化）`:index?'保持':'初始'])
 }
 export function mountLearningLabs(container,doc,{signal,render,base,onActivate}){
+ const mounted=[]
  for(const spec of lessons.filter(s=>s.doc===doc)){
   const heading=spec.anchor?container.querySelector(`[id="${spec.anchor}"]`):[...container.querySelectorAll('h2,h3,h4')].find(h=>h.firstChild?.textContent.trim()===spec.heading)
   if(!heading)continue
   let option=spec.options?.[0],lesson=spec.make(option),index=0,quiz=false,revealed=true,moving=true,zoomed=false
-  const root=document.createElement('details');root.className='learning-lab';root.dataset.lesson=spec.id
+  const root=document.createElement('details');root.className='learning-lab';root.dataset.lesson=spec.id;root.id='lab-'+spec.id;root.tabIndex=-1
   const label=document.createElement('summary');label.textContent='逐步演示 · '+lesson.title;root.append(label)
   const activate=()=>{if(!spec.anchor&&heading.dataset.section)onActivate?.(heading.dataset.section)}
-  root.addEventListener('click',activate,{signal});root.addEventListener('toggle',()=>{if(root.open)activate()},{signal})
+  let rendered=false
+  root.addEventListener('click',activate,{signal});root.addEventListener('toggle',()=>{if(root.open){if(!rendered)draw();activate()}},{signal})
   const panel=document.createElement('div');panel.className='lab-panel';root.append(panel)
   const question=spec.anchor?(heading.closest('.study-question')||heading):null
   let before=question?question.nextElementSibling:heading.nextElementSibling
@@ -94,10 +99,11 @@ export function mountLearningLabs(container,doc,{signal,render,base,onActivate})
   if(before&&/^H[1-4]$/.test(before.tagName)){const marker=before.previousElementSibling;if(marker?.tagName==='P'&&marker.querySelector('a[id]')&&!marker.textContent.trim())before=marker}
   if(question)question.after(root);else container.insertBefore(root,before)
   const draw=()=>{
+   rendered=true
    const f=lesson.frames[index],hidden=quiz&&!revealed&&index>0,view=hidden?lesson.frames[index-1]:f
    panel.classList.toggle('lab-motion-paused',!moving)
-   panel.innerHTML=`${lesson.source?`<p class="exam-source">据 ${lesson.source.year} 年第 ${lesson.source.number} 题图重绘 · <a href="#/doc/${encodeURIComponent(lesson.source.doc)}?section=${lesson.source.anchor}">查看题干与原图 ↗</a></p>`:''}<p class="lab-intro">${esc(lesson.intro)}</p>${spec.options?`<label class="lab-select">切换情形 <select aria-label="${esc(spec.heading)}演示情形">${spec.options.map(v=>`<option ${v===option?'selected':''}>${esc(v)}</option>`).join('')}</select></label>`:''}<div class="lab-controls"><button type="button" data-act="prev" ${index===0?'disabled':''}>← 上一步</button><button type="button" data-act="next" ${index===lesson.frames.length-1?'disabled':''}>下一步 →</button><button type="button" data-act="reset">重新开始</button>${['exam','graph'].includes(lesson.kind)?`<button type="button" data-act="motion" aria-pressed="${moving}">${moving?'暂停流动':'播放流动'}</button><button type="button" data-act="zoom" aria-pressed="${zoomed}">${zoomed?'适应宽度':'放大图'}</button>`:''}<button type="button" data-act="quiz" aria-pressed="${quiz}">${quiz?'退出自测':'自测模式'}</button></div><nav class="lab-step-strip" aria-label="${esc(spec.heading)}演示步骤">${lesson.frames.map((v,i)=>`<button type="button" data-step="${i}" aria-label="第${i}步${quiz&&!revealed?'':'：'+esc(v.title)}" ${i===index?'aria-current="step"':''}>${i===0?'初始':lesson.kind==='datapath'||lesson.kind==='pipeline'||lesson.clocked?'C'+i:'步骤'+i}</button>`).join('')}</nav><p class="lab-progress" role="status" aria-live="polite">${hidden?'待预测':'当前'} ${index}/${lesson.frames.length-1} · ${hidden?'请先预测本步结果':esc(f.title)}</p>${hidden?`<div class="lab-question"><p>${esc(f.question||'根据上一状态，下一步应执行什么？哪些值会改变，是否满足结束条件？')}</p><button type="button" data-act="reveal">揭示本步结果</button><small>图中保留上一步状态，揭示后再检查自己的推断。</small></div>`:''}${lesson.kind==='exam'?`<p class="exam-legend">橙线：数据流；紫虚线：控制；灰色未强调，不代表0；—为未定。${lesson.clocked?'按原题节拍显示。':'逻辑步骤，不按拍计数。'}</p>${hidden?'':`<div class="exam-micro"><strong>${esc(f.micro||'初始状态')}</strong><p>控制：${esc(f.signals?.join('，')||'未新增／未指定')}</p></div>`}`:''}${lesson.phases?`<div class="graph-phases" aria-label="算法执行阶段">${lesson.phases.map((phase,i)=>`<span class="${i===view.stage?'current':''}">${i+1}. ${esc(phase)}</span>${i<lesson.phases.length-1?'<b aria-hidden="true">→</b>':''}`).join('')}</div>`:''}<div class="lab-diagram lab-diagram--${lesson.kind} ${zoomed?'is-zoomed':''}">${diagram(lesson,view)}</div>${hidden?'':`<div class="lab-why"><strong>这一步为什么这样做</strong><p>${esc(f.why)}</p></div>${table(['对象','当前值','与上一步比较'],changedRows(lesson,lesson.frames,index))}`}<details class="lab-text"><summary>文字版 · 分支、循环与停止条件</summary><pre>${esc(lesson.flow)}</pre></details><details class="lab-text"><summary>完整过程表 · 从初始到结束</summary>${hidden?'<p>揭示当前步骤后，可展开核对完整过程。</p>':table(['步','动作','状态与原因'],lesson.frames.map((v,i)=>[i,v.title,stateRows(lesson,v).map(([k,x])=>`${k}：${x}`).join('；')+'。'+v.why]))}</details><details class="lab-text"><summary>适用条件、公式与易混点</summary><p>${esc(lesson.condition)}</p><div data-lab-formula></div>${table(['区分','判断依据'],lesson.compare)}</details>`
-   const marker=panel.querySelector('marker');if(marker){marker.id='lab-arrow-'+spec.id;panel.querySelectorAll('.lab-wire,.exam-flow,.exam-control,.graph-directed').forEach(path=>path.setAttribute('marker-end',`url(#${marker.id})`));const hint=document.createElement('p');hint.className='lab-diagram-hint';hint.textContent=lesson.kind==='graph'?'橙色表示本步，角标表示顺序，点下方显示当前值。有向边才画箭头；图与下方文字表同步。':lesson.kind==='exam'?'图按题目结构重绘，数据线与控制线分别标示；点“放大图”可放大并横向查看，所有值同时列于文字表。':lesson.kind==='datapath'?'虚线高亮表示本拍传送方向；粗横线为共享内部总线。仅画数据传送，控制信号从略，窄屏可横向查看。':lesson.kind==='critical'?'点为事件，边上数字为活动时长；高亮边参与本步计算。各事件时间同时列在下方文字表。':'高亮表示当前计算或阶段；窄屏可横向查看，数值同时列于下方文字表。';panel.querySelector('.lab-diagram').before(hint)}
+   panel.innerHTML=`${lesson.source?`<p class="exam-source">据 ${lesson.source.year} 年第 ${lesson.source.number} 题图重绘 · <a href="#/doc/${encodeURIComponent(lesson.source.doc)}?section=${lesson.source.anchor}">查看题干与原图 ↗</a></p>`:''}<p class="lab-intro">${esc(lesson.intro)}</p>${spec.options?`<label class="lab-select">切换情形 <select aria-label="${esc(spec.heading)}演示情形">${spec.options.map(v=>`<option ${v===option?'selected':''}>${esc(v)}</option>`).join('')}</select></label>`:''}<div class="lab-controls"><button type="button" data-act="prev" ${index===0?'disabled':''}>← 上一步</button><button type="button" data-act="next" ${index===lesson.frames.length-1?'disabled':''}>下一步 →</button><button type="button" data-act="reset">重新开始</button>${(['exam','graph'].includes(lesson.kind)||lesson.kind==='trace'&&lesson.frames.some(f=>f.view?.tree))?`<button type="button" data-act="motion" aria-pressed="${moving}">${moving?'暂停流动':'播放流动'}</button>`:''}${['exam','graph','trace'].includes(lesson.kind)?`<button type="button" data-act="zoom" aria-pressed="${zoomed}">${zoomed?'适应宽度':'放大图'}</button>`:''}<button type="button" data-act="quiz" aria-pressed="${quiz}">${quiz?'退出自测':'自测模式'}</button></div><nav class="lab-step-strip" aria-label="${esc(spec.heading)}演示步骤">${lesson.frames.map((v,i)=>`<button type="button" data-step="${i}" aria-label="第${i}步${quiz&&!revealed?'':'：'+esc(v.title)}" ${i===index?'aria-current="step"':''}>${i===0?'初始':lesson.kind==='datapath'||lesson.kind==='pipeline'||lesson.clocked?'C'+i:'步骤'+i}</button>`).join('')}</nav><p class="lab-progress" role="status" aria-live="polite">${hidden?'待预测':'当前'} ${index}/${lesson.frames.length-1} · ${hidden?'请先预测本步结果':esc(f.title)}</p>${hidden?`<div class="lab-question"><p>${esc(f.question||'根据上一状态，下一步应执行什么？哪些值会改变，是否满足结束条件？')}</p><button type="button" data-act="reveal">揭示本步结果</button><small>图中保留上一步状态，揭示后再检查自己的推断。</small></div>`:''}${lesson.kind==='exam'?`<p class="exam-legend">橙线：数据流；紫虚线：控制；灰色未强调，不代表0；—为未定。${lesson.clocked?'按原题节拍显示。':'逻辑步骤，不按拍计数。'}</p>${hidden?'':`<div class="exam-micro"><strong>${esc(f.micro||'初始状态')}</strong><p>控制：${esc(f.signals?.join('，')||'未新增／未指定')}</p></div>`}`:''}${lesson.phases?`<div class="graph-phases" aria-label="算法执行阶段">${lesson.phases.map((phase,i)=>`<span class="${i===view.stage?'current':''}">${i+1}. ${esc(phase)}</span>${i<lesson.phases.length-1?'<b aria-hidden="true">→</b>':''}`).join('')}</div>`:''}<div class="lab-diagram lab-diagram--${lesson.kind} ${zoomed?'is-zoomed':''}">${diagram(lesson,view)}</div>${hidden?'':`<div class="lab-why"><strong>这一步为什么这样做</strong><p>${esc(f.why)}</p></div>${table(['对象','当前值','与上一步比较'],changedRows(lesson,lesson.frames,index))}`}<details class="lab-text"><summary>文字版 · 分支、循环与停止条件</summary><pre>${esc(lesson.flow)}</pre></details><details class="lab-text"><summary>完整过程表 · 从初始到结束</summary>${hidden?'<p>揭示当前步骤后，可展开核对完整过程。</p>':table(['步','动作','状态与原因'],lesson.frames.map((v,i)=>[i,v.title,stateRows(lesson,v).map(([k,x])=>`${k}：${x}`).join('；')+'。'+v.why]))}</details><details class="lab-text"><summary>适用条件、公式与易混点</summary><p>${esc(lesson.condition)}</p><div data-lab-formula></div>${table(['区分','判断依据'],lesson.compare)}</details>`
+   const marker=panel.querySelector('marker');if(marker){marker.id='lab-arrow-'+spec.id;panel.querySelectorAll('.lab-wire,.exam-flow,.exam-control,.graph-directed,.trace-directed').forEach(path=>path.setAttribute('marker-end',`url(#${marker.id})`));const hint=document.createElement('p');hint.className='lab-diagram-hint';hint.textContent=lesson.kind==='graph'?'橙色表示本步，角标表示顺序，点下方显示当前值。有向边才画箭头；图与下方文字表同步。':lesson.kind==='exam'?'图按题目结构重绘，数据线与控制线分别标示；点“放大图”可放大并横向查看，所有值同时列于文字表。':lesson.kind==='datapath'?'虚线高亮表示本拍传送方向；粗横线为共享内部总线。仅画数据传送，控制信号从略，窄屏可横向查看。':lesson.kind==='critical'?'点为事件，边上数字为活动时长；高亮边参与本步计算。各事件时间同时列在下方文字表。':'高亮表示当前计算或阶段；窄屏可横向查看，数值同时列于下方文字表。';panel.querySelector('.lab-diagram').before(hint)}
    render(lesson.formula,base,panel.querySelector('[data-lab-formula]'))
    const step=panel.querySelector('[aria-current=step]'),strip=step.parentElement;if(step.offsetLeft<strip.scrollLeft)strip.scrollLeft=step.offsetLeft;else if(step.offsetLeft+step.offsetWidth>strip.scrollLeft+strip.clientWidth)strip.scrollLeft=step.offsetLeft+step.offsetWidth-strip.clientWidth
   }
@@ -116,6 +122,15 @@ export function mountLearningLabs(container,doc,{signal,render,base,onActivate})
    draw();const focus=btn.dataset.step!==undefined?`[data-step="${index}"]`:`[data-act="${act==='reveal'?'quiz':act}"]`;const nextFocus=panel.querySelector(focus);(nextFocus&&!nextFocus.disabled?nextFocus:panel.querySelector('[aria-current=step]'))?.focus({preventScroll:true})
   },{signal})
   panel.addEventListener('change',e=>{if(e.target.matches('select')){option=e.target.value;lesson=spec.make(option);index=0;revealed=true;label.textContent='逐步演示 · '+lesson.title;draw();panel.querySelector('select').focus({preventScroll:true})}},{signal})
-  draw()
+  root.addEventListener('lab:open',e=>{if(spec.options?.includes(e.detail)){option=e.detail;lesson=spec.make(option);index=0;revealed=true;label.textContent='逐步演示 · '+lesson.title;draw()}else {index=0;revealed=true;draw()}root.open=true;activate();root.scrollIntoView({block:'start',behavior:'instant'});label.focus({preventScroll:true})},{signal})
+  mounted.push({spec,root,title:spec.title||lesson.title})
  }
+ if(!mounted.length)return
+ const overview=document.createElement('details');overview.className='learning-overview'
+ const count=mounted.reduce((n,{spec})=>n+(spec.options?.length||1),0)
+ overview.innerHTML=`<summary>算法与过程演示总览 · ${mounted.length} 组 ${count} 个情形</summary><div class="learning-overview-body"><p>先找知识点，再选情形；图、文字箭头和完整过程表同步展示。按你提供的 2027 大纲整理，协议交互与计算算法分别标注。</p><label class="lab-select">筛选演示 <input type="search" aria-label="筛选算法与过程演示" placeholder="例如：排序、KMP、银行家、CRC"></label><div class="learning-overview-list">${mounted.map(({spec,title})=>`<section data-lab-entry="${esc([title,spec.heading,...spec.options||[]].join(' '))}"><h3>${esc(title)}</h3><small>${esc(spec.scope||'已有算法／真题演示')}${spec.pages?' · 大纲印刷页 '+spec.pages.map(p=>p+3).join('、'):''}</small><div>${(spec.options||['打开演示']).map(option=>`<button type="button" data-open-lab="${spec.id}" data-option="${esc(option)}">${esc(option)}</button>`).join('')}</div></section>`).join('')}</div><p class="learning-overview-empty" hidden>没有匹配的演示，换个算法名试试。</p></div>`
+ const intro=container.querySelector('h2')||container.firstElementChild
+ if(intro)container.insertBefore(overview,intro.previousElementSibling?.querySelector('a[id]')?intro.previousElementSibling:intro);else container.prepend(overview)
+ overview.addEventListener('input',e=>{if(!e.target.matches('input'))return;const query=e.target.value.trim().toLowerCase();let found=0;overview.querySelectorAll('[data-lab-entry]').forEach(el=>{el.hidden=!el.dataset.labEntry.toLowerCase().includes(query);if(!el.hidden)found++});overview.querySelector('.learning-overview-empty').hidden=found>0},{signal})
+ overview.addEventListener('click',e=>{const button=e.target.closest('[data-open-lab]');if(!button)return;const match=mounted.find(x=>x.spec.id===button.dataset.openLab);if(match)match.root.dispatchEvent(new CustomEvent('lab:open',{detail:button.dataset.option}))},{signal})
 }

@@ -1,0 +1,45 @@
+import {recorder,row,flow} from './trace-kit.js'
+export function distanceVector(name='距离向量更新'){
+ const bad=name==='坏消息慢传播',s={本机:'A',路由:{N:{distance:bad?2:9,next:'B'}},轨迹:[]},t=recorder({title:'RIP 距离向量 · '+name,intro:bad?'A、B 互为邻居，A 原经 B 到 N 为 2 跳；B 到 N 的直接链路失效。演示未采用水平分割／毒性逆转的计数到无穷。':'A 收到 B 的距离向量：N=2，M=4；A 到 B 代价 1。A 原经 B 到 N 为 9。',condition:'RIP 度量是跳数，16 表示不可达；来自原下一跳的变差消息也要更新，不能永远只保留小值。坏消息例故意关闭防环措施，用来说明慢收敛问题。',flow:flow('收到邻居距离向量 → 每项距离加到邻居的代价','新目的／更优路径／原下一跳更新 → 修改表项','重复交换直到稳定；RIP 距离到 16 视为不可达')},s)
+ const emit=(a,b)=>t.add(a,b,{table:{heads:['目的','距离','下一跳'],rows:Object.entries(s.路由).map(([d,x])=>[d,x.distance,x.next])},route:s.轨迹.slice(-4)})
+ emit('初始路由表','邻居报告的值不等于本机距离，需要加上到邻居的一跳。')
+ if(bad){let a=2,b=16;for(let round=0;round<8;round++){b=Math.min(16,a+1);s.路由.N={distance:b,next:'A'};s.本机='B';s.轨迹.push(`A 报 ${a} → B 变 ${b}`);emit('B 误以为经 A 仍能到达','A 的旧路由实际依赖 B，形成相互误导。');a=Math.min(16,b+1);s.本机='A';s.路由.N={distance:a,next:'B'};s.轨迹.push(`B 报 ${b} → A 变 ${a}`);emit('A 更新来自原下一跳的距离','距离递增，直到 16 不可达。');if(a===16&&b===16)break}s.结果='不可达（16）'}
+ else for(const [dest,reported] of [['N',2],['M',4],['N',6]]){const old=s.路由[dest],candidate=Math.min(16,reported+1);s.轨迹.push(`B 报 ${dest}=${reported}`,`候选距离 ${candidate}`);if(!old||candidate<old.distance||old.next==='B')s.路由[dest]={distance:candidate,next:'B'};emit(`处理 ${dest}`,old?.next==='B'&&candidate>old.distance?'原下一跳变差，仍必须更新；不能留住失效的小距离。':'发现新路由或更短路由则更新。')}return t.finish()
+}
+export function bgp(){
+ const s={本AS:65001,候选:[],接收:[],拒绝:[]},t=recorder({title:'BGP 路径向量 · AS_PATH 检环',intro:'本自治系统 AS65001 收到两条候选路径：65002 65003，和 65004 65001 65003。',condition:'只展示大纲中的路径向量与环路排除机制。BGP 实际选路受本地策略及多种属性控制，不能简化成“一律选 AS 数最少”。',flow:flow('收到路由通告 → 检查 AS_PATH','包含本 AS → 拒绝，避免 AS 级环路','不包含 → 成为策略允许的候选 → 按本地策略比较 → 对外通告时按规则加入本 AS')},s)
+ const emit=(a,b)=>t.add(a,b,{rows:[row('候选路径',s.候选),row('接受',s.接收),row('拒绝',s.拒绝)],route:s.传播路径})
+ for(const path of [[65002,65003],[65004,65001,65003]]){s.候选.push(path.join(' → '));if(path.includes(s.本AS)){s.拒绝.push(path.join(' → '));emit('发现自身 AS，拒绝','该路由已经过本 AS，不能再次接收形成环。')}else{s.接收.push(path.join(' → '));emit('未含本 AS，保留候选','通过检环不代表已经成为最终最佳路径。')}}s.传播路径=['65001','65002','65003'];emit('假设该候选通过本地策略，对外通告','eBGP 通告时在 AS_PATH 前加入本 AS。');return t.finish()
+}
+export function stopWait(){
+ const s={发送序号:0,期待序号:0,已交付:[],轨迹:[],重传:0},t=recorder({title:'SW 停止等待 · ACK 丢失与重复帧',intro:'发送帧 0，接收正确但 ACK 丢失；发送方超时重传同一帧。1 位序号在 0、1 间交替。',condition:'一次只允许一个未确认数据帧；超时重传保留原序号。接收方必须去重，不能把重传数据再交付一次。',flow:flow('发送一帧并启动计时器 → 等 ACK','收到匹配 ACK → 停计时，序号翻转 → 下一帧','超时 → 重传原帧；接收重复帧 → 不重复交付，只补 ACK')},s)
+ const emit=(a,b)=>{s.轨迹.push(a);t.add(a,b,{route:s.轨迹.slice(-4),rows:[row('已交付',s.已交付)]})}
+ emit('发送 DATA0','启动定时器。');s.已交付=[0];s.期待序号=1;emit('接收 DATA0，交付一次，回 ACK0','接收方期待下一个序号 1。');emit('ACK0 丢失','发送方仍未获得成功证明。');s.重传++;emit('发送方超时，重传 DATA0','不能改成 DATA1。');emit('接收方发现重复 DATA0','不重复交付，只重发 ACK0。');s.发送序号=1;emit('ACK0 到达，发送序号改为 1','一个数据只交付一次，后续发送 DATA1。');return t.finish()
+}
+export function tcpCongestion(name='超时：慢开始重启'){
+ const s={轮次:0,cwnd:1,ssthresh:8,阶段:'慢开始',轨迹:[]},t=recorder({title:'TCP 拥塞控制 · '+name,intro:'以 MSS 为单位，初始 cwnd=1、ssthresh=8，每一轮全部确认后更新窗口；接收窗口足够大。',condition:'采用经典 Reno 教学模型；慢开始按一轮大致翻倍，拥塞避免每 RTT 约加 1。三次重复 ACK 与超时的处理不同；真实 TCP 还可能采用其他拥塞控制实现。',flow:flow('cwnd<ssthresh → 慢开始','cwnd≥ssthresh → 拥塞避免','超时 → ssthresh=max(在途量/2,2)，cwnd=1','三次重复 ACK → 快重传，cwnd=ssthresh+3 → 新 ACK 后回 ssthresh')},s)
+ const history=[],emit=(a,b)=>{history.push([s.轮次,s.cwnd,s.ssthresh,s.阶段]);t.add(a,b,{table:{heads:['轮次／事件','cwnd (MSS)','ssthresh','阶段'],rows:history},rows:[row('当前窗口',Array.from({length:s.cwnd},(_,i)=>i+1))]})}
+ emit('初始','只允许一个 MSS 在途。');for(let i=1;i<=5;i++){s.轮次=i;s.cwnd=s.cwnd<s.ssthresh?Math.min(s.ssthresh,s.cwnd*2):s.cwnd+1;s.阶段=s.cwnd<s.ssthresh?'慢开始':'拥塞避免';emit('本轮 ACK 全到',`更新后 cwnd=${s.cwnd}；达到阈值后按线性增长。`)}const flight=s.cwnd;s.ssthresh=Math.max(Math.floor(flight/2),2);s.轮次='丢包事件';if(name.startsWith('超时')){s.cwnd=1;s.阶段='慢开始';emit('超时重传',`在途 ${flight}，阈值降为 ${s.ssthresh}，窗口重新为 1。`);s.轮次='下一 RTT';s.cwnd=2;emit('重新慢开始','收到新 ACK 后增长，不直接跳回原窗口。')}else{s.cwnd=s.ssthresh+3;s.阶段='快恢复';emit('第三个重复 ACK → 快重传','不等待超时，重传缺失段；临时膨胀三个 MSS。');s.cwnd++;emit('再来一个重复 ACK','窗口临时再加一，是否可发新数据仍受在途量约束。');s.cwnd=s.ssthresh;s.阶段='拥塞避免';emit('确认新数据的 ACK 到达','退出快恢复，窗口收缩到阈值。')}return t.finish()
+}
+export function tcpWindow(name='累计确认与快重传'){
+ const s={SND_UNA:1001,SND_NXT:1001,rwnd:4000,cwnd:4000,在途:0,可发:4000,重复ACK:0,已接收:[],轨迹:[]},t=recorder({title:'TCP 字节窗口 · '+name,intro:'初始下一待发字节 1001，每段 1000B；接收窗口和拥塞窗口均为 4000B，先发四段；首段确认后还可再发一段。',condition:'TCP ACK 表示下一期待字节，不是最后收到字节。可新发量=max(0,min(rwnd,cwnd)−在途未确认量)。本例序号不回绕，SYN／FIN 另占一个序号。',flow:flow('计算 min(rwnd,cwnd)−在途量 → 决定是否可发','累计 ACK 前进 → 减少在途、滑动窗口','乱序段 → 可缓存，但 ACK 仍指向缺口','三次重复 ACK → 快重传；零窗口 → 按持久计时器探测，避免死等')},s)
+ const emit=(a,b)=>{s.在途=s.SND_NXT-s.SND_UNA;s.可发=Math.max(0,Math.min(s.rwnd,s.cwnd)-s.在途);s.轨迹.push(a);t.add(a,b,{rows:[row('序号／窗口',[`UNA ${s.SND_UNA}`,`NXT ${s.SND_NXT}`,`在途 ${s.在途}`,`可新发 ${s.可发}`])],route:s.轨迹.slice(-4)})}
+ emit('初始','可以先发 4000B。');for(let i=0;i<4;i++){const start=s.SND_NXT;s.SND_NXT+=1000;emit(`发送 ${start}～${s.SND_NXT-1}`,'发出本身不会使 SND_UNA 前进。')}s.SND_UNA=2001;s.已接收=['1001～2000'];emit('收到 ACK=2001','确认前 1000 字节，下一期待 2001。');if(name==='零窗口与探测'){s.rwnd=0;emit('对方通告 rwnd=0','停止发送新数据，但保留必要的窗口探测。');emit('持久计时器到期，发送探测','即使窗口更新报文丢失，也能重新获知窗口。');s.rwnd=2000;emit('探测响应通告窗口 2000','当前在途仍有 3000B，窗口收缩也不能撤销已发数据，此时仍不可新发。')}
+ else {s.SND_NXT+=1000;emit('首段确认释放窗口，再发 5001～6000','2001～3000 丢失，后面三段 3001～6000 失序到达，可产生三个重复 ACK。');for(let i=1;i<=3;i++){s.重复ACK=i;emit(`收到第 ${i} 个重复 ACK=2001`,i===1?'后续乱序数据已到，但缺口未补。':i===3?'达到三个重复 ACK，触发快重传 2001～3000。':'重复 ACK 不推进窗口左端。')}s.SND_UNA=6001;s.已接收=['1001～6000'];emit('缺口补齐，收到 ACK=6001','一次累计确认连续到 6000 的所有字节。')}return t.finish()
+}
+export function rto(){
+ const s={SRTT:100,RTTVAR:20,RTO:180},t=recorder({title:'TCP 超时估计 · 平滑 RTT 与偏差',intro:'已初始化 SRTT=100ms、RTTVAR=20ms；下一个有效 RTT 样本为 140ms，α=1/8，β=1/4。',condition:'演示估计式的计算内核，暂不套系统最小／最大 RTO、时钟粒度；更新 RTTVAR 时使用旧 SRTT。重传段的 ACK 有歧义，按 Karn 原则不直接取该 RTT 样本。',flow:flow('取得未重传段的 RTT 样本','用旧 SRTT 更新偏差 RTTVAR','再更新 SRTT → RTO=SRTT+4RTTVAR','超时 → RTO 指数退避；重传 ACK 不直接更新样本')},s)
+ const emit=(a,b)=>t.add(a,b,{equation:s.算式,rows:[row('估计值 ms',[s.SRTT,s.RTTVAR,s.RTO])]})
+ emit('旧估计','这里不是首个样本的初始化情况。');const old=s.SRTT;s.RTTVAR=.75*s.RTTVAR+.25*Math.abs(140-old);s.算式='0.75×20 + 0.25×|140−100| = 25';emit('先更新 RTT 偏差',s.算式);s.SRTT=.875*old+.125*140;s.算式='0.875×100 + 0.125×140 = 105';emit('更新平滑 RTT',s.算式);s.RTO=s.SRTT+4*s.RTTVAR;emit('计算 RTO','105+4×25=205ms。');s.RTO*=2;emit('发生一次超时，退避加倍','示例变为 410ms；不要把本次重传耗时直接当新 RTT。');return t.finish()
+}
+export const processNames=['ARP 解析下一跳','DHCP 四步分配','DNS 递归与迭代','TCP 三次握手','TCP 四次挥手','NAT 端口转换']
+export function protocolProcess(name=processNames[0]){
+ const s={阶段:0,主机状态:'初始',对端状态:'初始',轨迹:[]},t=recorder({title:'协议过程 · '+name,intro:'按消息顺序查看一次完整交互，每步标出必要字段与状态；这是协议过程演示，与选路／数值算法分列。',condition:'演示无丢包的基本过程；实际还要考虑缓存、超时重传、拒绝和并发。地址、端口与初始序号均为教学值。',flow:flow('读取初始状态与地址／序号','按箭头依次发送消息 → 接收并更新状态','检查何时可交付／建立／关闭 → 结束')},s)
+ const emit=(a,b,from,to)=>{s.阶段++;s.轨迹.push(a);t.add(a,b,{route:[from,a,to],table:{heads:['对象','状态'],rows:[['主机',s.主机状态],['对端',s.对端状态]]}})}
+ if(name==='TCP 三次握手'){s.主机状态='SYN-SENT';s.对端状态='LISTEN';emit('SYN：seq=100','SYN 占一个序号。','客户端','服务端');s.对端状态='SYN-RCVD';emit('SYN+ACK：seq=500，ack=101','确认客户端 SYN，并同步服务器初始序号。','服务端','客户端');s.主机状态='ESTABLISHED';emit('ACK：seq=101，ack=501','无数据的纯 ACK 不占序号。','客户端','服务端');s.对端状态='ESTABLISHED';emit('服务端收到第三次 ACK','双方建立连接。','服务端','连接可用')}
+ else if(name==='TCP 四次挥手'){s.主机状态='FIN-WAIT-1';s.对端状态='ESTABLISHED';emit('FIN：seq=1001','先关闭 A→B 方向，FIN 占序号。','A','B');s.对端状态='CLOSE-WAIT';s.主机状态='FIN-WAIT-2';emit('ACK：ack=1002','B 仍可继续向 A 发送未完数据。','B','A');s.对端状态='LAST-ACK';emit('FIN：seq=5001','B 的发送方向也准备关闭。','B','A');s.主机状态='TIME-WAIT';emit('ACK：ack=5002','A 保留 TIME-WAIT，以便重发最后 ACK 并让旧段消失。','A','B');s.对端状态='CLOSED';s.主机状态='2MSL 后 CLOSED';emit('等待结束','基本过程下主动关闭方等待 2MSL。','A','CLOSED')}
+ else if(name==='ARP 解析下一跳'){s.目的IP='外网服务器';s.下一跳='本网关';emit('按路由选择网关','目的不在本子网，应解析网关 MAC，而非外网服务器 MAC。','主机','路由表');emit('广播：谁有网关 IP？','以太网目的 FF:FF:FF:FF:FF:FF，ARP 请求不穿越路由器。','主机','本广播域');emit('网关单播回复自己的 MAC','主机缓存 IP→MAC。','网关','主机');emit('封装以太网帧','目的 IP 仍是服务器，目的 MAC 是下一跳网关。','主机','网关')}
+ else if(name==='DHCP 四步分配'){for(const [a,b,from,to] of [['DISCOVER','客户端还没有可用地址，典型源 IP=0.0.0.0、目的=255.255.255.255。','客户端','服务器'],['OFFER','服务器提出可租地址与参数。','服务器','客户端'],['REQUEST','典型初始分配中广播声明选择哪台服务器的提议。','客户端','服务器'],['ACK','确认租约；OFFER 不等于最终分配成功。','服务器','客户端']])emit(a,b,from,to)}
+ else if(name==='DNS 递归与迭代'){emit('递归查询 www.example.com','客户端向本地解析器请求最终结果。','主机','本地 DNS');emit('迭代问根','根返回 .com 顶级域服务器线索，不负责替解析器查到底。','本地 DNS','根');emit('迭代问 .com','返回 example.com 权威服务器线索。','本地 DNS','.com TLD');emit('迭代问权威','权威返回所需记录。','本地 DNS','权威 DNS');emit('结果返回主机并缓存','后续可在 TTL 有效期内使用缓存。','本地 DNS','主机')}
+ else {s.映射='10.0.0.2:1234 ↔ 203.0.113.1:40000';emit('建立端口映射','私网源 IP 与端口转换为公网地址与分配端口，目的服务器不变。','私网主机','NAT');emit('向公网发送','五元组改变后需相应更新校验和。','NAT','服务器');emit('公网回复 203.0.113.1:40000','按映射恢复目的私网地址与端口。','服务器','NAT');emit('转回 10.0.0.2:1234','多个内部主机可通过不同映射端口共享公网地址。','NAT','私网主机')}return t.finish()
+}
