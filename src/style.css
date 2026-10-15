@@ -270,3 +270,22 @@ dialog::backdrop {background:#25211d70}
 .lab-bus{stroke:var(--lab-wire);stroke-width:5;fill:none;opacity:.55}
 
 .lab-diagram--critical svg,.lab-diagram--disk svg{min-width:0}.lab-diagram--critical svg{font-size:22px}.lab-diagram--critical .lab-value{font-size:18px}
+/* Exam figures: retain data/control semantics; motion only decorates active data paths. */
+.exam-source,.exam-legend{font-size:13px!important;line-height:1.8;color:var(--ink-soft)}.exam-source a{text-decoration:underline;color:var(--accent-dark)}
+.exam-micro{border-left:3px solid var(--accent);padding:8px 12px;background:var(--accent-tint);font-size:14px;margin:12px 0}.exam-micro p{margin:4px 0}
+.lab-diagram .exam-svg{min-width:0;max-height:none;background:white;color:#332d27;fill:#332d27;font-family:system-ui,sans-serif}
+.exam-bus{stroke:#777;stroke-width:7;fill:none}.exam-wire{stroke:#84908c;stroke-width:1.5;fill:none}.exam-flow{stroke:#a54930;stroke-width:5;fill:none}.exam-moving{stroke:#ffe2a4;stroke-width:3;fill:none;stroke-dasharray:5 19;animation:exam-flow 1.5s linear infinite}
+@keyframes exam-flow{to{stroke-dashoffset:-48}}
+.lab-motion-paused .exam-moving{animation-play-state:paused}
+.exam-control{stroke:#777;stroke-dasharray:4 4;stroke-width:1.4;fill:none;opacity:1}.exam-control.active{stroke:#7354a4;stroke-width:2.5;opacity:1}.exam-control-label{font-size:16px;fill:#595959;opacity:1}.exam-control-label.active{fill:#61418f;font-weight:700;opacity:1}
+.exam-node rect{stroke:#555;stroke-width:1.6;fill:white}.exam-node.active rect{stroke:#a54930;stroke-width:3;fill:#fff3e1}.exam-node-label{font-size:15px;fill:#332d27}.exam-value{font-size:16px;fill:#375b5a;font-weight:650}.exam-value.small{font-size:13px}.exam-caption{font-size:14px;fill:#555}
+@media(prefers-reduced-motion:reduce){.exam-moving{animation:none;display:none}}
+
+.lab-diagram--exam.is-zoomed .exam-svg{min-width:960px}
+.exam-node>path{stroke:#555;stroke-width:1.6;fill:white}.exam-node.active>path{stroke:#a54930;stroke-width:3;fill:#fff3e1}
+
+.exam-center{text-anchor:middle}
+
+.exam-gate{fill:white;stroke:#777;stroke-width:1.5}.exam-gate.active{fill:#fff3e1;stroke:#a54930;stroke-width:2.5}
+
+.exam-control-label.edge{text-anchor:end}

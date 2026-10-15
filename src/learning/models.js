@@ -1,3 +1,4 @@
+import {classicOptions, makeClassicExam, aluOptions, exam2024} from './exam-models.js'
 // Deterministic traces shared by the diagram, explanations and tests.
 const copy = v => JSON.parse(JSON.stringify(v))
 const frame = (title, why, state, extra = {}) => ({ title, why, state: copy(state), ...copy(extra) })
@@ -90,7 +91,13 @@ export function diskSchedule(policy='LOOK') {
   return {kind:'disk',title:'磁盘调度 · '+policy,intro:'初始 50，请求按到达顺序为 40、10、70，初始向右，磁道号 0～99。',condition:'只计算机械磁盘寻道距离，忽略旋转和传输时间；所有请求开始时已到达；最后一个请求完成即停止。SSTF 等距时本例取较小磁道号。',max,requests,flow:'选择未完成请求\n├─ FCFS → 最早到达者\n├─ SSTF → 当前距离最近者\n└─ SCAN／LOOK → 沿当前方向依次服务\n   本方向没有请求\n   ├─ SCAN → 先到物理端点再折返\n   └─ LOOK → 直接在最后请求处折返\n服务后还有请求？\n├─ 是 → 继续选点\n└─ 否 → 停止，累计距离／请求数',frames:out,compare:[['SCAN 与 LOOK','SCAN 为折返走到物理端点；LOOK 只到当前方向最后一个请求。'],['请求数与路径段数','物理端点可能产生额外路段，但不能增加平均距离的分母。']],formula:'$$D=\\sum_{i=1}^{m}|x_i-x_{i-1}|,\\qquad\\overline D=\\frac{D}{n}$$\n\nx₀ 为初始位置，xᵢ 为第 i 段终点，D 为总移动磁道数。本例 n=3 个请求；m 为实际移动段数。'}
 }
 export const lessons=[
- {id:'datapath',doc:'02-计算机组成原理',heading:'单总线结构',make:()=>dataPath()},
+ {id:'q2009',doc:'10-计组强化题型',anchor:'q-10-0b4feed381cd',heading:'2009年第44题',make:()=>makeClassicExam(classicOptions[0])},
+ {id:'q2015a',doc:'10-计组强化题型',anchor:'q-10-9e51170314fb',heading:'2015年第43题',options:classicOptions.slice(1,4),make:makeClassicExam},
+ {id:'q2015b',doc:'10-计组强化题型',anchor:'q-10-d9b1e8dfa20a',heading:'2015年第44题',options:classicOptions.slice(1,4),make:makeClassicExam},
+ {id:'q2022',doc:'10-计组强化题型',anchor:'q-10-5799e1c9d1ca',heading:'2022年第43题',options:classicOptions.slice(4),make:makeClassicExam},
+ {id:'q2024',doc:'10-计组强化题型',anchor:'q-10-a253b8668c2d',heading:'2024年第43题',options:aluOptions,make:exam2024},
+ {id:'datapath',doc:'02-计算机组成原理',heading:'单总线结构',options:[...classicOptions,'基础示意'],make:v=>v==='基础示意'?dataPath():makeClassicExam(v)},
+ {id:'exam-alu',doc:'02-计算机组成原理',heading:'加法器与算术逻辑部件',options:aluOptions,make:exam2024},
  {id:'critical',doc:'01-数据结构',heading:'关键路径',make:()=>criticalPath()},
  {id:'pages',doc:'03-操作系统',heading:'页面置换',options:['LRU','FIFO','Clock'],make:pageReplacement},
  {id:'banker',doc:'03-操作系统',heading:'死锁的避免（银行家算法）',options:['安全状态','不安全状态'],make:v=>banker(v==='不安全状态')},
