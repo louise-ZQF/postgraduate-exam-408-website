@@ -115,7 +115,7 @@ async function renderDoc(id,anchor='',query='',force=false){
   try {
     const [md,units,article]=await Promise.all([resources.load(url('docs/'+encodeURIComponent(id)+'.md'),{format:'text',signal:nav.signal,force}),resources.load(url('units/'+encodeURIComponent(id)+'.json'),{signal:nav.signal,force}),import('./article.js')])
     if(!nav.current())return
-    articleModule=article;documentUnits=units;const container=app.querySelector('#article-body');article.renderMarkdown(md,BASE,container)
+    articleModule=article;documentUnits=units;const container=app.querySelector('#article-body');container.dataset.knowledgeFocus=String(doc.group==='知识体系'||doc.group==='错题补充');article.renderMarkdown(md,BASE,container)
     for(const section of doc.sections){
       const a=document.getElementById(section.anchor),p=a?.parentElement,marker=p?.tagName==='P'?p:a,heading=marker?.nextElementSibling
       if(!heading||!/^H[1-4]$/.test(heading.tagName))continue
@@ -129,7 +129,7 @@ async function renderDoc(id,anchor='',query='',force=false){
     readerReady=true
     editorModule??=await import('./editor.js');if(!nav.current())return
     await editorModule.mountEditor({host:app,doc,render:article.renderMarkdown,base:BASE,storage:safeStorage,notice:notify,signal:nav.signal,load:()=>resources.load(url('editable/'+encodeURIComponent(id)+'.json'),{signal:nav.signal})})
-    if(id==='14-数据结构错题补充'||doc.group==='知识体系'||id==='10-计组强化题型'||id==='09-数据结构强化题型'){
+    if(doc.group==='知识体系'||id==='10-计组强化题型'||id==='09-数据结构强化题型'){
       const labs=await import('./learning/labs.js');if(!nav.current())return
       labs.mountLearningLabs(container,id,{signal:nav.signal,render:article.renderMarkdown,base:BASE,onActivate:markCurrent})
     }

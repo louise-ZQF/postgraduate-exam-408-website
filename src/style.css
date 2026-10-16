@@ -439,3 +439,20 @@ dialog::backdrop {background:#25211d70}
 .exam-gate{fill:white;stroke:#777;stroke-width:1.5}.exam-gate.active{fill:#fff3e1;stroke:#a54930;stroke-width:2.5}
 
 .exam-control-label.edge{text-anchor:end}
+
+/* Explicit content labels: visible without expanding a panel or relying on color. */
+.markdown .study-focus{margin:18px 0;padding:14px 18px;border:1px solid #d8cbb7;border-left:4px solid #93642c;border-radius:6px;background:#fbf6e9;color:#383329;line-height:1.85}
+.markdown .study-focus-label{display:block;margin-bottom:5px;color:#74501f;font-size:.86em;letter-spacing:.03em;font-family:var(--sans,system-ui,sans-serif)}
+.markdown .study-focus[data-focus=boundary]{border-color:#c7d9d3;border-left-color:#286c59;background:#eef6f2}
+.markdown .study-focus[data-focus=boundary]>.study-focus-label{color:#235f4e}
+.markdown .study-focus[data-focus=boundary] code{font-size:1.08em;font-weight:700;background:transparent;color:#204e41;white-space:normal;overflow-wrap:anywhere}
+.markdown .study-focus[data-focus=condition]{border-left-color:#47718a;background:#f1f6f8}
+.markdown .study-focus[data-focus=condition]>.study-focus-label{color:#31566d}
+.markdown .study-focus[data-focus=pitfall]{border-left-color:#ac4935;background:#fcf1ec}
+.markdown .study-focus[data-focus=pitfall]>.study-focus-label{color:#913b2b}
+.markdown .study-key-table{border:2px solid var(--line-strong);border-radius:5px}
+.markdown .study-key-table caption{padding:10px 12px;text-align:left;color:var(--ink);background:#f2ede3;font-size:14px;font-weight:750;caption-side:top}
+.markdown .study-key-table th{background:#eee8dc;font-weight:750}
+.markdown .study-key-table .study-boundary-row td{background:#eef6f2;color:#204e41;font-weight:650}
+.markdown .study-key-table .study-boundary-row code{background:transparent;color:inherit;font-weight:750}
+@media(max-width:600px){.markdown .study-focus{padding:12px 13px;margin:16px 0}.markdown .study-focus-label{font-size:14px}.markdown .study-key-table th,.markdown .study-key-table td{padding:9px}}

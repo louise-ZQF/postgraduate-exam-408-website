@@ -49,6 +49,31 @@ function styleAnswerChoices(container) {
   }
 }
 
+const focusLabels = /^(重点|易错|公式与条件|判空[^｜]*|判满|整体判满|左栈判空|右栈判空|先看约定|先分结构|尾部关系|首尾关系|判满说明|操作顺序|为什么相邻就满|为什么要取模|另一种实现|判空与首尾)｜$/
+export function styleKnowledgeFocus(container) {
+  for (const p of container.querySelectorAll('p')) {
+    const label = [...p.children].find(el => el.tagName === 'STRONG' && focusLabels.test(el.textContent.trim()))
+    if (!label) continue
+    p.classList.add('study-focus')
+    p.dataset.focus = /判空|判满/.test(label.textContent) ? 'boundary' : /易错/.test(label.textContent) ? 'pitfall' : /公式|约定|关系|结构/.test(label.textContent) ? 'condition' : 'key'
+    label.classList.add('study-focus-label')
+  }
+  // A knowledge table is already a comparison of rules; make its purpose explicit.
+  if (container.dataset.knowledgeFocus !== 'true') return
+  for (const table of container.querySelectorAll('table')) {
+    if (table.closest('.learning-lab,.study-question,.code-options')) continue
+    table.classList.add('study-key-table')
+    if (!table.querySelector('caption')) {
+      const caption = document.createElement('caption')
+      caption.textContent = /判空|判满|操作 \/ 状态/.test(table.textContent) ? '条件与表达式对照' : '重点对照'
+      table.prepend(caption)
+    }
+    for (const row of table.querySelectorAll('tbody tr')) {
+      if (/^(?:空|满|判空|判满|两栈都空|元素个数|中间剩余空位|最多存放|只有一个数据结点)$/.test(row.cells[0]?.textContent.trim() || '')) row.classList.add('study-boundary-row')
+    }
+  }
+}
+
 export function renderMarkdown(md, base, container) {
   const html = marked.parse(preprocessMarkdown(md, base))
   container.innerHTML = DOMPurify.sanitize(html, { ADD_ATTR: ['target', 'rel', 'style'] })
@@ -67,6 +92,7 @@ export function renderMarkdown(md, base, container) {
   container.querySelectorAll('p').forEach(el => {
     if (/^(总流程|主线|负数转换顺序|记忆线索|流程)[：:]/.test(el.textContent) && el.textContent.includes('→')) el.classList.add('study-flow')
   })
+  styleKnowledgeFocus(container)
   styleAnswerChoices(container)
   container.querySelectorAll('a[href^="/docs/"]').forEach(a=>{const [path,hash]=a.getAttribute('href').split('#');a.href='https://yyx-dev.github.io'+path+(path.endsWith('.html')?'':'.html')+(hash?'#'+hash:'')})
   container.querySelectorAll('a[href^="http"]').forEach(a => { a.target = '_blank'; a.rel = 'noopener noreferrer' })
