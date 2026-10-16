@@ -143,3 +143,6 @@ def add_search_marker(line, anchor):
 
 from content_model import build
 build(HERE, specs, clean, convert, prepare_images, image_dimensions)
+
+from exam_focus import build_exam_focus
+build_exam_focus(HERE)

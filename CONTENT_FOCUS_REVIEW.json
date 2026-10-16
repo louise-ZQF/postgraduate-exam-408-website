@@ -1,84 +1,49 @@
 [
   {
     "document": "01-数据结构",
-    "labels": {
-      "重点": 32,
-      "易错": 18,
-      "公式与条件": 10,
-      "判空": 3,
-      "判满": 3
-    },
-    "tables": 18
+    "sections": 45,
+    "summaries": 45,
+    "missing": []
   },
   {
     "document": "02-计算机组成原理",
-    "labels": {
-      "重点": 107,
-      "易错": 52,
-      "公式与条件": 11,
-      "判空": 0,
-      "判满": 0
-    },
-    "tables": 18,
-    "preservedTextSha256": "bc5dad4c2fd251f9fba1ad55b5110a66c60607fbb1a81be300ad5acfe13648ab"
+    "preservedTextSha256": "bc5dad4c2fd251f9fba1ad55b5110a66c60607fbb1a81be300ad5acfe13648ab",
+    "sections": 130,
+    "summaries": 130,
+    "missing": []
   },
   {
     "document": "03-操作系统",
-    "labels": {
-      "重点": 100,
-      "易错": 54,
-      "公式与条件": 3,
-      "判空": 0,
-      "判满": 0
-    },
-    "tables": 11,
-    "preservedTextSha256": "c6138b81c5c4dd65f9b4e7b8eec6febc1eef7f4c6c5f016f5d33a720269acd83"
+    "preservedTextSha256": "c6138b81c5c4dd65f9b4e7b8eec6febc1eef7f4c6c5f016f5d33a720269acd83",
+    "sections": 114,
+    "summaries": 114,
+    "missing": []
   },
   {
     "document": "04-计算机网络",
-    "labels": {
-      "重点": 80,
-      "易错": 44,
-      "公式与条件": 4,
-      "判空": 0,
-      "判满": 0
-    },
-    "tables": 8,
-    "preservedTextSha256": "4913b0a38b48e110f961fe56200e64e93a734de6fe798ad6a2daccf6e85a04aa"
+    "preservedTextSha256": "4913b0a38b48e110f961fe56200e64e93a734de6fe798ad6a2daccf6e85a04aa",
+    "sections": 98,
+    "summaries": 98,
+    "missing": []
   },
   {
     "document": "14-数据结构错题补充",
-    "labels": {
-      "重点": 20,
-      "易错": 8,
-      "公式与条件": 2,
-      "判空": 8,
-      "判满": 4
-    },
-    "tables": 6
+    "sections": 37,
+    "summaries": 37,
+    "missing": []
   },
   {
     "document": "15-计算机组成原理错题补充",
-    "labels": {
-      "重点": 11,
-      "易错": 5,
-      "公式与条件": 4,
-      "判空": 0,
-      "判满": 0
-    },
-    "tables": 0,
-    "preservedTextSha256": "57d5c4f20a0f86a6932378b7a9502b8f1cb97570e4144bddb3f4f84031a42d93"
+    "preservedTextSha256": "57d5c4f20a0f86a6932378b7a9502b8f1cb97570e4144bddb3f4f84031a42d93",
+    "sections": 14,
+    "summaries": 14,
+    "missing": []
   },
   {
     "document": "16-操作系统错题补充",
-    "labels": {
-      "重点": 14,
-      "易错": 6,
-      "公式与条件": 0,
-      "判空": 0,
-      "判满": 0
-    },
-    "tables": 0,
-    "preservedTextSha256": "b254ebc8426a8622d325242c105593d556b69728c513244f387f328121f537f1"
+    "preservedTextSha256": "b254ebc8426a8622d325242c105593d556b69728c513244f387f328121f537f1",
+    "sections": 18,
+    "summaries": 18,
+    "missing": []
   }
 ]

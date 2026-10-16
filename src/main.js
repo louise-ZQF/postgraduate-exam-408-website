@@ -113,7 +113,7 @@ async function renderDoc(id,anchor='',query='',force=false){
   readerView.mount(app,{signal:nav.signal,openDialog,closeDialog})
   for(const dialog of app.querySelectorAll('dialog'))dialog.addEventListener('cancel',()=>{queueMicrotask(()=>dialog.returnFocus?.focus())})
   try {
-    const [md,units,article]=await Promise.all([resources.load(url('docs/'+encodeURIComponent(id)+'.md'),{format:'text',signal:nav.signal,force}),resources.load(url('units/'+encodeURIComponent(id)+'.json'),{signal:nav.signal,force}),import('./article.js')])
+    const [md,units,article,examFocus]=await Promise.all([resources.load(url('docs/'+encodeURIComponent(id)+'.md'),{format:'text',signal:nav.signal,force}),resources.load(url('units/'+encodeURIComponent(id)+'.json'),{signal:nav.signal,force}),import('./article.js'),(doc.group==='知识体系'||doc.group==='错题补充')?resources.load(url('exam-focus/'+encodeURIComponent(id)+'.json'),{signal:nav.signal,force}):Promise.resolve(null)])
     if(!nav.current())return
     articleModule=article;documentUnits=units;const container=app.querySelector('#article-body');container.dataset.knowledgeFocus=String(doc.group==='知识体系'||doc.group==='错题补充');article.renderMarkdown(md,BASE,container)
     for(const section of doc.sections){
@@ -133,6 +133,7 @@ async function renderDoc(id,anchor='',query='',force=false){
       const labs=await import('./learning/labs.js');if(!nav.current())return
       labs.mountLearningLabs(container,id,{signal:nav.signal,render:article.renderMarkdown,base:BASE,onActivate:markCurrent})
     }
+    if(examFocus){const focusModule=await import('./exam-focus.js');if(!nav.current())return;focusModule.mountExamFocus(container,examFocus,{signal:nav.signal,editorButton:app.querySelector('#toggle-editor')})}
     tocObserver=new IntersectionObserver(entries=>{const hits=entries.filter(e=>e.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top);if(hits.length)markCurrent(hits[0].target.dataset.section)},{rootMargin:'-120px 0px -60% 0px'})
     container.querySelectorAll('[data-section]').forEach(h=>tocObserver.observe(h))
     markCurrent(doc.sections.find(s=>s.level>1)?.anchor||'')

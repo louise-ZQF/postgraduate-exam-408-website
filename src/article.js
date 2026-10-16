@@ -111,6 +111,7 @@ export function revealSearchTarget(anchor, query, searchTerms = []) {
     const wrapper=marker.parentElement?.tagName==='P'?marker.parentElement:marker
     block=wrapper.nextElementSibling||marker
   }
+  if(block.closest('.study-unit')&&block.closest('.exam-focus-only'))block.closest('.exam-focus-only').dispatchEvent(new Event('exam-focus:reveal'))
   const needles=[...searchTerms,query.trim()].filter(Boolean)
   const walker=document.createTreeWalker(block,NodeFilter.SHOW_TEXT)
   let node,hit
