@@ -19,7 +19,8 @@
       "判空": 0,
       "判满": 0
     },
-    "tables": 18
+    "tables": 18,
+    "preservedTextSha256": "bc5dad4c2fd251f9fba1ad55b5110a66c60607fbb1a81be300ad5acfe13648ab"
   },
   {
     "document": "03-操作系统",
@@ -30,7 +31,8 @@
       "判空": 0,
       "判满": 0
     },
-    "tables": 11
+    "tables": 11,
+    "preservedTextSha256": "c6138b81c5c4dd65f9b4e7b8eec6febc1eef7f4c6c5f016f5d33a720269acd83"
   },
   {
     "document": "04-计算机网络",
@@ -41,7 +43,8 @@
       "判空": 0,
       "判满": 0
     },
-    "tables": 8
+    "tables": 8,
+    "preservedTextSha256": "4913b0a38b48e110f961fe56200e64e93a734de6fe798ad6a2daccf6e85a04aa"
   },
   {
     "document": "14-数据结构错题补充",
@@ -63,7 +66,8 @@
       "判空": 0,
       "判满": 0
     },
-    "tables": 0
+    "tables": 0,
+    "preservedTextSha256": "57d5c4f20a0f86a6932378b7a9502b8f1cb97570e4144bddb3f4f84031a42d93"
   },
   {
     "document": "16-操作系统错题补充",
@@ -74,6 +78,7 @@
       "判空": 0,
       "判满": 0
     },
-    "tables": 0
+    "tables": 0,
+    "preservedTextSha256": "b254ebc8426a8622d325242c105593d556b69728c513244f387f328121f537f1"
   }
 ]
