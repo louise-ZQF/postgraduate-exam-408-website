@@ -22,6 +22,7 @@ function networkDiagram(g){
 }
 export function traceDiagram(l,f){
  const v=f.view||{};let html=''
+ if(v.positions)html+=positionDiagram(v.positions)
  if(v.tree)html+=`<div class="trace-tree-scroll">${treeDiagram(v.tree)}</div>`
  if(v.network)html+=networkDiagram(v.network)
  for(const r of v.rows||[])html+=`<div class="trace-row"><p>${esc(r.label)}</p><div class="trace-cells">${r.items.map((item,i)=>`<span class="trace-cell ${item.current?'current':''} ${item.done?'done':''}"><small>${esc(item.index??i)}</small><strong>${esc(item.text)}</strong>${item.note?`<small>${esc(item.note)}</small>`:''}</span>`).join('')}</div></div>`
@@ -30,4 +31,13 @@ export function traceDiagram(l,f){
  if(v.equation)html+=`<p class="graph-calculation">${esc(v.equation)}</p>`
  if(v.route)html+=`<div class="trace-route" aria-label="本步传递过程">${v.route.map((s,i)=>`${i?'<b aria-hidden="true">→</b>':''}<span>${esc(s)}</span>`).join('')}</div>`
  return html||`<div class="trace-route">${traceStateRows(l,f).map(([k,x])=>`<span>${esc(k)}<strong>${esc(x)}</strong></span>`).join('')}</div>`
+}
+
+function positionDiagram({nodes,edges,pointers}){
+ const order=nodes.includes('S')?['A','S','B']:nodes.includes('H')?['H','A','B','C']:['A','B','C'];
+ const xy=Object.fromEntries(nodes.map(n=>[n,[85+order.indexOf(n)*155,115]]));
+ let b='';
+ for(const [a,z,k] of edges){const [x,y]=xy[a],[xx]=xy[z],back=k==='prior',bend=back?205:55;const d=a===z?`M${x-15} 90 C${x-90} 0 ${x+90} 0 ${x+15} 90`:Math.abs(xx-x)===155&&!back?`M${x+Math.sign(xx-x)*35} ${y}H${xx-Math.sign(xx-x)*35}`:`M${x} ${back?140:90}V${bend}H${xx}V${back?140:90}`;b+=`<path d="${d}" fill="none" stroke="${back?'#7952a0':'#247569'}" stroke-width="2" marker-end="url(#position-arrow)"/><text x="${(x+xx)/2}" y="${back?225:a===z?22:Math.abs(xx-x)===155?106:45}" text-anchor="middle" font-size="14" fill="currentColor">${k||'next'}</text>`}
+ for(const n of nodes){const [x,y]=xy[n],labels=Object.entries(pointers).filter(([,v])=>v===n).map(([k])=>k).join(' / ');b+=`<rect x="${x-35}" y="${y-25}" width="70" height="50" rx="8" fill="var(--paper, #fffaf4)" stroke="#a6472b" stroke-width="2"/><text x="${x}" y="${y+7}" text-anchor="middle" fill="currentColor">${n}</text><text x="${x}" y="175" text-anchor="middle" font-size="16" fill="currentColor">${labels}</text>`}
+ return `<svg viewBox="0 0 650 245" role="img" aria-label="链表当前链接；下方标注指针，next 箭头指向后继，prior 箭头指向前驱，完整链接见状态表。"><defs><marker id="position-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#247569"/></marker></defs>${b}</svg>`
 }

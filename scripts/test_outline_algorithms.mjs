@@ -16,7 +16,7 @@ const last=l=>l.frames.at(-1).state
 const finalTree=l=>l.frames.at(-1).view.tree
 let presets=0,snapshots=0
 for(const spec of outlineLessons){
- const source=fs.readFileSync(new URL('../source/408/'+spec.doc+'.md',import.meta.url),'utf8')
+ const source=fs.readFileSync(new URL('../source/'+(spec.doc.startsWith('14-')?'supplements':'408')+'/'+spec.doc+'.md',import.meta.url),'utf8')
  const headings=[...source.matchAll(/^#{2,4} (.+)$/gm)].map(m=>m[1].trim())
  assert.ok(headings.includes(spec.heading),'exact heading missing: '+spec.id)
  assert.ok(spec.outline&&spec.scope&&spec.pages.every(p=>p>=1&&p<=20))

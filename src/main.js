@@ -129,7 +129,7 @@ async function renderDoc(id,anchor='',query='',force=false){
     readerReady=true
     editorModule??=await import('./editor.js');if(!nav.current())return
     await editorModule.mountEditor({host:app,doc,render:article.renderMarkdown,base:BASE,storage:safeStorage,notice:notify,signal:nav.signal,load:()=>resources.load(url('editable/'+encodeURIComponent(id)+'.json'),{signal:nav.signal})})
-    if(doc.group==='知识体系'||id==='10-计组强化题型'||id==='09-数据结构强化题型'){
+    if(id==='14-数据结构错题补充'||doc.group==='知识体系'||id==='10-计组强化题型'||id==='09-数据结构强化题型'){
       const labs=await import('./learning/labs.js');if(!nav.current())return
       labs.mountLearningLabs(container,id,{signal:nav.signal,render:article.renderMarkdown,base:BASE,onActivate:markCurrent})
     }

@@ -1,3 +1,4 @@
+import {positions,stackPositions,linkPositions} from './position-traces.js'
 import * as ds from './ds-traces.js'
 import * as trees from './tree-traces.js'
 import * as extra from './ds-extra-traces.js'
@@ -13,6 +14,7 @@ import {dijkstra} from './graph-models.js'
 const D='01-数据结构',C='02-计算机组成原理',O='03-操作系统',N='04-计算机网络'
 const spec=(id,doc,heading,title,pages,outline,options,make,scope='算法／计算方法')=>({id,doc,heading,title,pages,outline,options,make,scope})
 export const outlineLessons=[
+ ...[['position-stack','顺序栈和共享栈的边界',stackPositions],['position-links','删除循环链表首元与双链表插入',linkPositions]].map(([id,heading,options])=>spec(id,'14-数据结构错题补充',heading,'首尾指针与边界',[],heading,options,positions,'位置关系演示')),
  spec('linear-ops',D,'线性表的应用','线性表操作',[1],'线性表的实现与应用',['顺序表插入','顺序表删除','单链表插入','单链表逆置','有序表合并'],ds.linearOps,'支撑方法'),
  spec('stack-queue',D,'栈','栈与队列应用',[2],'栈、队列和数组的应用',['括号匹配','中缀转后缀','后缀表达式求值','循环队列'],ds.stackQueue,'支撑方法'),
  spec('matrix-address',D,'矩阵','数组与压缩矩阵定位',[2],'多维数组的存储、特殊矩阵的压缩存储',['二维数组行优先','二维数组列优先','下三角压缩存储','三对角压缩存储'],support.matrixAddress),

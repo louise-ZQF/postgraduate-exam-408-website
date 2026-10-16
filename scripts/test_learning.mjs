@@ -25,7 +25,7 @@ for(const sr of [false,true]){const l=slidingWindow(sr);assert.deepEqual(last(l)
 for(const [p,path,d] of [['LOOK',[50,70,40,10],80],['SCAN',[50,70,99,40,10],138],['FCFS',[50,40,10,70],100],['SSTF',[50,40,10,70],100]]){const l=diskSchedule(p);assert.deepEqual(last(l).path,path);assert.equal(last(l).distance,d);assert.equal(last(l).done.length,3);assert.equal(l.frames[0].state.distance,0)}
 let presets=0,frames=0
 for(const spec of lessons){
- const md=fs.readFileSync(new URL('../source/408/'+spec.doc+'.md',import.meta.url),'utf8');assert.ok(md.includes(spec.anchor||spec.heading),'missing mount heading '+spec.id)
+ const folder=spec.doc.startsWith('14-')?'supplements':'408';const md=fs.readFileSync(new URL('../source/'+folder+'/'+spec.doc+'.md',import.meta.url),'utf8');assert.ok(md.includes(spec.anchor||spec.heading),'missing mount heading '+spec.id)
  for(const option of spec.options||[undefined]){const l=spec.make(option);presets++;frames+=l.frames.length;assert.ok(l.condition&&l.flow&&l.compare.length);assert.ok(!/[\x00-\x08\x0b\x0c\x0e-\x1f]/.test(l.formula),'JS consumed TeX escapes');for(const match of l.formula.matchAll(/\$\$([\s\S]+?)\$\$/g))assert.doesNotThrow(()=>katex.renderToString(match[1],{throwOnError:true}));for(const f of l.frames)assert.ok(f.title&&f.why&&f.state)}
 }
 console.log(`Learning traces: ${presets} mounted presets, ${frames} snapshots; CPU writes, critical timing, hits/evictions, safe/unsafe, stall, selective retry and disk endpoints passed`)
