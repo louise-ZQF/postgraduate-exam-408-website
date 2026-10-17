@@ -1,19 +1,56 @@
-"""Check that structural changes retain the original facts and stable unit IDs."""
+"""Audit full prose coverage, resource retention, questions and deep links.
+
+The user authorized replacing all prose, superseding the old preservation test.
+"""
 from pathlib import Path
-import subprocess,re,json
-root=Path(__file__).resolve().parents[1]
-changed={'u-04-aab21e8e0f66','u-04-059cb1719753','u-04-28c29e0533de','u-04-4f842e19e45c','u-04-fc33d9dd8461','u-04-bcf4483210b8','u-04-18d49f5ecc6a','u-04-b749ca9e09da','u-04-explain-1a885cb327','u-04-f0df29aa1dc2','u-04-12e113b4ae39','u-04-b6dc2feaa3a8','u-04-0e015e01baf6','u-04-6daf4e7b97f6','u-04-39e3a55f85e9','u-03-799268f64029','u-03-9bea3a064cdb','u-03-9e440b3e504c','u-03-bbf6757e8a36'}
-def units(s):return {m[1]:m[2] for m in re.finditer(r'<!-- unit-id:([\w-]+) -->\n([\s\S]*?)(?=\n<!-- unit-id:|\Z)',s)}
-def normalized(s):return re.sub(r'\s','',re.sub(r'(?m)^- |\*\*(?:例子|基本概念|对照与计算|操作步骤|代码与实现|计算公式|规则与说明)\*\*','',s))
-# Baseline hashes are stored so this check works in GitHub's shallow checkout.
-manifest=root/'BODY_STRUCTURE_BASELINE.json'
-if __name__=='__main__':
- baseline=json.loads(manifest.read_text())
- import hashlib
- for doc,old in baseline.items():
-  p=root/'source'/('408' if doc.startswith('0') else 'supplements')/(doc+'.md');text=p.read_text();pattern=r'<!-- unit-id:('+ '|'.join(re.escape(k) for k in old)+r') -->\n([\s\S]*?)(?=\n<!-- unit-id:(?:'+'|'.join(re.escape(k) for k in old)+r') -->|\Z)';now={m[1]:re.sub(r'<!-- unit-id:[\w-]+ -->','',m[2]) for m in re.finditer(pattern,text)}
-  assert set(old).issubset(now),doc+' removed original anchors'
-  for uid,digest in old.items():
-   if uid in changed:continue
-   assert hashlib.sha256(normalized(now[uid]).encode()).hexdigest()==digest,(doc,uid,'lost a condition/formula during restructuring')
- print('Body structure: every original anchor retained; unchanged facts, formulas, examples and code preserved.')
+import hashlib
+import json
+import re
+
+root = Path(__file__).resolve().parents[1]
+review = json.loads((root / 'CONTENT_REWRITE_REVIEW.json').read_text())
+catalog = json.loads((root / 'public/catalog.json').read_text())
+expected = {'01': 45, '02': 130, '03': 114, '04': 98, '14': 37, '15': 14, '16': 18}
+count = resources = redirects = 0
+
+def units(text):
+    return {m[1]: m[2].strip() for m in re.finditer(
+        r'^<!-- unit-id:([\w-]+) -->\n([\s\S]*?)(?=^<!-- unit-id:|\Z)', text, re.M)}
+
+for doc, audit in review['documents'].items():
+    prefix = doc.split('-')[0]
+    source = root / 'source' / ('408' if prefix < '05' else 'supplements') / (doc + '.md')
+    text = source.read_text()
+    blocks = units(text)
+    sections = next(d for d in catalog['docs'] if d['id'] == doc)['sections']
+    headings = [s for s in sections if s['level'] > 1]
+    assert len(headings) == expected[prefix]
+    assert [s['anchor'] for s in headings] == [s['anchor'] for s in audit['sections']]
+    assert [u for u, t in blocks.items() if re.match(r'^#{1,4} ', t)] == audit['headingAnchors']
+    generated = (root / 'public/docs' / (doc + '.md')).read_text()
+    for section in audit['sections']:
+        paragraphs = [blocks[u] for u in section['paragraphs']]
+        assert sum(len(p) for p in paragraphs) >= 65, (doc, section['title'])
+        assert all(not p.startswith(('#', '|', '<details')) for p in paragraphs)
+        order = list(blocks)
+        start = order.index(section['anchor'])
+        stop = next((i for i in range(start + 1, len(order)) if blocks[order[i]].startswith('#')), len(order))
+        assert all(start < order.index(u) < stop for u in section['paragraphs'])
+        assert all('id="' + u + '"' in generated for u in section['paragraphs'])
+        count += 1
+    for entry in audit['preservedResources']:
+        assert hashlib.sha256(blocks[entry['anchor']].encode()).hexdigest() == entry['sha256'], (doc, entry['anchor'])
+        resources += 1
+    for old in audit['replacedParagraphAnchors']:
+        assert old not in blocks, (doc, old, 'old prose left in place')
+        target = catalog['redirects'][doc][old]
+        assert target['doc'] == doc and target['anchor'] in audit['headingAnchors']
+        assert 'id="' + old + '"' in generated, (doc, old, 'bookmark missing')
+        redirects += 1
+    assert not re.search(r'^\*\*(基本概念|规则与说明|对照与计算|操作步骤|代码与实现|计算公式|例子)\*\*$', text, re.M)
+
+assert len(review['documents']) == 7 and count == 456
+for path, digest in review['questionSources'].items():
+    assert hashlib.sha256((root / path).read_bytes()).hexdigest() == digest, path + ': question source changed'
+assert len(review['questionSources']) == 11
+print(f'Full rewrite: {count} sections, {resources} original technical resources, {redirects} old prose links; all question sources unchanged')

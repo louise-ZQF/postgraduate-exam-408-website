@@ -1,5 +1,7 @@
 # 408 内容审查记录
 
+2026-10-17：四科与三份错题补充全部 456 个目录项的直接正文已逐节重写，替换此前结构整理稿；保留技术表格、公式、代码和配图，题库保持完整，旧段落链接转向原章节。范围和验证见 [CONTENT_REWRITE_REVIEW.md](./CONTENT_REWRITE_REVIEW.md) 与 [逐项记录](./CONTENT_REWRITE_REVIEW.json)。
+
 2026-10-15：新增2009、2015、2022、2024四种真题数据通路图的动态重绘与十种演示情形，知识讲解和相应题目共用模型；原资料未改写，来源与验证见 [EXAM_FIGURE_REVIEW.md](./EXAM_FIGURE_REVIEW.md)。
 
 2026-10-15：加入逐步交互演示、预测后揭示的自测、文字分支流程和完整过程表；补充模型条件、变量与易混点，对最短路／排序重复讲解做合并，见 [INTERACTIVE_LEARNING.md](./INTERACTIVE_LEARNING.md)。
