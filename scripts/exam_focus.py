@@ -17,10 +17,10 @@ def build_exam_focus(root):
         for line_no,line in enumerate(path.read_text().splitlines(),1):
             if not line.strip():continue
             fields=line.split('|')
-            if len(fields)!=4 or any(not part.strip() for part in fields):raise ValueError(f'{path.name}:{line_no}: expected title|key|exam|condition')
+            if len(fields)!=2 or any(not part.strip() for part in fields):raise ValueError(f'{path.name}:{line_no}: expected title|key')
             key=normalized(fields[0])
             if key in authored:raise ValueError(f'{path.name}: duplicate {key}')
-            authored[key]=dict(zip(('key','exam','condition'),(p.strip() for p in fields[1:])))
+            authored[key]={'key':fields[1].strip()}
         used=set();entries=[]
         for sec in doc['sections']:
             if sec['level']==1:continue

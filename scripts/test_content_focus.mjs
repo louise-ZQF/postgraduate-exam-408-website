@@ -16,10 +16,11 @@ for(const {document:doc,preservedTextSha256} of docs){
  assert.deepEqual(data.entries.map(e=>e.anchor),sections.map(s=>s.anchor),doc+': every individual directory section needs a summary')
  assert.equal(new Set(data.entries.map(e=>e.anchor)).size,sections.length)
  for(const e of data.entries){
-  for(const field of ['key','exam','condition'])assert.ok(e[field].length>=12,doc+e.title+field)
-  assert.notEqual(e.key,e.exam);assert.notEqual(e.exam,e.condition)
-  const html=examFocusCard(e);assert.equal((html.match(/<dt>/g)||[]).length,3)
-  assert.ok(html.includes('核心规则')&&html.includes('典型考法')&&html.includes('前提与易错'))
+  assert.ok(e.key.length>=12,doc+e.title)
+  assert.ok(!('exam' in e)&&!('condition' in e))
+  assert.ok(e.key.length<=110&&e.key.split('。').filter(Boolean).length===1,doc+e.title+': one concise sentence')
+  const html=examFocusCard(e);assert.equal((html.match(/<p /g)||[]).length,1)
+  assert.ok(html.includes('核心特点：')&&!html.includes('<dl>')&&!html.includes('典型考法')&&!html.includes('前提与易错'))
  }
  total+=data.entries.length
 }
@@ -31,7 +32,7 @@ const ds=JSON.parse(read('public/exam-focus/01-数据结构.json')).entries
 assert.ok(ds.find(e=>e.title==='顺序栈：top 指向当前栈顶').key.includes('top==-1'))
 assert.ok(ds.find(e=>e.title==='顺序栈：top 指向下一空位').key.includes('top==0'))
 assert.ok(ds.find(e=>e.title==='共享栈：两端向中间生长').key.includes('top2-top1==1'))
-const html=examFocusCard({anchor:'test',title:'<unsafe>',level:3,key:'`x<0`',exam:'<script>alert(1)</script>',condition:'a & b'})
+const html=examFocusCard({anchor:'test',title:'<unsafe>',level:3,key:'`x<0` <script>alert(1)</script> a & b'})
 assert.ok(!html.includes('<script>'));assert.ok(html.includes('x&lt;0'));assert.ok(html.includes('a &amp; b'))
 assert.ok(!read('src/learning/outline-lessons.js').includes('position-traces'))
-console.log(`Exam focus: ${total} authored three-part summaries match every section; duplicate titles mapped by context; full original non-boundary prose/formulas preserved.`)
+console.log(`Exam focus: ${total} single-sentence core summaries match every section; duplicate titles mapped by context; full original non-boundary prose/formulas preserved.`)
