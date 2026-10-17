@@ -26,6 +26,7 @@ for(const doc of Object.keys(rewrite.documents)){
  for(const m of html.matchAll(/<(span|div) class="math-(inline|display)-source">([^]*?)<\/\1>/g)){
   const delimiter=m[2]==='display'?'$$':'$'
   const tex=m[3].slice(delimiter.length,-delimiter.length).replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&quot;','"').replaceAll('&amp;','&')
+  assert.ok(!/\^-\d/.test(tex),source+': negative exponents need braces around the whole exponent')
   assert.doesNotThrow(()=>katex.renderToString(tex,{throwOnError:true,strict:'ignore'}),source+': '+tex)
   formulas++
  }

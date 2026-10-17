@@ -22,3 +22,5 @@
 格式研究参考 [408 简纲的死锁页面](https://liangbohan.github.io/postgraduate-exam-website/#/knowledge/operating-systems/os-section-deadlock)，借鉴其分层解释与对照方式，正文另行撰写。上一轮已核对的协议依据继续使用：[RIP RFC 2453](https://www.rfc-editor.org/rfc/rfc2453)、[OSPF RFC 2328](https://www.rfc-editor.org/rfc/rfc2328)、[ICMP RFC 792](https://www.rfc-editor.org/rfc/rfc792)。参考页的银行家/检测伪代码不作为直接抄写依据。
 
 逐项目录、正文单元、保留资源摘要及题库文件校验见 [CONTENT_REWRITE_REVIEW.json](./CONTENT_REWRITE_REVIEW.json)。自动检查覆盖 456 项归属、原技术资源一致性、旧链接重定向、题库未变、实际 Markdown→KaTeX 公式解析，以及原有搜索、交互模型、编辑和内容生成回归。自动检查用于验证覆盖和功能，不代替对技术结论的解释与校对。
+
+渲染复查另修正原 IEEE 754 对照表的一处负指数：`2^-126` 改为 `2^{-126}`，让整个 −126 正确成为上标；原资源摘要、修订摘要与理由同时保留，不以重置旧摘要掩盖修改。

@@ -39,7 +39,9 @@ for doc, audit in review['documents'].items():
         assert all('id="' + u + '"' in generated for u in section['paragraphs'])
         count += 1
     for entry in audit['preservedResources']:
-        assert hashlib.sha256(blocks[entry['anchor']].encode()).hexdigest() == entry['sha256'], (doc, entry['anchor'])
+        assert hashlib.sha256(blocks[entry['anchor']].encode()).hexdigest() == entry.get('revisedSha256', entry['sha256']), (doc, entry['anchor'])
+        if 'revisedSha256' in entry:
+            assert entry['revisionReason']
         resources += 1
     for old in audit['replacedParagraphAnchors']:
         assert old not in blocks, (doc, old, 'old prose left in place')
