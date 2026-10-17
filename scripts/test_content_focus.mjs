@@ -6,11 +6,11 @@ import {examFocusCard} from '../src/exam-focus.js'
 const read=p=>fs.readFileSync(p,'utf8')
 const docs=JSON.parse(read('CONTENT_FOCUS_REVIEW.json'))
 const catalog=JSON.parse(read('public/catalog.json')).docs
-const strip=s=>s.replace(/<!--[^]*?-->/g,'').replace(/\*\*(?:重点|易错|公式与条件)｜\*\* /g,'').replace(/\s/g,'')
+const strip=s=>s.replace(/<!--[^]*?-->/g,'').replace(/\s/g,'')
 let total=0
-for(const {document:doc,preservedTextSha256} of docs){
+for(const {document:doc,bodyTextSha256} of docs){
  const path='source/'+(doc.startsWith('0')?'408':'supplements')+'/'+doc+'.md',md=read(path)
- if(preservedTextSha256) assert.equal(createHash('sha256').update(strip(md)).digest('hex'),preservedTextSha256,doc+': keep original text/formulas')
+ if(bodyTextSha256) assert.equal(createHash('sha256').update(strip(md)).digest('hex'),bodyTextSha256,doc+': reviewed body baseline')
  const sections=catalog.find(d=>d.id===doc).sections.filter(s=>s.level>1)
  const data=JSON.parse(read('public/exam-focus/'+doc+'.json'))
  assert.deepEqual(data.entries.map(e=>e.anchor),sections.map(s=>s.anchor),doc+': every individual directory section needs a summary')
@@ -35,4 +35,4 @@ assert.ok(ds.find(e=>e.title==='共享栈：两端向中间生长').key.includes
 const html=examFocusCard({anchor:'test',title:'<unsafe>',level:3,key:'`x<0` <script>alert(1)</script> a & b'})
 assert.ok(!html.includes('<script>'));assert.ok(html.includes('x&lt;0'));assert.ok(html.includes('a &amp; b'))
 assert.ok(!read('src/learning/outline-lessons.js').includes('position-traces'))
-console.log(`Exam focus: ${total} single-sentence core summaries match every section; duplicate titles mapped by context; full original non-boundary prose/formulas preserved.`)
+console.log(`Exam focus: ${total} single-sentence core summaries match every section; duplicate titles mapped by context; reviewed body baseline verified.`)

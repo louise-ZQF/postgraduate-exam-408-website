@@ -467,3 +467,12 @@ dialog::backdrop {background:#25211d70}
 .markdown.exam-focus-only>.study-unit,.markdown.exam-focus-only>.learning-lab,.markdown.exam-focus-only>.learning-overview{display:none!important}
 .exam-focus-toolbar button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 @media(max-width:600px){.markdown .exam-focus-toolbar{align-items:flex-start;flex-direction:column;gap:10px;padding:12px}.markdown .exam-focus-toolbar button{width:100%}.markdown .exam-focus-card{padding:9px 12px}}
+
+/* Textbook reading: clear paragraph hierarchy and individually readable rules. */
+.markdown[data-knowledge-focus=true] .study-unit{max-width:76ch}
+.markdown[data-knowledge-focus=true] .study-unit>ul,.markdown[data-knowledge-focus=true] .study-unit>ol{padding-left:1.55em;margin:12px 0 18px}
+.markdown[data-knowledge-focus=true] .study-unit li{padding-left:.25em;margin:8px 0;line-height:1.85}
+.markdown[data-knowledge-focus=true] .study-unit p>strong:first-child{color:var(--ink);font-weight:750}
+.markdown[data-knowledge-focus=true] .study-unit table{line-height:1.75}
+.markdown[data-knowledge-focus=true] .study-unit th{font-weight:750;white-space:normal}
+.markdown[data-knowledge-focus=true] .study-unit td{vertical-align:top}
